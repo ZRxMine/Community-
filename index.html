@@ -10,7 +10,7 @@
 
     :root {
       --bg: #070b16;
-      --card: rgba(18, 25, 45, .85);
+      --card: rgba(18, 25, 45, .86);
       --line: rgba(255,255,255,.12);
       --text: #f4f7ff;
       --muted: #9ba7c4;
@@ -28,9 +28,9 @@
     body {
       margin: 0;
       min-height: 100vh;
+      overflow-x: hidden;
       color: var(--text);
       font-family: "Vazirmatn", Tahoma, sans-serif;
-      overflow-x: hidden;
       background:
         radial-gradient(circle at 15% 15%, rgba(102,117,255,.22), transparent 28%),
         radial-gradient(circle at 90% 10%, rgba(168,85,247,.18), transparent 25%),
@@ -122,6 +122,12 @@
       font-size: 22px;
       background: linear-gradient(135deg, var(--blue), var(--purple));
       box-shadow: 0 0 25px rgba(102,117,255,.45);
+    }
+
+    .user-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .user-label {
@@ -523,8 +529,18 @@
         <span>Community Hub</span>
       </div>
 
-      <div class="user-label" id="topUser">
-        وارد نشده‌اید
+      <div class="user-area">
+        <div class="user-label" id="topUser">
+          وارد نشده‌اید
+        </div>
+
+        <button
+          class="btn btn-red"
+          id="logoutBtn"
+          style="display: none; padding: 9px 13px;"
+        >
+          Log out
+        </button>
       </div>
     </header>
 
@@ -567,7 +583,7 @@
       </div>
     </section>
 
-    <!-- صفحه لیست کامیونیتی‌ها -->
+    <!-- صفحه کامیونیتی‌ها -->
     <section class="screen" id="communitiesScreen">
       <div class="page-title">
         <h1>کامیونیتی‌ها</h1>
@@ -581,7 +597,6 @@
           id="searchInput"
           class="input"
           type="search"
-          value=""
           placeholder="جست‌وجوی کامیونیتی..."
         >
 
@@ -627,7 +642,7 @@
       </div>
     </section>
 
-    <!-- صفحه جزئیات کامیونیتی -->
+    <!-- صفحه جزئیات -->
     <section class="screen" id="detailScreen">
 
       <button class="btn btn-dark back-btn" id="backBtn">
@@ -665,7 +680,6 @@
         </div>
 
         <div class="detail-actions">
-
           <button class="btn btn-red" id="leaveBtn">
             Leave Community
           </button>
@@ -681,7 +695,6 @@
           <button class="btn btn-dark" id="detailBackBtn">
             مشاهده کامیونیتی‌ها
           </button>
-
         </div>
       </div>
 
@@ -698,7 +711,9 @@
     const passwordInput = document.getElementById("passwordInput");
     const continueBtn = document.getElementById("continueBtn");
     const loginError = document.getElementById("loginError");
+
     const topUser = document.getElementById("topUser");
+    const logoutBtn = document.getElementById("logoutBtn");
 
     const searchInput = document.getElementById("searchInput");
     const searchBtn = document.getElementById("searchBtn");
@@ -743,23 +758,12 @@
       const saved = localStorage.getItem("communities");
 
       if (!saved) {
-        const initialCommunities = [defaultCommunity];
-        saveCommunities(initialCommunities);
-        return initialCommunities;
+        const communities = [defaultCommunity];
+        saveCommunities(communities);
+        return communities;
       }
 
-      let communities = JSON.parse(saved);
-
-      communities = communities.map(community => ({
-        ...community,
-        level: community.id === "python_community"
-          ? 40
-          : (community.level || 1)
-      }));
-
-      saveCommunities(communities);
-
-      return communities;
+      return JSON.parse(saved);
     }
 
     function showScreen(screen) {
@@ -775,6 +779,15 @@
       });
     }
 
+    function escapeHTML(text) {
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
     function firstLetter(name) {
       return name.trim().charAt(0).toUpperCase() || "C";
     }
@@ -787,21 +800,23 @@
         .replace(/[^\w\u0600-\u06FF-]/g, "");
     }
 
-    function escapeHTML(text) {
-      return String(text)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+    function updateUserBar() {
+      if (currentUser) {
+        topUser.innerHTML =
+          `اکانت روبلاکس: <b>${escapeHTML(currentUser)}</b>`;
+
+        logoutBtn.style.display = "inline-block";
+      } else {
+        topUser.textContent = "وارد نشده‌اید";
+        logoutBtn.style.display = "none";
+      }
     }
 
     function renderCommunities() {
       const communities = getCommunities();
-
       const query = searchInput.value.trim().toLowerCase();
 
-      const filteredCommunities = communities.filter(community => {
+      const filtered = communities.filter(community => {
         return (
           community.name.toLowerCase().includes(query) ||
           community.description.toLowerCase().includes(query)
@@ -810,7 +825,7 @@
 
       communityList.innerHTML = "";
 
-      if (filteredCommunities.length === 0) {
+      if (filtered.length === 0) {
         communityList.innerHTML = `
           <div class="empty">
             کامیونیتی‌ای با این نام پیدا نشد.
@@ -820,7 +835,7 @@
         return;
       }
 
-      filteredCommunities.forEach(community => {
+      filtered.forEach(community => {
         const card = document.createElement("div");
 
         card.className = "community-card";
@@ -853,11 +868,9 @@
           </button>
         `;
 
-        card
-          .querySelector(".join-btn")
-          .addEventListener("click", () => {
-            joinCommunity(community.id);
-          });
+        card.querySelector(".join-btn").addEventListener("click", () => {
+          joinCommunity(community.id);
+        });
 
         communityList.appendChild(card);
       });
@@ -866,9 +879,7 @@
     function joinCommunity(id) {
       const communities = getCommunities();
 
-      const community = communities.find(
-        item => item.id === id
-      );
+      const community = communities.find(item => item.id === id);
 
       if (!community) return;
 
@@ -888,9 +899,7 @@
     function openCommunity(id) {
       const communities = getCommunities();
 
-      const community = communities.find(
-        item => item.id === id
-      );
+      const community = communities.find(item => item.id === id);
 
       if (!community) return;
 
@@ -905,7 +914,6 @@
       const isOwner = community.owner === currentUser;
 
       detailRank.textContent = isOwner ? "owner" : "member";
-
       detailRank.className = isOwner
         ? "rank-owner"
         : "rank-member";
@@ -915,6 +923,82 @@
         : "none";
 
       showScreen(detailScreen);
+    }
+
+    function loginUser() {
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value;
+
+      if (username.length < 3) {
+        loginError.textContent =
+          "نام کاربری باید حداقل ۳ کاراکتر باشد.";
+
+        return;
+      }
+
+      if (password.length < 8) {
+        loginError.textContent =
+          "رمز عبور باید حداقل ۸ کاراکتر باشد.";
+
+        return;
+      }
+
+      const users = JSON.parse(
+        localStorage.getItem("community_users") || "{}"
+      );
+
+      if (!users[username]) {
+        users[username] = {
+          password: password,
+          createdAt: Date.now()
+        };
+
+        localStorage.setItem(
+          "community_users",
+          JSON.stringify(users)
+        );
+      } else if (users[username].password !== password) {
+        loginError.textContent = "رمز عبور اشتباه است.";
+        return;
+      }
+
+      currentUser = username;
+
+      localStorage.setItem(
+        "community_username",
+        currentUser
+      );
+
+      loginError.style.color = "#24d47b";
+      loginError.textContent = "ورود با موفقیت انجام شد.";
+
+      updateUserBar();
+
+      setTimeout(() => {
+        showScreen(communitiesScreen);
+        renderCommunities();
+      }, 350);
+    }
+
+    function logoutUser() {
+      const confirmed = confirm(
+        "آیا می‌خواهید از حساب خود خارج شوید؟"
+      );
+
+      if (!confirmed) return;
+
+      currentUser = "";
+      currentCommunityId = null;
+
+      localStorage.removeItem("community_username");
+
+      usernameInput.value = "";
+      passwordInput.value = "";
+      loginError.textContent = "";
+      loginError.style.color = "#ff8295";
+
+      updateUserBar();
+      showScreen(loginScreen);
     }
 
     function leaveCommunity() {
@@ -936,9 +1020,10 @@
       const joinedKey =
         `joined_${currentCommunityId}_${currentUser}`;
 
-      const alreadyJoined = localStorage.getItem(joinedKey);
-
-      if (alreadyJoined && community.members > 0) {
+      if (
+        localStorage.getItem(joinedKey) &&
+        community.members > 0
+      ) {
         community.members--;
 
         localStorage.removeItem(joinedKey);
@@ -963,31 +1048,21 @@
       if (!community) return;
 
       if (community.owner !== currentUser) {
-        alert("فقط سازنده‌ی کامیونیتی می‌تواند آن را حذف کند.");
+        alert("فقط سازنده می‌تواند کامیونیتی را حذف کند.");
         return;
       }
 
       const confirmed = confirm(
-        `آیا از حذف کامیونیتی «${community.name}» مطمئن هستید؟`
+        `آیا از حذف «${community.name}» مطمئن هستید؟`
       );
 
       if (!confirmed) return;
 
-      const updatedCommunities = communities.filter(
+      const updated = communities.filter(
         item => item.id !== currentCommunityId
       );
 
-      saveCommunities(updatedCommunities);
-
-      const joinedPrefix = `joined_${currentCommunityId}_`;
-
-      for (let i = localStorage.length - 1; i >= 0; i--) {
-        const key = localStorage.key(i);
-
-        if (key && key.startsWith(joinedPrefix)) {
-          localStorage.removeItem(key);
-        }
-      }
+      saveCommunities(updated);
 
       currentCommunityId = null;
 
@@ -996,97 +1071,6 @@
       showScreen(communitiesScreen);
       renderCommunities();
     }
-
-    /*
-      ورود یا ساخت حساب
-    */
-    function loginUser() {
-      const username = usernameInput.value.trim();
-      const password = passwordInput.value;
-
-      loginError.style.color = "#ff8295";
-
-      if (username.length < 3) {
-        loginError.textContent =
-          "نام کاربری باید حداقل ۳ کاراکتر باشد.";
-
-        return;
-      }
-
-      if (password.length < 8) {
-        loginError.textContent =
-          "رمز عبور باید حداقل ۸ کاراکتر باشد.";
-
-        return;
-      }
-
-      const savedUsers = JSON.parse(
-        localStorage.getItem("community_users") || "{}"
-      );
-
-      /*
-        اگر حساب وجود نداشته باشد، حساب جدید ساخته می‌شود.
-      */
-      if (!savedUsers[username]) {
-        savedUsers[username] = {
-          password: password,
-          createdAt: Date.now()
-        };
-
-        localStorage.setItem(
-          "community_users",
-          JSON.stringify(savedUsers)
-        );
-      }
-
-      /*
-        اگر حساب قبلاً وجود داشته باشد،
-        رمز عبور بررسی می‌شود.
-      */
-      else if (savedUsers[username].password !== password) {
-        loginError.textContent =
-          "رمز عبور اشتباه است.";
-
-        return;
-      }
-
-      currentUser = username;
-
-      localStorage.setItem(
-        "community_username",
-        username
-      );
-
-      topUser.innerHTML =
-        `اکانت روبلاکس: <b>${escapeHTML(username)}</b>`;
-
-      loginError.style.color = "#24d47b";
-      loginError.textContent =
-        "ورود با موفقیت انجام شد.";
-
-      setTimeout(() => {
-        showScreen(communitiesScreen);
-        renderCommunities();
-      }, 350);
-    }
-
-    continueBtn.addEventListener("click", loginUser);
-
-    usernameInput.addEventListener("keydown", event => {
-      if (event.key === "Enter") {
-        passwordInput.focus();
-      }
-    });
-
-    passwordInput.addEventListener("keydown", event => {
-      if (event.key === "Enter") {
-        loginUser();
-      }
-    });
-
-    searchBtn.addEventListener("click", renderCommunities);
-
-    searchInput.addEventListener("input", renderCommunities);
 
     createForm.addEventListener("submit", event => {
       event.preventDefault();
@@ -1112,9 +1096,9 @@
       }
 
       const newCommunity = {
-        id: id,
-        name: name,
-        description: description,
+        id,
+        name,
+        description,
         members: 1,
         level: 1,
         owner: currentUser
@@ -1129,12 +1113,29 @@
       );
 
       createForm.reset();
-
       openCommunity(id);
     });
 
-    leaveBtn.addEventListener("click", leaveCommunity);
+    continueBtn.addEventListener("click", loginUser);
 
+    usernameInput.addEventListener("keydown", event => {
+      if (event.key === "Enter") {
+        passwordInput.focus();
+      }
+    });
+
+    passwordInput.addEventListener("keydown", event => {
+      if (event.key === "Enter") {
+        loginUser();
+      }
+    });
+
+    logoutBtn.addEventListener("click", logoutUser);
+
+    searchBtn.addEventListener("click", renderCommunities);
+    searchInput.addEventListener("input", renderCommunities);
+
+    leaveBtn.addEventListener("click", leaveCommunity);
     deleteBtn.addEventListener("click", deleteCommunity);
 
     backBtn.addEventListener("click", () => {
@@ -1147,17 +1148,12 @@
       renderCommunities();
     });
 
-    if (currentUser) {
-      topUser.innerHTML =
-        `اکانت روبلاکس: <b>${escapeHTML(currentUser)}</b>`;
+    updateUserBar();
 
+    if (currentUser) {
       showScreen(communitiesScreen);
       renderCommunities();
     }
-
-    searchInput.value = "";
-
-    getCommunities();
   </script>
 
 </body>
