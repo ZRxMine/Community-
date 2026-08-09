@@ -10,8 +10,8 @@
 
     :root {
       --bg: #070b16;
-      --card: rgba(18, 25, 45, .85);
-      --line: rgba(255,255,255,.12);
+      --card: rgba(18, 25, 45, .88);
+      --line: rgba(255, 255, 255, .12);
       --text: #f4f7ff;
       --muted: #9ba7c4;
       --blue: #6675ff;
@@ -45,6 +45,12 @@
     button {
       cursor: pointer;
       border: 0;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: .65;
+      transform: none !important;
     }
 
     .app {
@@ -159,6 +165,10 @@
       font-size: 14px;
     }
 
+    .input::placeholder {
+      color: #7885a4;
+    }
+
     .input:focus {
       border-color: var(--blue);
       box-shadow: 0 0 0 4px rgba(102,117,255,.13);
@@ -174,6 +184,10 @@
       margin-top: 9px;
       color: #ff8295;
       font-size: 13px;
+    }
+
+    .success-text {
+      color: #8cffbd;
     }
 
     .btn {
@@ -476,50 +490,54 @@
       </div>
     </header>
 
-    <!-- صفحه ورود -->
+    <!-- صفحه لاگین -->
     <section class="screen active" id="loginScreen">
       <div class="login-box">
         <div class="login-logo">👥</div>
 
-        <h1>Community Join</h1>
+        <h1>ورود با Roblox</h1>
 
         <p>
-          نام کاربری اکانت روبلاکس خود را وارد نمایید.
+          Username اکانت Roblox خود را وارد کنید.
+          سیستم بررسی می‌کند که این اکانت واقعاً وجود داشته باشد.
         </p>
 
         <input
           id="usernameInput"
           class="input"
           type="text"
-          placeholder="مثلاً: Builderman"
+          placeholder="مثلاً: Erfan0243"
           maxlength="24"
+          autocomplete="off"
         >
 
         <div class="error" id="loginError"></div>
 
         <button class="btn btn-primary" id="continueBtn">
-          ورود به بخش کامیونیتی
+          بررسی و ورود
         </button>
       </div>
     </section>
 
-    <!-- صفحه لیست کامیونیتی‌ها -->
+    <!-- صفحه کامیونیتی‌ها -->
     <section class="screen" id="communitiesScreen">
       <div class="page-title">
         <h1>کامیونیتی‌ها</h1>
+
         <p>
           کامیونیتی موردنظر خود را جست‌وجو کنید یا کامیونیتی جدید بسازید.
         </p>
       </div>
 
       <div class="search-area">
-        <!-- مقدار سرچ عمداً خالی است -->
+        <!-- این مقدار عمداً خالی است -->
         <input
           id="searchInput"
           class="input"
           type="search"
           value=""
           placeholder="جست‌وجوی کامیونیتی..."
+          autocomplete="off"
         >
 
         <button class="btn btn-primary" id="searchBtn">
@@ -531,6 +549,7 @@
 
         <div class="panel">
           <h2>لیست کامیونیتی‌ها</h2>
+
           <div class="community-list" id="communityList"></div>
         </div>
 
@@ -572,11 +591,13 @@
       </button>
 
       <div class="success-banner">
-        ✅ ورود انجام شد
+        ✅ ورود به کامیونیتی انجام شد
       </div>
 
       <div class="detail-box">
-        <div class="detail-avatar" id="detailAvatar">C</div>
+        <div class="detail-avatar" id="detailAvatar">
+          C
+        </div>
 
         <h1 id="detailName"></h1>
 
@@ -607,7 +628,7 @@
             Leave Community
           </button>
 
-          <!-- فقط برای سازنده نمایش داده می‌شود -->
+          <!-- فقط مالک کامیونیتی این دکمه را می‌بیند -->
           <button
             class="btn btn-red"
             id="deleteBtn"
@@ -628,45 +649,95 @@
   </main>
 
   <script>
-    const loginScreen = document.getElementById("loginScreen");
-    const communitiesScreen = document.getElementById("communitiesScreen");
-    const detailScreen = document.getElementById("detailScreen");
+    const loginScreen =
+      document.getElementById("loginScreen");
 
-    const usernameInput = document.getElementById("usernameInput");
-    const continueBtn = document.getElementById("continueBtn");
-    const loginError = document.getElementById("loginError");
-    const topUser = document.getElementById("topUser");
+    const communitiesScreen =
+      document.getElementById("communitiesScreen");
 
-    const searchInput = document.getElementById("searchInput");
-    const searchBtn = document.getElementById("searchBtn");
-    const communityList = document.getElementById("communityList");
+    const detailScreen =
+      document.getElementById("detailScreen");
 
-    const createForm = document.getElementById("createForm");
-    const newName = document.getElementById("newName");
-    const newDescription = document.getElementById("newDescription");
+    const usernameInput =
+      document.getElementById("usernameInput");
 
-    const detailAvatar = document.getElementById("detailAvatar");
-    const detailName = document.getElementById("detailName");
-    const detailDescription = document.getElementById("detailDescription");
-    const memberCount = document.getElementById("memberCount");
-    const detailRank = document.getElementById("detailRank");
-    const communityLevel = document.getElementById("communityLevel");
+    const continueBtn =
+      document.getElementById("continueBtn");
 
-    const leaveBtn = document.getElementById("leaveBtn");
-    const deleteBtn = document.getElementById("deleteBtn");
-    const backBtn = document.getElementById("backBtn");
-    const detailBackBtn = document.getElementById("detailBackBtn");
+    const loginError =
+      document.getElementById("loginError");
 
-    let currentUser = localStorage.getItem("community_username") || "";
+    const topUser =
+      document.getElementById("topUser");
+
+    const searchInput =
+      document.getElementById("searchInput");
+
+    const searchBtn =
+      document.getElementById("searchBtn");
+
+    const communityList =
+      document.getElementById("communityList");
+
+    const createForm =
+      document.getElementById("createForm");
+
+    const newName =
+      document.getElementById("newName");
+
+    const newDescription =
+      document.getElementById("newDescription");
+
+    const detailAvatar =
+      document.getElementById("detailAvatar");
+
+    const detailName =
+      document.getElementById("detailName");
+
+    const detailDescription =
+      document.getElementById("detailDescription");
+
+    const memberCount =
+      document.getElementById("memberCount");
+
+    const detailRank =
+      document.getElementById("detailRank");
+
+    const communityLevel =
+      document.getElementById("communityLevel");
+
+    const leaveBtn =
+      document.getElementById("leaveBtn");
+
+    const deleteBtn =
+      document.getElementById("deleteBtn");
+
+    const backBtn =
+      document.getElementById("backBtn");
+
+    const detailBackBtn =
+      document.getElementById("detailBackBtn");
+
+    let currentUser =
+      localStorage.getItem("community_username") || "";
+
+    let currentRobloxUserId =
+      localStorage.getItem("roblox_user_id") || "";
+
     let currentCommunityId = null;
 
+    /*
+      کامیونیتی پیش‌فرض
+      فقط همین کامیونیتی لول ۴۰ دارد.
+    */
     const defaultCommunity = {
       id: "python_community",
       name: "python_community",
       description: "کامیونیتی برنامه‌نویسی پایتون و یادگیری مهارت‌های جدید.",
       members: 128,
       level: 40,
-      owner: "CommunityAdmin"
+      owner: "CommunityAdmin",
+      ownerId: ""
     };
 
     function saveCommunities(communities) {
@@ -677,23 +748,37 @@
     }
 
     function getCommunities() {
-      const saved = localStorage.getItem("communities");
+      const saved =
+        localStorage.getItem("communities");
 
       if (!saved) {
         const initialCommunities = [defaultCommunity];
+
         saveCommunities(initialCommunities);
+
         return initialCommunities;
       }
 
-      let communities = JSON.parse(saved);
+      let communities;
+
+      try {
+        communities = JSON.parse(saved);
+      } catch {
+        communities = [defaultCommunity];
+        saveCommunities(communities);
+      }
 
       /*
-        فقط python_community لول ۴۰ دارد.
-        کامیونیتی‌های دیگر لول ۱ دارند.
+        تضمین لول‌ها:
+        python_community = 40
+        سایر کامیونیتی‌ها = 1
       */
       communities = communities.map(community => ({
         ...community,
-        level: community.id === "python_community" ? 40 : 1
+        level: community.id === "python_community"
+          ? 40
+          : 1,
+        ownerId: community.ownerId || ""
       }));
 
       saveCommunities(communities);
@@ -702,9 +787,11 @@
     }
 
     function showScreen(screen) {
-      document.querySelectorAll(".screen").forEach(item => {
-        item.classList.remove("active");
-      });
+      document
+        .querySelectorAll(".screen")
+        .forEach(item => {
+          item.classList.remove("active");
+        });
 
       screen.classList.add("active");
 
@@ -735,18 +822,62 @@
         .replaceAll("'", "&#039;");
     }
 
+    /*
+      بررسی واقعی Username با API رسمی Roblox
+    */
+    async function verifyRobloxUsername(username) {
+      const response = await fetch(
+        "https://users.roblox.com/v1/usernames/users",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            usernames: [username],
+            excludeBannedUsers: false
+          })
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("ROBLOX_API_ERROR");
+      }
+
+      const result = await response.json();
+
+      if (
+        !result.data ||
+        result.data.length === 0
+      ) {
+        return null;
+      }
+
+      return result.data[0];
+    }
+
     function renderCommunities() {
       const communities = getCommunities();
 
-      // مقدار اولیه سرچ خالی است و همه کامیونیتی‌ها نمایش داده می‌شوند
-      const query = searchInput.value.trim().toLowerCase();
+      /*
+        چون مقدار searchInput از اول خالی است،
+        در شروع همه کامیونیتی‌ها نشان داده می‌شوند.
+      */
+      const query =
+        searchInput.value.trim().toLowerCase();
 
-      const filteredCommunities = communities.filter(community => {
-        return (
-          community.name.toLowerCase().includes(query) ||
-          community.description.toLowerCase().includes(query)
-        );
-      });
+      const filteredCommunities =
+        communities.filter(community => {
+          return (
+            community.name
+              .toLowerCase()
+              .includes(query) ||
+
+            community.description
+              .toLowerCase()
+              .includes(query)
+          );
+        });
 
       communityList.innerHTML = "";
 
@@ -761,7 +892,8 @@
       }
 
       filteredCommunities.forEach(community => {
-        const card = document.createElement("div");
+        const card =
+          document.createElement("div");
 
         card.className = "community-card";
 
@@ -806,57 +938,85 @@
     function joinCommunity(id) {
       const communities = getCommunities();
 
-      const community = communities.find(
-        item => item.id === id
-      );
+      const community =
+        communities.find(item => item.id === id);
 
       if (!community) return;
 
-      const joinedKey = `joined_${id}_${currentUser}`;
-      const alreadyJoined = localStorage.getItem(joinedKey);
+      const joinedKey =
+        `joined_${id}_${currentRobloxUserId}`;
+
+      const alreadyJoined =
+        localStorage.getItem(joinedKey);
 
       if (!alreadyJoined) {
         community.members++;
 
         localStorage.setItem(joinedKey, "true");
+
         saveCommunities(communities);
       }
 
       openCommunity(id);
     }
 
+    function isCurrentUserOwner(community) {
+      /*
+        کامیونیتی‌های جدید با ownerId ذخیره می‌شوند.
+        برای سازگاری با نسخه قبلی، owner name هم بررسی می‌شود.
+      */
+      return (
+        (
+          community.ownerId &&
+          String(community.ownerId) ===
+          String(currentRobloxUserId)
+        ) ||
+        (
+          community.owner &&
+          community.owner === currentUser
+        )
+      );
+    }
+
     function openCommunity(id) {
       const communities = getCommunities();
 
-      const community = communities.find(
-        item => item.id === id
-      );
+      const community =
+        communities.find(item => item.id === id);
 
       if (!community) return;
 
       currentCommunityId = id;
 
-      detailAvatar.textContent = firstLetter(community.name);
-      detailName.textContent = community.name;
-      detailDescription.textContent = community.description;
-      memberCount.textContent = community.members;
-      communityLevel.textContent = community.level;
+      detailAvatar.textContent =
+        firstLetter(community.name);
 
-      const isOwner = community.owner === currentUser;
+      detailName.textContent =
+        community.name;
 
-      detailRank.textContent = isOwner ? "owner" : "member";
+      detailDescription.textContent =
+        community.description;
 
-      detailRank.className = isOwner
-        ? "rank-owner"
-        : "rank-member";
+      memberCount.textContent =
+        community.members;
+
+      communityLevel.textContent =
+        community.level;
+
+      const isOwner =
+        isCurrentUserOwner(community);
+
+      detailRank.textContent =
+        isOwner ? "owner" : "member";
+
+      detailRank.className =
+        isOwner ? "rank-owner" : "rank-member";
 
       /*
-        دکمه حذف فقط زمانی نمایش داده می‌شود
-        که کاربر سازنده کامیونیتی باشد.
+        فقط سازنده دکمه حذف را می‌بیند.
       */
-      deleteBtn.style.display = isOwner
-        ? "inline-block"
-        : "none";
+      deleteBtn.style.display =
+        isOwner ? "inline-block" : "none";
 
       showScreen(detailScreen);
     }
@@ -866,26 +1026,35 @@
 
       const communities = getCommunities();
 
-      const community = communities.find(
-        item => item.id === currentCommunityId
-      );
+      const community =
+        communities.find(
+          item => item.id === currentCommunityId
+        );
 
       if (!community) return;
 
-      if (community.owner === currentUser) {
-        alert("سازنده نمی‌تواند از کامیونیتی خودش خارج شود.");
+      if (isCurrentUserOwner(community)) {
+        alert(
+          "سازنده نمی‌تواند از کامیونیتی خودش خارج شود."
+        );
+
         return;
       }
 
       const joinedKey =
-        `joined_${currentCommunityId}_${currentUser}`;
+        `joined_${currentCommunityId}_${currentRobloxUserId}`;
 
-      const alreadyJoined = localStorage.getItem(joinedKey);
+      const alreadyJoined =
+        localStorage.getItem(joinedKey);
 
-      if (alreadyJoined && community.members > 0) {
+      if (
+        alreadyJoined &&
+        community.members > 0
+      ) {
         community.members--;
 
         localStorage.removeItem(joinedKey);
+
         saveCommunities(communities);
       }
 
@@ -900,15 +1069,18 @@
 
       const communities = getCommunities();
 
-      const community = communities.find(
-        item => item.id === currentCommunityId
-      );
+      const community =
+        communities.find(
+          item => item.id === currentCommunityId
+        );
 
       if (!community) return;
 
-      // بررسی امنیتی: فقط owner اجازه حذف دارد
-      if (community.owner !== currentUser) {
-        alert("فقط سازنده‌ی کامیونیتی می‌تواند آن را حذف کند.");
+      if (!isCurrentUserOwner(community)) {
+        alert(
+          "فقط سازنده کامیونیتی می‌تواند آن را حذف کند."
+        );
+
         return;
       }
 
@@ -918,21 +1090,27 @@
 
       if (!confirmed) return;
 
-      const updatedCommunities = communities.filter(
-        item => item.id !== currentCommunityId
-      );
+      const updatedCommunities =
+        communities.filter(
+          item => item.id !== currentCommunityId
+        );
 
       saveCommunities(updatedCommunities);
 
-      /*
-        حذف اطلاعات عضویت ذخیره‌شده برای این کامیونیتی
-      */
-      const joinedPrefix = `joined_${currentCommunityId}_`;
+      const joinedPrefix =
+        `joined_${currentCommunityId}_`;
 
-      for (let i = localStorage.length - 1; i >= 0; i--) {
+      for (
+        let i = localStorage.length - 1;
+        i >= 0;
+        i--
+      ) {
         const key = localStorage.key(i);
 
-        if (key && key.startsWith(joinedPrefix)) {
+        if (
+          key &&
+          key.startsWith(joinedPrefix)
+        ) {
           localStorage.removeItem(key);
         }
       }
@@ -945,120 +1123,231 @@
       renderCommunities();
     }
 
-    continueBtn.addEventListener("click", () => {
-      const username = usernameInput.value.trim();
+    /*
+      لاگین با بررسی Username در Roblox
+    */
+    async function loginWithRoblox() {
+      const username =
+        usernameInput.value.trim();
 
       if (username.length < 3) {
         loginError.textContent =
-          "لطفاً یک User Name معتبر وارد نمایید.";
+          "لطفاً یک Username معتبر وارد کنید.";
 
         return;
       }
 
-      currentUser = username;
+      loginError.className = "error";
+      loginError.textContent =
+        "در حال بررسی اکانت Roblox...";
 
-      localStorage.setItem(
-        "community_username",
-        username
-      );
+      continueBtn.disabled = true;
+      continueBtn.textContent =
+        "در حال بررسی...";
 
-      topUser.innerHTML =
-        `اکانت روبلاکس: <b>${escapeHTML(username)}</b>`;
+      try {
+        const robloxUser =
+          await verifyRobloxUsername(username);
 
-      loginError.textContent = "";
+        if (!robloxUser) {
+          loginError.textContent =
+            "این اکانت Roblox پیدا نشد. Username را دقیق وارد کنید.";
 
-      showScreen(communitiesScreen);
-      renderCommunities();
-    });
+          return;
+        }
 
-    usernameInput.addEventListener("keydown", event => {
-      if (event.key === "Enter") {
-        continueBtn.click();
+        /*
+          نام رسمی Roblox ذخیره می‌شود.
+          مثلاً erfan0243 اگر کاربر Erfan0243 را وارد کرده باشد،
+          مقدار رسمی خود Roblox استفاده می‌شود.
+        */
+        currentUser =
+          robloxUser.name;
+
+        currentRobloxUserId =
+          String(robloxUser.id);
+
+        localStorage.setItem(
+          "community_username",
+          currentUser
+        );
+
+        localStorage.setItem(
+          "roblox_user_id",
+          currentRobloxUserId
+        );
+
+        topUser.innerHTML =
+          `اکانت روبلاکس: <b>${escapeHTML(currentUser)}</b>`;
+
+        loginError.textContent = "";
+
+        /*
+          سرچ همیشه هنگام ورود خالی می‌شود.
+        */
+        searchInput.value = "";
+
+        showScreen(communitiesScreen);
+        renderCommunities();
+
+      } catch (error) {
+        console.error(error);
+
+        loginError.textContent =
+          "اتصال به Roblox برقرار نشد. اینترنت یا فیلترشکن را بررسی کنید.";
+
+      } finally {
+        continueBtn.disabled = false;
+        continueBtn.textContent =
+          "بررسی و ورود";
       }
-    });
-
-    searchBtn.addEventListener("click", renderCommunities);
-
-    searchInput.addEventListener("input", renderCommunities);
-
-    createForm.addEventListener("submit", event => {
-      event.preventDefault();
-
-      const name = newName.value.trim();
-      const description = newDescription.value.trim();
-
-      if (name.length < 3 || description.length < 3) {
-        alert("نام و توضیحات را کامل وارد کنید.");
-        return;
-      }
-
-      const communities = getCommunities();
-      const id = makeId(name);
-
-      const exists = communities.some(
-        community => community.id === id
-      );
-
-      if (exists) {
-        alert("این کامیونیتی قبلاً ساخته شده است.");
-        return;
-      }
-
-      /*
-        کامیونیتی جدید:
-        - سازنده owner است
-        - تعداد اولیه ممبر ۱ است
-        - لول اولیه ۱ است
-      */
-      const newCommunity = {
-        id: id,
-        name: name,
-        description: description,
-        members: 1,
-        level: 1,
-        owner: currentUser
-      };
-
-      communities.push(newCommunity);
-      saveCommunities(communities);
-
-      localStorage.setItem(
-        `joined_${id}_${currentUser}`,
-        "true"
-      );
-
-      createForm.reset();
-
-      // سازنده مستقیم وارد کامیونیتی خودش می‌شود
-      openCommunity(id);
-    });
-
-    leaveBtn.addEventListener("click", leaveCommunity);
-
-    deleteBtn.addEventListener("click", deleteCommunity);
-
-    backBtn.addEventListener("click", () => {
-      showScreen(communitiesScreen);
-      renderCommunities();
-    });
-
-    detailBackBtn.addEventListener("click", () => {
-      showScreen(communitiesScreen);
-      renderCommunities();
-    });
-
-    if (currentUser) {
-      topUser.innerHTML =
-        `اکانت روبلاکس: <b>${escapeHTML(currentUser)}</b>`;
     }
 
-    /*
-      اینجا سرچ عمداً خالی می‌ماند و همه کامیونیتی‌ها
-      هنگام ورود نمایش داده می‌شوند.
-    */
-    searchInput.value = "";
+    continueBtn.addEventListener(
+      "click",
+      loginWithRoblox
+    );
 
-    getCommunities();
+    usernameInput.addEventListener(
+      "keydown",
+      event => {
+        if (event.key === "Enter") {
+          loginWithRoblox();
+        }
+      }
+    );
+
+    searchBtn.addEventListener(
+      "click",
+      renderCommunities
+    );
+
+    searchInput.addEventListener(
+      "input",
+      renderCommunities
+    );
+
+    createForm.addEventListener(
+      "submit",
+      event => {
+        event.preventDefault();
+
+        const name =
+          newName.value.trim();
+
+        const description =
+          newDescription.value.trim();
+
+        if (
+          name.length < 3 ||
+          description.length < 3
+        ) {
+          alert(
+            "نام و توضیحات را کامل وارد کنید."
+          );
+
+          return;
+        }
+
+        const communities =
+          getCommunities();
+
+        const id =
+          makeId(name);
+
+        const exists =
+          communities.some(
+            community => community.id === id
+          );
+
+        if (exists) {
+          alert(
+            "این کامیونیتی قبلاً ساخته شده است."
+          );
+
+          return;
+        }
+
+        /*
+          کامیونیتی جدید:
+          owner = سازنده
+          level = 1
+          members = 1
+        */
+        const newCommunity = {
+          id: id,
+          name: name,
+          description: description,
+          members: 1,
+          level: 1,
+          owner: currentUser,
+          ownerId: currentRobloxUserId
+        };
+
+        communities.push(newCommunity);
+
+        saveCommunities(communities);
+
+        localStorage.setItem(
+          `joined_${id}_${currentRobloxUserId}`,
+          "true"
+        );
+
+        createForm.reset();
+
+        openCommunity(id);
+      }
+    );
+
+    leaveBtn.addEventListener(
+      "click",
+      leaveCommunity
+    );
+
+    deleteBtn.addEventListener(
+      "click",
+      deleteCommunity
+    );
+
+    backBtn.addEventListener(
+      "click",
+      () => {
+        showScreen(communitiesScreen);
+        renderCommunities();
+      }
+    );
+
+    detailBackBtn.addEventListener(
+      "click",
+      () => {
+        showScreen(communitiesScreen);
+        renderCommunities();
+      }
+    );
+
+    /*
+      اگر قبلاً با یک اکانت معتبر وارد شده باشد،
+      نشست محلی حفظ می‌شود.
+    */
+    if (
+      currentUser &&
+      currentRobloxUserId
+    ) {
+      topUser.innerHTML =
+        `اکانت روبلاکس: <b>${escapeHTML(currentUser)}</b>`;
+
+      searchInput.value = "";
+
+      showScreen(communitiesScreen);
+      renderCommunities();
+    } else {
+      /*
+        در اولین ورود، سرچ خالی می‌ماند.
+      */
+      searchInput.value = "";
+
+      getCommunities();
+    }
   </script>
 
 </body>
