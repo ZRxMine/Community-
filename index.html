@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Community Join</title>
+  <title>Community Hub</title>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
 
     :root {
       --bg: #070b16;
-      --card: rgba(18, 25, 45, .82);
+      --card: rgba(18, 25, 45, .85);
       --line: rgba(255,255,255,.12);
       --text: #f4f7ff;
       --muted: #9ba7c4;
@@ -64,7 +64,6 @@
       border-radius: 22px;
       background: rgba(12, 17, 34, .75);
       backdrop-filter: blur(20px);
-      box-shadow: 0 25px 80px rgba(0,0,0,.42);
     }
 
     .brand {
@@ -123,7 +122,6 @@
       border: 1px solid var(--line);
       border-radius: 30px;
       background: var(--card);
-      backdrop-filter: blur(20px);
       box-shadow: 0 25px 80px rgba(0,0,0,.42);
     }
 
@@ -250,7 +248,6 @@
       border: 1px solid var(--line);
       border-radius: 24px;
       background: var(--card);
-      backdrop-filter: blur(18px);
       box-shadow: 0 25px 80px rgba(0,0,0,.42);
     }
 
@@ -506,7 +503,7 @@
       </div>
     </section>
 
-    <!-- صفحه کامیونیتی‌ها -->
+    <!-- صفحه لیست کامیونیتی‌ها -->
     <section class="screen" id="communitiesScreen">
       <div class="page-title">
         <h1>کامیونیتی‌ها</h1>
@@ -516,11 +513,12 @@
       </div>
 
       <div class="search-area">
+        <!-- مقدار سرچ عمداً خالی است -->
         <input
           id="searchInput"
           class="input"
           type="search"
-          value="python_community"
+          value=""
           placeholder="جست‌وجوی کامیونیتی..."
         >
 
@@ -566,7 +564,7 @@
       </div>
     </section>
 
-    <!-- صفحه داخل کامیونیتی -->
+    <!-- صفحه جزئیات کامیونیتی -->
     <section class="screen" id="detailScreen">
 
       <button class="btn btn-dark back-btn" id="backBtn">
@@ -578,9 +576,9 @@
       </div>
 
       <div class="detail-box">
-        <div class="detail-avatar" id="detailAvatar">P</div>
+        <div class="detail-avatar" id="detailAvatar">C</div>
 
-        <h1 id="detailName">python_community</h1>
+        <h1 id="detailName"></h1>
 
         <p class="detail-description" id="detailDescription"></p>
 
@@ -598,19 +596,30 @@
           </div>
 
           <div class="stat">
-            <strong id="communityLevel">40</strong>
+            <strong id="communityLevel">1</strong>
             <span>لول کامیونیتی</span>
           </div>
         </div>
 
         <div class="detail-actions">
+
           <button class="btn btn-red" id="leaveBtn">
             Leave Community
+          </button>
+
+          <!-- فقط برای سازنده نمایش داده می‌شود -->
+          <button
+            class="btn btn-red"
+            id="deleteBtn"
+            style="display: none;"
+          >
+            حذف کامیونیتی
           </button>
 
           <button class="btn btn-dark" id="detailBackBtn">
             مشاهده کامیونیتی‌ها
           </button>
+
         </div>
       </div>
 
@@ -644,6 +653,7 @@
     const communityLevel = document.getElementById("communityLevel");
 
     const leaveBtn = document.getElementById("leaveBtn");
+    const deleteBtn = document.getElementById("deleteBtn");
     const backBtn = document.getElementById("backBtn");
     const detailBackBtn = document.getElementById("detailBackBtn");
 
@@ -659,45 +669,36 @@
       owner: "CommunityAdmin"
     };
 
-    function getCommunities() {
-      let saved = localStorage.getItem("communities");
-
-      if (!saved) {
-        const initial = [defaultCommunity];
-        localStorage.setItem("communities", JSON.stringify(initial));
-        return initial;
-      }
-
-      let communities = JSON.parse(saved);
-
-      /*
-        اصلاح اطلاعات قدیمی:
-        فقط python_community لول ۴۰ دارد.
-        بقیه کامیونیتی‌ها لول ۱ دارند.
-      */
-      communities = communities.map(community => {
-        if (community.id === "python_community") {
-          return {
-            ...community,
-            level: 40
-          };
-        }
-
-        return {
-          ...community,
-          level: 1
-        };
-      });
-
-      saveCommunities(communities);
-      return communities;
-    }
-
     function saveCommunities(communities) {
       localStorage.setItem(
         "communities",
         JSON.stringify(communities)
       );
+    }
+
+    function getCommunities() {
+      const saved = localStorage.getItem("communities");
+
+      if (!saved) {
+        const initialCommunities = [defaultCommunity];
+        saveCommunities(initialCommunities);
+        return initialCommunities;
+      }
+
+      let communities = JSON.parse(saved);
+
+      /*
+        فقط python_community لول ۴۰ دارد.
+        کامیونیتی‌های دیگر لول ۱ دارند.
+      */
+      communities = communities.map(community => ({
+        ...community,
+        level: community.id === "python_community" ? 40 : 1
+      }));
+
+      saveCommunities(communities);
+
+      return communities;
     }
 
     function showScreen(screen) {
@@ -706,10 +707,15 @@
       });
 
       screen.classList.add("active");
+
       window.scrollTo({
         top: 0,
         behavior: "smooth"
       });
+    }
+
+    function firstLetter(name) {
+      return name.trim().charAt(0).toUpperCase() || "C";
     }
 
     function makeId(name) {
@@ -718,10 +724,6 @@
         .trim()
         .replace(/\s+/g, "_")
         .replace(/[^\w\u0600-\u06FF-]/g, "");
-    }
-
-    function firstLetter(name) {
-      return name.trim().charAt(0).toUpperCase() || "C";
     }
 
     function escapeHTML(text) {
@@ -735,32 +737,38 @@
 
     function renderCommunities() {
       const communities = getCommunities();
+
+      // مقدار اولیه سرچ خالی است و همه کامیونیتی‌ها نمایش داده می‌شوند
       const query = searchInput.value.trim().toLowerCase();
 
-      const filtered = communities.filter(community =>
-        community.name.toLowerCase().includes(query) ||
-        community.description.toLowerCase().includes(query)
-      );
+      const filteredCommunities = communities.filter(community => {
+        return (
+          community.name.toLowerCase().includes(query) ||
+          community.description.toLowerCase().includes(query)
+        );
+      });
 
       communityList.innerHTML = "";
 
-      if (filtered.length === 0) {
+      if (filteredCommunities.length === 0) {
         communityList.innerHTML = `
           <div class="empty">
             کامیونیتی‌ای با این نام پیدا نشد.
           </div>
         `;
+
         return;
       }
 
-      filtered.forEach(community => {
+      filteredCommunities.forEach(community => {
         const card = document.createElement("div");
+
         card.className = "community-card";
 
         card.innerHTML = `
           <div class="community-info">
             <div class="community-avatar">
-              ${firstLetter(community.name)}
+              ${escapeHTML(firstLetter(community.name))}
             </div>
 
             <div>
@@ -797,7 +805,10 @@
 
     function joinCommunity(id) {
       const communities = getCommunities();
-      const community = communities.find(item => item.id === id);
+
+      const community = communities.find(
+        item => item.id === id
+      );
 
       if (!community) return;
 
@@ -806,6 +817,7 @@
 
       if (!alreadyJoined) {
         community.members++;
+
         localStorage.setItem(joinedKey, "true");
         saveCommunities(communities);
       }
@@ -815,7 +827,10 @@
 
     function openCommunity(id) {
       const communities = getCommunities();
-      const community = communities.find(item => item.id === id);
+
+      const community = communities.find(
+        item => item.id === id
+      );
 
       if (!community) return;
 
@@ -830,9 +845,18 @@
       const isOwner = community.owner === currentUser;
 
       detailRank.textContent = isOwner ? "owner" : "member";
+
       detailRank.className = isOwner
         ? "rank-owner"
         : "rank-member";
+
+      /*
+        دکمه حذف فقط زمانی نمایش داده می‌شود
+        که کاربر سازنده کامیونیتی باشد.
+      */
+      deleteBtn.style.display = isOwner
+        ? "inline-block"
+        : "none";
 
       showScreen(detailScreen);
     }
@@ -841,6 +865,7 @@
       if (!currentCommunityId) return;
 
       const communities = getCommunities();
+
       const community = communities.find(
         item => item.id === currentCommunityId
       );
@@ -859,11 +884,63 @@
 
       if (alreadyJoined && community.members > 0) {
         community.members--;
+
         localStorage.removeItem(joinedKey);
         saveCommunities(communities);
       }
 
       currentCommunityId = null;
+
+      showScreen(communitiesScreen);
+      renderCommunities();
+    }
+
+    function deleteCommunity() {
+      if (!currentCommunityId) return;
+
+      const communities = getCommunities();
+
+      const community = communities.find(
+        item => item.id === currentCommunityId
+      );
+
+      if (!community) return;
+
+      // بررسی امنیتی: فقط owner اجازه حذف دارد
+      if (community.owner !== currentUser) {
+        alert("فقط سازنده‌ی کامیونیتی می‌تواند آن را حذف کند.");
+        return;
+      }
+
+      const confirmed = confirm(
+        `آیا از حذف کامیونیتی «${community.name}» مطمئن هستید؟`
+      );
+
+      if (!confirmed) return;
+
+      const updatedCommunities = communities.filter(
+        item => item.id !== currentCommunityId
+      );
+
+      saveCommunities(updatedCommunities);
+
+      /*
+        حذف اطلاعات عضویت ذخیره‌شده برای این کامیونیتی
+      */
+      const joinedPrefix = `joined_${currentCommunityId}_`;
+
+      for (let i = localStorage.length - 1; i >= 0; i--) {
+        const key = localStorage.key(i);
+
+        if (key && key.startsWith(joinedPrefix)) {
+          localStorage.removeItem(key);
+        }
+      }
+
+      currentCommunityId = null;
+
+      alert("کامیونیتی با موفقیت حذف شد.");
+
       showScreen(communitiesScreen);
       renderCommunities();
     }
@@ -874,16 +951,22 @@
       if (username.length < 3) {
         loginError.textContent =
           "لطفاً یک User Name معتبر وارد نمایید.";
+
         return;
       }
 
       currentUser = username;
-      localStorage.setItem("community_username", username);
+
+      localStorage.setItem(
+        "community_username",
+        username
+      );
 
       topUser.innerHTML =
         `اکانت روبلاکس: <b>${escapeHTML(username)}</b>`;
 
       loginError.textContent = "";
+
       showScreen(communitiesScreen);
       renderCommunities();
     });
@@ -895,6 +978,7 @@
     });
 
     searchBtn.addEventListener("click", renderCommunities);
+
     searchInput.addEventListener("input", renderCommunities);
 
     createForm.addEventListener("submit", event => {
@@ -921,7 +1005,10 @@
       }
 
       /*
-        کامیونیتی جدید از ابتدا لول ۱ دارد.
+        کامیونیتی جدید:
+        - سازنده owner است
+        - تعداد اولیه ممبر ۱ است
+        - لول اولیه ۱ است
       */
       const newCommunity = {
         id: id,
@@ -942,11 +1029,13 @@
 
       createForm.reset();
 
-      // ورود مستقیم سازنده به کامیونیتی خودش
+      // سازنده مستقیم وارد کامیونیتی خودش می‌شود
       openCommunity(id);
     });
 
     leaveBtn.addEventListener("click", leaveCommunity);
+
+    deleteBtn.addEventListener("click", deleteCommunity);
 
     backBtn.addEventListener("click", () => {
       showScreen(communitiesScreen);
@@ -962,6 +1051,12 @@
       topUser.innerHTML =
         `اکانت روبلاکس: <b>${escapeHTML(currentUser)}</b>`;
     }
+
+    /*
+      اینجا سرچ عمداً خالی می‌ماند و همه کامیونیتی‌ها
+      هنگام ورود نمایش داده می‌شوند.
+    */
+    searchInput.value = "";
 
     getCommunities();
   </script>
