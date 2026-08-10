@@ -10,7 +10,7 @@
 
     :root {
       --bg: #070b16;
-      --card: rgba(18, 25, 45, .86);
+      --card: rgba(18, 25, 45, .88);
       --line: rgba(255,255,255,.12);
       --text: #f4f7ff;
       --muted: #9ba7c4;
@@ -28,7 +28,6 @@
     body {
       margin: 0;
       min-height: 100vh;
-      overflow-x: hidden;
       color: var(--text);
       font-family: "Vazirmatn", Tahoma, sans-serif;
       background:
@@ -42,17 +41,17 @@
       content: "";
       position: fixed;
       z-index: -1;
-      width: 360px;
-      height: 360px;
+      width: 350px;
+      height: 350px;
       border-radius: 50%;
-      filter: blur(80px);
+      filter: blur(85px);
       opacity: .25;
       pointer-events: none;
-      animation: floating 8s ease-in-out infinite alternate;
+      animation: float 8s ease-in-out infinite alternate;
     }
 
     body::before {
-      top: 18%;
+      top: 15%;
       left: -120px;
       background: #5365ff;
     }
@@ -64,7 +63,7 @@
       animation-delay: 2s;
     }
 
-    @keyframes floating {
+    @keyframes float {
       from {
         transform: translate(0, 0) scale(1);
       }
@@ -218,8 +217,8 @@
     }
 
     textarea.input {
-      resize: vertical;
       min-height: 115px;
+      resize: vertical;
     }
 
     .error {
@@ -483,6 +482,209 @@
       flex-wrap: wrap;
     }
 
+    /* پنجره آپدیت */
+
+    .update-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(3, 6, 18, .78);
+      backdrop-filter: blur(16px);
+      animation: overlayShow .35s ease;
+    }
+
+    .update-overlay.hidden {
+      display: none;
+    }
+
+    @keyframes overlayShow {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .update-modal {
+      position: relative;
+      width: min(570px, 100%);
+      overflow: hidden;
+      padding: 42px 30px 30px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 32px;
+      background:
+        radial-gradient(circle at 50% -20%, rgba(115,125,255,.4), transparent 45%),
+        linear-gradient(145deg, rgba(23,31,65,.98), rgba(12,16,35,.98));
+      box-shadow:
+        0 0 0 1px rgba(102,117,255,.12),
+        0 25px 100px rgba(0,0,0,.65),
+        0 0 60px rgba(102,117,255,.25);
+      animation: modalShow .45s cubic-bezier(.2,.8,.2,1);
+    }
+
+    @keyframes modalShow {
+      from {
+        opacity: 0;
+        transform: scale(.82) translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .update-modal::before {
+      content: "";
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      width: 230px;
+      height: 230px;
+      border-radius: 50%;
+      background: rgba(102,117,255,.3);
+      filter: blur(45px);
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    .update-close {
+      position: absolute;
+      top: 15px;
+      left: 17px;
+      width: 34px;
+      height: 34px;
+      color: #aeb8d5;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 50%;
+      background: rgba(255,255,255,.07);
+      font-size: 18px;
+      transition: .2s;
+    }
+
+    .update-close:hover {
+      color: white;
+      background: rgba(255,88,116,.25);
+      transform: rotate(90deg);
+    }
+
+    .update-icon {
+      position: relative;
+      width: 88px;
+      height: 88px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 21px;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 28px;
+      background: linear-gradient(135deg, #6475ff, #a855f7);
+      box-shadow:
+        0 0 35px rgba(102,117,255,.5),
+        inset 0 1px 0 rgba(255,255,255,.3);
+      font-size: 42px;
+      animation: iconFloat 2.5s ease-in-out infinite;
+    }
+
+    @keyframes iconFloat {
+      0%, 100% {
+        transform: translateY(0) rotate(-3deg);
+      }
+
+      50% {
+        transform: translateY(-8px) rotate(3deg);
+      }
+    }
+
+    .update-modal h2 {
+      position: relative;
+      margin: 0 0 10px;
+      font-size: 27px;
+      font-weight: 900;
+    }
+
+    .update-modal p {
+      position: relative;
+      margin: 0 auto 25px;
+      color: #aeb8d5;
+      line-height: 2;
+      font-size: 14px;
+    }
+
+    .countdown-title {
+      position: relative;
+      margin-bottom: 11px;
+      color: #dce2ff;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .countdown {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      direction: ltr;
+      margin-bottom: 25px;
+    }
+
+    .time-box {
+      padding: 15px 8px 12px;
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 18px;
+      background: rgba(255,255,255,.07);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    }
+
+    .time-box strong {
+      display: block;
+      color: white;
+      font-size: 29px;
+      font-weight: 900;
+      line-height: 1.1;
+      text-shadow: 0 0 18px rgba(133,145,255,.8);
+    }
+
+    .time-box span {
+      display: block;
+      margin-top: 7px;
+      color: #9ba7c4;
+      font-size: 11px;
+    }
+
+    .update-action {
+      position: relative;
+      width: 100%;
+      padding: 16px;
+      color: white;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #6675ff, #a855f7);
+      box-shadow: 0 12px 30px rgba(102,117,255,.3);
+      font-size: 15px;
+      font-weight: 900;
+      transition: .2s;
+    }
+
+    .update-action:hover {
+      transform: translateY(-3px);
+      filter: brightness(1.12);
+      box-shadow: 0 16px 38px rgba(102,117,255,.45);
+    }
+
+    .update-note {
+      position: relative;
+      display: block;
+      margin-top: 14px;
+      color: #7582a3;
+      font-size: 11px;
+    }
+
     @media (max-width: 800px) {
       .layout {
         grid-template-columns: 1fr;
@@ -512,8 +714,13 @@
       }
 
       .login-box,
-      .detail-box {
+      .detail-box,
+      .update-modal {
         padding: 28px 18px;
+      }
+
+      .update-modal {
+        padding-top: 38px;
       }
     }
   </style>
@@ -544,22 +751,81 @@
       </div>
     </header>
 
+    <!-- پنجره نمایش آپدیت -->
+
+    <div class="update-overlay" id="updateOverlay">
+
+      <div class="update-modal">
+
+        <button class="update-close" id="updateCloseBtn">
+          ×
+        </button>
+
+        <div class="update-icon">
+          🚀
+        </div>
+
+        <h2>آپدیت بعدی در راهه!</h2>
+
+        <p>
+          ما داریم Community Hub را بهتر، سریع‌تر و خفن‌تر می‌کنیم.
+          تا انتشار آپدیت بعدی زمان باقی مانده:
+        </p>
+
+        <div class="countdown-title">
+          زمان باقی‌مانده
+        </div>
+
+        <div class="countdown">
+
+          <div class="time-box">
+            <strong id="countdownHours">15</strong>
+            <span>ساعت</span>
+          </div>
+
+          <div class="time-box">
+            <strong id="countdownMinutes">00</strong>
+            <span>دقیقه</span>
+          </div>
+
+          <div class="time-box">
+            <strong id="countdownSeconds">00</strong>
+            <span>ثانیه</span>
+          </div>
+
+        </div>
+
+        <button class="update-action" id="startWorkBtn">
+          باشه، بزن بریم! ✨
+        </button>
+
+        <span class="update-note">
+          این پنجره را ببند و به کارت ادامه بده.
+        </span>
+
+      </div>
+
+    </div>
+
     <!-- صفحه ورود -->
+
     <section class="screen active" id="loginScreen">
+
       <div class="login-box">
+
         <div class="login-logo">👥</div>
 
         <h1>Community Join</h1>
 
         <p>
-        اگر username اکانت اصلی روبلاکس خود و پسورد اصلی  اکانت روبلاکستان را درست وارد نکنید و اشتباه بزنید ممکن است اگر کامینوتی بسازید یا کامینوتی عضو شید در روبلاکس اتصال نمیشود  
+          برای ورود یا ساخت حساب، نام کاربری و رمز عبور خود را وارد کنید.
         </p>
 
         <input
           id="usernameInput"
           class="input"
           type="text"
-          placeholder="‌username روبلاکس خود را وارد کنید"
+          placeholder="نام کاربری، مثلاً Builderman"
           maxlength="24"
           autocomplete="username"
         >
@@ -570,7 +836,7 @@
           id="passwordInput"
           class="input"
           type="password"
-          placeholder="رمز عبور‌ اکانت روبلاکس خود را وارد کنید"
+          placeholder="رمز عبور حداقل ۸ کاراکتر"
           minlength="8"
           autocomplete="current-password"
         >
@@ -578,21 +844,27 @@
         <div class="error" id="loginError"></div>
 
         <button class="btn btn-primary" id="continueBtn">
-         ورود
+          ورود / ساخت حساب
         </button>
+
       </div>
+
     </section>
 
     <!-- صفحه کامیونیتی‌ها -->
+
     <section class="screen" id="communitiesScreen">
+
       <div class="page-title">
         <h1>کامیونیتی‌ها</h1>
+
         <p>
           کامیونیتی موردنظر خود را جست‌وجو کنید یا کامیونیتی جدید بسازید.
         </p>
       </div>
 
       <div class="search-area">
+
         <input
           id="searchInput"
           class="input"
@@ -603,6 +875,7 @@
         <button class="btn btn-primary" id="searchBtn">
           جست‌وجو
         </button>
+
       </div>
 
       <div class="layout">
@@ -613,9 +886,11 @@
         </div>
 
         <aside class="panel">
+
           <h2>ساختن Community</h2>
 
           <form class="create-form" id="createForm">
+
             <input
               id="newName"
               class="input"
@@ -636,13 +911,17 @@
             <button class="btn btn-green" type="submit">
               ساخت کامیونیتی
             </button>
+
           </form>
+
         </aside>
 
       </div>
+
     </section>
 
-    <!-- صفحه جزئیات -->
+    <!-- صفحه جزئیات کامیونیتی -->
+
     <section class="screen" id="detailScreen">
 
       <button class="btn btn-dark back-btn" id="backBtn">
@@ -654,13 +933,17 @@
       </div>
 
       <div class="detail-box">
-        <div class="detail-avatar" id="detailAvatar">C</div>
+
+        <div class="detail-avatar" id="detailAvatar">
+          C
+        </div>
 
         <h1 id="detailName"></h1>
 
         <p class="detail-description" id="detailDescription"></p>
 
         <div class="stats">
+
           <div class="stat">
             <strong id="memberCount">0</strong>
             <span>تعداد ممبر</span>
@@ -677,9 +960,11 @@
             <strong id="communityLevel">1</strong>
             <span>لول کامیونیتی</span>
           </div>
+
         </div>
 
         <div class="detail-actions">
+
           <button class="btn btn-red" id="leaveBtn">
             Leave Community
           </button>
@@ -695,7 +980,9 @@
           <button class="btn btn-dark" id="detailBackBtn">
             مشاهده کامیونیتی‌ها
           </button>
+
         </div>
+
       </div>
 
     </section>
@@ -703,39 +990,84 @@
   </main>
 
   <script>
-    const loginScreen = document.getElementById("loginScreen");
-    const communitiesScreen = document.getElementById("communitiesScreen");
-    const detailScreen = document.getElementById("detailScreen");
+    const loginScreen =
+      document.getElementById("loginScreen");
 
-    const usernameInput = document.getElementById("usernameInput");
-    const passwordInput = document.getElementById("passwordInput");
-    const continueBtn = document.getElementById("continueBtn");
-    const loginError = document.getElementById("loginError");
+    const communitiesScreen =
+      document.getElementById("communitiesScreen");
 
-    const topUser = document.getElementById("topUser");
-    const logoutBtn = document.getElementById("logoutBtn");
+    const detailScreen =
+      document.getElementById("detailScreen");
 
-    const searchInput = document.getElementById("searchInput");
-    const searchBtn = document.getElementById("searchBtn");
-    const communityList = document.getElementById("communityList");
+    const usernameInput =
+      document.getElementById("usernameInput");
 
-    const createForm = document.getElementById("createForm");
-    const newName = document.getElementById("newName");
-    const newDescription = document.getElementById("newDescription");
+    const passwordInput =
+      document.getElementById("passwordInput");
 
-    const detailAvatar = document.getElementById("detailAvatar");
-    const detailName = document.getElementById("detailName");
-    const detailDescription = document.getElementById("detailDescription");
-    const memberCount = document.getElementById("memberCount");
-    const detailRank = document.getElementById("detailRank");
-    const communityLevel = document.getElementById("communityLevel");
+    const continueBtn =
+      document.getElementById("continueBtn");
 
-    const leaveBtn = document.getElementById("leaveBtn");
-    const deleteBtn = document.getElementById("deleteBtn");
-    const backBtn = document.getElementById("backBtn");
-    const detailBackBtn = document.getElementById("detailBackBtn");
+    const loginError =
+      document.getElementById("loginError");
 
-    let currentUser = localStorage.getItem("community_username") || "";
+    const topUser =
+      document.getElementById("topUser");
+
+    const logoutBtn =
+      document.getElementById("logoutBtn");
+
+    const searchInput =
+      document.getElementById("searchInput");
+
+    const searchBtn =
+      document.getElementById("searchBtn");
+
+    const communityList =
+      document.getElementById("communityList");
+
+    const createForm =
+      document.getElementById("createForm");
+
+    const newName =
+      document.getElementById("newName");
+
+    const newDescription =
+      document.getElementById("newDescription");
+
+    const detailAvatar =
+      document.getElementById("detailAvatar");
+
+    const detailName =
+      document.getElementById("detailName");
+
+    const detailDescription =
+      document.getElementById("detailDescription");
+
+    const memberCount =
+      document.getElementById("memberCount");
+
+    const detailRank =
+      document.getElementById("detailRank");
+
+    const communityLevel =
+      document.getElementById("communityLevel");
+
+    const leaveBtn =
+      document.getElementById("leaveBtn");
+
+    const deleteBtn =
+      document.getElementById("deleteBtn");
+
+    const backBtn =
+      document.getElementById("backBtn");
+
+    const detailBackBtn =
+      document.getElementById("detailBackBtn");
+
+    let currentUser =
+      localStorage.getItem("community_username") || "";
+
     let currentCommunityId = null;
 
     const defaultCommunity = {
@@ -755,11 +1087,14 @@
     }
 
     function getCommunities() {
-      const saved = localStorage.getItem("communities");
+      const saved =
+        localStorage.getItem("communities");
 
       if (!saved) {
         const communities = [defaultCommunity];
+
         saveCommunities(communities);
+
         return communities;
       }
 
@@ -814,7 +1149,9 @@
 
     function renderCommunities() {
       const communities = getCommunities();
-      const query = searchInput.value.trim().toLowerCase();
+
+      const query =
+        searchInput.value.trim().toLowerCase();
 
       const filtered = communities.filter(community => {
         return (
@@ -836,17 +1173,20 @@
       }
 
       filtered.forEach(community => {
-        const card = document.createElement("div");
+        const card =
+          document.createElement("div");
 
         card.className = "community-card";
 
         card.innerHTML = `
           <div class="community-info">
+
             <div class="community-avatar">
               ${escapeHTML(firstLetter(community.name))}
             </div>
 
             <div>
+
               <div class="community-name">
                 ${escapeHTML(community.name)}
               </div>
@@ -860,7 +1200,9 @@
                 &nbsp; • &nbsp;
                 ⭐ Level ${community.level}
               </div>
+
             </div>
+
           </div>
 
           <button class="btn btn-primary join-btn">
@@ -868,9 +1210,11 @@
           </button>
         `;
 
-        card.querySelector(".join-btn").addEventListener("click", () => {
-          joinCommunity(community.id);
-        });
+        card
+          .querySelector(".join-btn")
+          .addEventListener("click", () => {
+            joinCommunity(community.id);
+          });
 
         communityList.appendChild(card);
       });
@@ -879,17 +1223,22 @@
     function joinCommunity(id) {
       const communities = getCommunities();
 
-      const community = communities.find(item => item.id === id);
+      const community =
+        communities.find(item => item.id === id);
 
       if (!community) return;
 
-      const joinedKey = `joined_${id}_${currentUser}`;
-      const alreadyJoined = localStorage.getItem(joinedKey);
+      const joinedKey =
+        `joined_${id}_${currentUser}`;
+
+      const alreadyJoined =
+        localStorage.getItem(joinedKey);
 
       if (!alreadyJoined) {
         community.members++;
 
         localStorage.setItem(joinedKey, "true");
+
         saveCommunities(communities);
       }
 
@@ -899,35 +1248,49 @@
     function openCommunity(id) {
       const communities = getCommunities();
 
-      const community = communities.find(item => item.id === id);
+      const community =
+        communities.find(item => item.id === id);
 
       if (!community) return;
 
       currentCommunityId = id;
 
-      detailAvatar.textContent = firstLetter(community.name);
-      detailName.textContent = community.name;
-      detailDescription.textContent = community.description;
-      memberCount.textContent = community.members;
-      communityLevel.textContent = community.level;
+      detailAvatar.textContent =
+        firstLetter(community.name);
 
-      const isOwner = community.owner === currentUser;
+      detailName.textContent =
+        community.name;
 
-      detailRank.textContent = isOwner ? "owner" : "member";
-      detailRank.className = isOwner
-        ? "rank-owner"
-        : "rank-member";
+      detailDescription.textContent =
+        community.description;
 
-      deleteBtn.style.display = isOwner
-        ? "inline-block"
-        : "none";
+      memberCount.textContent =
+        community.members;
+
+      communityLevel.textContent =
+        community.level;
+
+      const isOwner =
+        community.owner === currentUser;
+
+      detailRank.textContent =
+        isOwner ? "owner" : "member";
+
+      detailRank.className =
+        isOwner ? "rank-owner" : "rank-member";
+
+      deleteBtn.style.display =
+        isOwner ? "inline-block" : "none";
 
       showScreen(detailScreen);
     }
 
     function loginUser() {
-      const username = usernameInput.value.trim();
-      const password = passwordInput.value;
+      const username =
+        usernameInput.value.trim();
+
+      const password =
+        passwordInput.value;
 
       if (username.length < 3) {
         loginError.textContent =
@@ -958,7 +1321,9 @@
           JSON.stringify(users)
         );
       } else if (users[username].password !== password) {
-        loginError.textContent = "رمز عبور اشتباه است.";
+        loginError.textContent =
+          "رمز عبور اشتباه است.";
+
         return;
       }
 
@@ -970,7 +1335,8 @@
       );
 
       loginError.style.color = "#24d47b";
-      loginError.textContent = "ورود با موفقیت انجام شد.";
+      loginError.textContent =
+        "ورود با موفقیت انجام شد.";
 
       updateUserBar();
 
@@ -990,7 +1356,9 @@
       currentUser = "";
       currentCommunityId = null;
 
-      localStorage.removeItem("community_username");
+      localStorage.removeItem(
+        "community_username"
+      );
 
       usernameInput.value = "";
       passwordInput.value = "";
@@ -1006,14 +1374,18 @@
 
       const communities = getCommunities();
 
-      const community = communities.find(
-        item => item.id === currentCommunityId
-      );
+      const community =
+        communities.find(
+          item => item.id === currentCommunityId
+        );
 
       if (!community) return;
 
       if (community.owner === currentUser) {
-        alert("سازنده نمی‌تواند از کامیونیتی خودش خارج شود.");
+        alert(
+          "سازنده نمی‌تواند از کامیونیتی خودش خارج شود."
+        );
+
         return;
       }
 
@@ -1027,6 +1399,7 @@
         community.members--;
 
         localStorage.removeItem(joinedKey);
+
         saveCommunities(communities);
       }
 
@@ -1041,14 +1414,18 @@
 
       const communities = getCommunities();
 
-      const community = communities.find(
-        item => item.id === currentCommunityId
-      );
+      const community =
+        communities.find(
+          item => item.id === currentCommunityId
+        );
 
       if (!community) return;
 
       if (community.owner !== currentUser) {
-        alert("فقط سازنده می‌تواند کامیونیتی را حذف کند.");
+        alert(
+          "فقط سازنده می‌تواند کامیونیتی را حذف کند."
+        );
+
         return;
       }
 
@@ -1058,9 +1435,10 @@
 
       if (!confirmed) return;
 
-      const updated = communities.filter(
-        item => item.id !== currentCommunityId
-      );
+      const updated =
+        communities.filter(
+          item => item.id !== currentCommunityId
+        );
 
       saveCommunities(updated);
 
@@ -1075,23 +1453,33 @@
     createForm.addEventListener("submit", event => {
       event.preventDefault();
 
-      const name = newName.value.trim();
-      const description = newDescription.value.trim();
+      const name =
+        newName.value.trim();
+
+      const description =
+        newDescription.value.trim();
 
       if (name.length < 3 || description.length < 3) {
         alert("نام و توضیحات را کامل وارد کنید.");
         return;
       }
 
-      const communities = getCommunities();
-      const id = makeId(name);
+      const communities =
+        getCommunities();
 
-      const exists = communities.some(
-        community => community.id === id
-      );
+      const id =
+        makeId(name);
+
+      const exists =
+        communities.some(
+          community => community.id === id
+        );
 
       if (exists) {
-        alert("این کامیونیتی قبلاً ساخته شده است.");
+        alert(
+          "این کامیونیتی قبلاً ساخته شده است."
+        );
+
         return;
       }
 
@@ -1105,6 +1493,7 @@
       };
 
       communities.push(newCommunity);
+
       saveCommunities(communities);
 
       localStorage.setItem(
@@ -1113,40 +1502,185 @@
       );
 
       createForm.reset();
+
       openCommunity(id);
     });
 
-    continueBtn.addEventListener("click", loginUser);
+    continueBtn.addEventListener(
+      "click",
+      loginUser
+    );
 
-    usernameInput.addEventListener("keydown", event => {
-      if (event.key === "Enter") {
-        passwordInput.focus();
+    usernameInput.addEventListener(
+      "keydown",
+      event => {
+        if (event.key === "Enter") {
+          passwordInput.focus();
+        }
       }
-    });
+    );
 
-    passwordInput.addEventListener("keydown", event => {
-      if (event.key === "Enter") {
-        loginUser();
+    passwordInput.addEventListener(
+      "keydown",
+      event => {
+        if (event.key === "Enter") {
+          loginUser();
+        }
       }
-    });
+    );
 
-    logoutBtn.addEventListener("click", logoutUser);
+    logoutBtn.addEventListener(
+      "click",
+      logoutUser
+    );
 
-    searchBtn.addEventListener("click", renderCommunities);
-    searchInput.addEventListener("input", renderCommunities);
+    searchBtn.addEventListener(
+      "click",
+      renderCommunities
+    );
 
-    leaveBtn.addEventListener("click", leaveCommunity);
-    deleteBtn.addEventListener("click", deleteCommunity);
+    searchInput.addEventListener(
+      "input",
+      renderCommunities
+    );
 
-    backBtn.addEventListener("click", () => {
-      showScreen(communitiesScreen);
-      renderCommunities();
-    });
+    leaveBtn.addEventListener(
+      "click",
+      leaveCommunity
+    );
 
-    detailBackBtn.addEventListener("click", () => {
-      showScreen(communitiesScreen);
-      renderCommunities();
-    });
+    deleteBtn.addEventListener(
+      "click",
+      deleteCommunity
+    );
+
+    backBtn.addEventListener(
+      "click",
+      () => {
+        showScreen(communitiesScreen);
+        renderCommunities();
+      }
+    );
+
+    detailBackBtn.addEventListener(
+      "click",
+      () => {
+        showScreen(communitiesScreen);
+        renderCommunities();
+      }
+    );
+
+    /* سیستم آپدیت و شمارش معکوس */
+
+    const updateOverlay =
+      document.getElementById("updateOverlay");
+
+    const updateCloseBtn =
+      document.getElementById("updateCloseBtn");
+
+    const startWorkBtn =
+      document.getElementById("startWorkBtn");
+
+    const countdownHours =
+      document.getElementById("countdownHours");
+
+    const countdownMinutes =
+      document.getElementById("countdownMinutes");
+
+    const countdownSeconds =
+      document.getElementById("countdownSeconds");
+
+    const UPDATE_TIME =
+      15 * 60 * 60 * 1000;
+
+    const UPDATE_DEADLINE_KEY =
+      "community_update_deadline";
+
+    function getUpdateDeadline() {
+      let deadline =
+        Number(
+          localStorage.getItem(
+            UPDATE_DEADLINE_KEY
+          )
+        );
+
+      if (!deadline || deadline <= Date.now()) {
+        deadline =
+          Date.now() + UPDATE_TIME;
+
+        localStorage.setItem(
+          UPDATE_DEADLINE_KEY,
+          deadline
+        );
+      }
+
+      return deadline;
+    }
+
+    function twoDigits(number) {
+      return String(number).padStart(2, "0");
+    }
+
+    function updateCountdown() {
+      const deadline =
+        getUpdateDeadline();
+
+      let remaining =
+        deadline - Date.now();
+
+      if (remaining <= 0) {
+        remaining = UPDATE_TIME;
+
+        localStorage.setItem(
+          UPDATE_DEADLINE_KEY,
+          Date.now() + UPDATE_TIME
+        );
+      }
+
+      const totalSeconds =
+        Math.floor(remaining / 1000);
+
+      const hours =
+        Math.floor(totalSeconds / 3600);
+
+      const minutes =
+        Math.floor(
+          (totalSeconds % 3600) / 60
+        );
+
+      const seconds =
+        totalSeconds % 60;
+
+      countdownHours.textContent =
+        twoDigits(hours);
+
+      countdownMinutes.textContent =
+        twoDigits(minutes);
+
+      countdownSeconds.textContent =
+        twoDigits(seconds);
+    }
+
+    function closeUpdatePopup() {
+      updateOverlay.classList.add("hidden");
+    }
+
+    updateCloseBtn.addEventListener(
+      "click",
+      closeUpdatePopup
+    );
+
+    startWorkBtn.addEventListener(
+      "click",
+      closeUpdatePopup
+    );
+
+    updateCountdown();
+
+    setInterval(
+      updateCountdown,
+      1000
+    );
 
     updateUserBar();
 
