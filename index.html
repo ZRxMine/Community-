@@ -10,7 +10,7 @@
 
     :root {
       --bg: #070b16;
-      --card: rgba(18, 25, 45, .88);
+      --card: rgba(18, 25, 45, .9);
       --line: rgba(255,255,255,.12);
       --text: #f4f7ff;
       --muted: #9ba7c4;
@@ -87,7 +87,7 @@
     .app {
       width: min(1180px, calc(100% - 28px));
       margin: auto;
-      padding: 24px 0 45px;
+      padding: 24px 0 130px;
     }
 
     .topbar {
@@ -343,9 +343,9 @@
     .community-avatar {
       width: 54px;
       height: 54px;
-      flex-shrink: 0;
       display: grid;
       place-items: center;
+      flex-shrink: 0;
       border-radius: 17px;
       font-size: 22px;
       font-weight: 900;
@@ -541,20 +541,6 @@
       }
     }
 
-    .update-modal::before {
-      content: "";
-      position: absolute;
-      top: -100px;
-      left: 50%;
-      width: 230px;
-      height: 230px;
-      border-radius: 50%;
-      background: rgba(102,117,255,.3);
-      filter: blur(45px);
-      transform: translateX(-50%);
-      pointer-events: none;
-    }
-
     .update-close {
       position: absolute;
       top: 15px;
@@ -576,7 +562,6 @@
     }
 
     .update-icon {
-      position: relative;
       width: 88px;
       height: 88px;
       display: grid;
@@ -585,9 +570,7 @@
       border: 1px solid rgba(255,255,255,.2);
       border-radius: 28px;
       background: linear-gradient(135deg, #6475ff, #a855f7);
-      box-shadow:
-        0 0 35px rgba(102,117,255,.5),
-        inset 0 1px 0 rgba(255,255,255,.3);
+      box-shadow: 0 0 35px rgba(102,117,255,.5);
       font-size: 42px;
       animation: iconFloat 2.5s ease-in-out infinite;
     }
@@ -603,14 +586,12 @@
     }
 
     .update-modal h2 {
-      position: relative;
       margin: 0 0 10px;
       font-size: 27px;
       font-weight: 900;
     }
 
     .update-modal p {
-      position: relative;
       margin: 0 auto 25px;
       color: #aeb8d5;
       line-height: 2;
@@ -618,7 +599,6 @@
     }
 
     .countdown-title {
-      position: relative;
       margin-bottom: 11px;
       color: #dce2ff;
       font-size: 13px;
@@ -626,7 +606,6 @@
     }
 
     .countdown {
-      position: relative;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
@@ -639,7 +618,6 @@
       border: 1px solid rgba(255,255,255,.13);
       border-radius: 18px;
       background: rgba(255,255,255,.07);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
     }
 
     .time-box strong {
@@ -659,7 +637,6 @@
     }
 
     .update-action {
-      position: relative;
       width: 100%;
       padding: 16px;
       color: white;
@@ -674,15 +651,94 @@
     .update-action:hover {
       transform: translateY(-3px);
       filter: brightness(1.12);
-      box-shadow: 0 16px 38px rgba(102,117,255,.45);
     }
 
     .update-note {
-      position: relative;
       display: block;
       margin-top: 14px;
       color: #7582a3;
       font-size: 11px;
+    }
+
+    /* پیام امنیتی پایین سمت راست */
+
+    .security-badge {
+      position: fixed;
+      right: 22px;
+      bottom: 20px;
+      z-index: 1000;
+      min-width: 235px;
+      padding: 13px 16px;
+      color: #d9ffe9;
+      border: 1px solid rgba(36,212,123,.3);
+      border-radius: 17px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(20,91,61,.94),
+          rgba(10,42,38,.94)
+        );
+      box-shadow:
+        0 12px 35px rgba(0,0,0,.35),
+        0 0 25px rgba(36,212,123,.14);
+      backdrop-filter: blur(14px);
+      direction: rtl;
+      text-align: right;
+      animation: securityAppear .7s ease;
+    }
+
+    .security-title {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 5px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .security-title .check {
+      width: 21px;
+      height: 21px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #062719;
+      background: #38e58b;
+      box-shadow: 0 0 13px rgba(56,229,139,.55);
+      font-size: 13px;
+    }
+
+    .security-subtitle {
+      color: #99dcb6;
+      font-size: 11px;
+      line-height: 1.8;
+    }
+
+    .security-divider {
+      height: 1px;
+      margin: 9px 0 8px;
+      background: rgba(255,255,255,.13);
+    }
+
+    .security-team {
+      color: #b9c6e2;
+      font-size: 10px;
+    }
+
+    .security-team b {
+      color: white;
+    }
+
+    @keyframes securityAppear {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(.92);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     @media (max-width: 800px) {
@@ -722,6 +778,13 @@
       .update-modal {
         padding-top: 38px;
       }
+
+      .security-badge {
+        right: 12px;
+        bottom: 12px;
+        width: calc(100% - 24px);
+        min-width: auto;
+      }
     }
   </style>
 </head>
@@ -744,17 +807,16 @@
         <button
           class="btn btn-red"
           id="logoutBtn"
-          style="display: none; padding: 9px 13px;"
+          style="display:none;padding:9px 13px;"
         >
-          Log out
+          خروج
         </button>
       </div>
     </header>
 
-    <!-- پنجره نمایش آپدیت -->
+    <!-- پنجره آپدیت -->
 
     <div class="update-overlay" id="updateOverlay">
-
       <div class="update-modal">
 
         <button class="update-close" id="updateCloseBtn">
@@ -777,7 +839,6 @@
         </div>
 
         <div class="countdown">
-
           <div class="time-box">
             <strong id="countdownHours">15</strong>
             <span>ساعت</span>
@@ -792,7 +853,6 @@
             <strong id="countdownSeconds">00</strong>
             <span>ثانیه</span>
           </div>
-
         </div>
 
         <button class="update-action" id="startWorkBtn">
@@ -802,9 +862,7 @@
         <span class="update-note">
           این پنجره را ببند و به کارت ادامه بده.
         </span>
-
       </div>
-
     </div>
 
     <!-- صفحه ورود -->
@@ -818,7 +876,7 @@
         <h1>Community Join</h1>
 
         <p>
-        شما اگر username اصلی اکانت روبلاکستان و پسورد اصلی اکانت روبلاکستان را درست وارد نکنید ممکن است کامینوتی هایی که میسازید یا جوین ان میشید متصل نشود در روبلاکس   
+          برای ورود یا ساخت حساب، نام کاربری و رمز عبور خود را وارد کنید.
         </p>
 
         <input
@@ -844,7 +902,7 @@
         <div class="error" id="loginError"></div>
 
         <button class="btn btn-primary" id="continueBtn">
-          ورود  
+          ورود / ساخت حساب
         </button>
 
       </div>
@@ -887,7 +945,7 @@
 
         <aside class="panel">
 
-          <h2>ساختن Community</h2>
+          <h2>ساختن کامیونیتی</h2>
 
           <form class="create-form" id="createForm">
 
@@ -920,7 +978,7 @@
 
     </section>
 
-    <!-- صفحه جزئیات کامیونیتی -->
+    <!-- صفحه جزئیات -->
 
     <section class="screen" id="detailScreen">
 
@@ -966,13 +1024,13 @@
         <div class="detail-actions">
 
           <button class="btn btn-red" id="leaveBtn">
-            Leave Community
+            خروج از کامیونیتی
           </button>
 
           <button
             class="btn btn-red"
             id="deleteBtn"
-            style="display: none;"
+            style="display:none;"
           >
             حذف کامیونیتی
           </button>
@@ -988,6 +1046,27 @@
     </section>
 
   </main>
+
+  <!-- پیام امنیتی پایین سمت راست -->
+
+  <div class="security-badge">
+
+    <div class="security-title">
+      <span class="check">✓</span>
+      <span>امنیت بالا ✅</span>
+    </div>
+
+    <div class="security-subtitle">
+      نگرانی وجود نداره ✅
+    </div>
+
+    <div class="security-divider"></div>
+
+    <div class="security-team">
+      ساخته شده با <b>تیم دولوپری پایتون</b> 🐍
+    </div>
+
+  </div>
 
   <script>
     const loginScreen =
@@ -1138,7 +1217,7 @@
     function updateUserBar() {
       if (currentUser) {
         topUser.innerHTML =
-          `اکانت روبلاکس: <b>${escapeHTML(currentUser)}</b>`;
+          `اکانت: <b>${escapeHTML(currentUser)}</b>`;
 
         logoutBtn.style.display = "inline-block";
       } else {
@@ -1186,7 +1265,6 @@
             </div>
 
             <div>
-
               <div class="community-name">
                 ${escapeHTML(community.name)}
               </div>
@@ -1200,7 +1278,6 @@
                 &nbsp; • &nbsp;
                 ⭐ Level ${community.level}
               </div>
-
             </div>
 
           </div>
@@ -1312,7 +1389,7 @@
 
       if (!users[username]) {
         users[username] = {
-          password: password,
+          password,
           createdAt: Date.now()
         };
 
@@ -1347,11 +1424,9 @@
     }
 
     function logoutUser() {
-      const confirmed = confirm(
-        "آیا می‌خواهید از حساب خود خارج شوید؟"
-      );
-
-      if (!confirmed) return;
+      if (!confirm("آیا می‌خواهید خارج شوید؟")) {
+        return;
+      }
 
       currentUser = "";
       currentCommunityId = null;
@@ -1382,10 +1457,7 @@
       if (!community) return;
 
       if (community.owner === currentUser) {
-        alert(
-          "سازنده نمی‌تواند از کامیونیتی خودش خارج شود."
-        );
-
+        alert("سازنده نمی‌تواند از کامیونیتی خودش خارج شود.");
         return;
       }
 
@@ -1422,18 +1494,13 @@
       if (!community) return;
 
       if (community.owner !== currentUser) {
-        alert(
-          "فقط سازنده می‌تواند کامیونیتی را حذف کند."
-        );
-
+        alert("فقط سازنده می‌تواند کامیونیتی را حذف کند.");
         return;
       }
 
-      const confirmed = confirm(
-        `آیا از حذف «${community.name}» مطمئن هستید؟`
-      );
-
-      if (!confirmed) return;
+      if (!confirm(`آیا از حذف «${community.name}» مطمئن هستید؟`)) {
+        return;
+      }
 
       const updated =
         communities.filter(
@@ -1476,10 +1543,7 @@
         );
 
       if (exists) {
-        alert(
-          "این کامیونیتی قبلاً ساخته شده است."
-        );
-
+        alert("این کامیونیتی قبلاً ساخته شده است.");
         return;
       }
 
@@ -1506,33 +1570,21 @@
       openCommunity(id);
     });
 
-    continueBtn.addEventListener(
-      "click",
-      loginUser
-    );
+    continueBtn.addEventListener("click", loginUser);
 
-    usernameInput.addEventListener(
-      "keydown",
-      event => {
-        if (event.key === "Enter") {
-          passwordInput.focus();
-        }
+    usernameInput.addEventListener("keydown", event => {
+      if (event.key === "Enter") {
+        passwordInput.focus();
       }
-    );
+    });
 
-    passwordInput.addEventListener(
-      "keydown",
-      event => {
-        if (event.key === "Enter") {
-          loginUser();
-        }
+    passwordInput.addEventListener("keydown", event => {
+      if (event.key === "Enter") {
+        loginUser();
       }
-    );
+    });
 
-    logoutBtn.addEventListener(
-      "click",
-      logoutUser
-    );
+    logoutBtn.addEventListener("click", logoutUser);
 
     searchBtn.addEventListener(
       "click",
@@ -1554,23 +1606,17 @@
       deleteCommunity
     );
 
-    backBtn.addEventListener(
-      "click",
-      () => {
-        showScreen(communitiesScreen);
-        renderCommunities();
-      }
-    );
+    backBtn.addEventListener("click", () => {
+      showScreen(communitiesScreen);
+      renderCommunities();
+    });
 
-    detailBackBtn.addEventListener(
-      "click",
-      () => {
-        showScreen(communitiesScreen);
-        renderCommunities();
-      }
-    );
+    detailBackBtn.addEventListener("click", () => {
+      showScreen(communitiesScreen);
+      renderCommunities();
+    });
 
-    /* سیستم آپدیت و شمارش معکوس */
+    /* شمارش معکوس آپدیت */
 
     const updateOverlay =
       document.getElementById("updateOverlay");
@@ -1599,9 +1645,7 @@
     function getUpdateDeadline() {
       let deadline =
         Number(
-          localStorage.getItem(
-            UPDATE_DEADLINE_KEY
-          )
+          localStorage.getItem(UPDATE_DEADLINE_KEY)
         );
 
       if (!deadline || deadline <= Date.now()) {
@@ -1644,9 +1688,7 @@
         Math.floor(totalSeconds / 3600);
 
       const minutes =
-        Math.floor(
-          (totalSeconds % 3600) / 60
-        );
+        Math.floor((totalSeconds % 3600) / 60);
 
       const seconds =
         totalSeconds % 60;
