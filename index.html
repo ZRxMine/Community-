@@ -1,1748 +1,673 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Community Hub</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Infinite Road Game</title>
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
-
-    :root {
-      --bg: #070b16;
-      --card: rgba(18, 25, 45, .9);
-      --line: rgba(255,255,255,.12);
-      --text: #f4f7ff;
-      --muted: #9ba7c4;
-      --blue: #6675ff;
-      --purple: #a855f7;
-      --green: #24d47b;
-      --red: #ff5874;
-      --yellow: #ffd166;
-    }
-
     * {
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
       margin: 0;
-      min-height: 100vh;
-      color: var(--text);
-      font-family: "Vazirmatn", Tahoma, sans-serif;
-      background:
-        radial-gradient(circle at 15% 15%, rgba(102,117,255,.22), transparent 28%),
-        radial-gradient(circle at 90% 10%, rgba(168,85,247,.18), transparent 25%),
-        linear-gradient(135deg, #070b16, #0c1021 55%, #080b17);
+      overflow: hidden;
+      background: #07111f;
+      font-family: Arial, sans-serif;
+      touch-action: none;
     }
 
-    body::before,
-    body::after {
-      content: "";
-      position: fixed;
-      z-index: -1;
-      width: 350px;
-      height: 350px;
-      border-radius: 50%;
-      filter: blur(85px);
-      opacity: .25;
-      pointer-events: none;
-      animation: float 8s ease-in-out infinite alternate;
-    }
-
-    body::before {
-      top: 15%;
-      left: -120px;
-      background: #5365ff;
-    }
-
-    body::after {
-      right: -120px;
-      bottom: 5%;
-      background: #a855f7;
-      animation-delay: 2s;
-    }
-
-    @keyframes float {
-      from {
-        transform: translate(0, 0) scale(1);
-      }
-
-      to {
-        transform: translate(60px, -40px) scale(1.2);
-      }
-    }
-
-    button,
-    input,
-    textarea {
-      font-family: inherit;
-    }
-
-    button {
-      cursor: pointer;
-      border: 0;
-    }
-
-    .app {
-      width: min(1180px, calc(100% - 28px));
-      margin: auto;
-      padding: 24px 0 130px;
-    }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      padding: 14px 22px;
-      margin-bottom: 28px;
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      background: rgba(12, 17, 34, .75);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 15px 45px rgba(0,0,0,.25);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 20px;
-      font-weight: 900;
-    }
-
-    .brand-icon {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      border-radius: 14px;
-      font-size: 22px;
-      background: linear-gradient(135deg, var(--blue), var(--purple));
-      box-shadow: 0 0 25px rgba(102,117,255,.45);
-    }
-
-    .user-area {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .user-label {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .user-label b {
-      color: white;
-    }
-
-    .screen {
-      display: none;
-    }
-
-    .screen.active {
+    canvas {
       display: block;
-      animation: show .35s ease;
     }
 
-    @keyframes show {
-      from {
-        opacity: 0;
-        transform: translateY(12px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .login-box {
-      width: min(560px, 100%);
-      margin: 8vh auto 0;
-      padding: 42px 34px;
-      text-align: center;
-      border: 1px solid var(--line);
-      border-radius: 30px;
-      background: var(--card);
-      box-shadow: 0 25px 80px rgba(0,0,0,.42);
-      backdrop-filter: blur(20px);
-    }
-
-    .login-logo {
-      width: 82px;
-      height: 82px;
-      display: grid;
-      place-items: center;
-      margin: 0 auto 22px;
-      border-radius: 27px;
-      font-size: 38px;
-      background: linear-gradient(135deg, var(--blue), var(--purple));
-      box-shadow: 0 0 35px rgba(102,117,255,.45);
-    }
-
-    .login-box h1 {
-      margin: 0 0 10px;
-      font-size: 32px;
-    }
-
-    .login-box p {
-      color: var(--muted);
-      line-height: 2;
-      font-size: 14px;
-      margin-bottom: 28px;
-    }
-
-    .input {
-      width: 100%;
-      padding: 15px 17px;
-      color: white;
-      outline: none;
-      border: 1px solid var(--line);
-      border-radius: 15px;
-      background: rgba(255,255,255,.06);
-      font-size: 14px;
-      transition: .2s;
-    }
-
-    .input::placeholder {
-      color: #8290b0;
-    }
-
-    .input:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 4px rgba(102,117,255,.13);
-    }
-
-    textarea.input {
-      min-height: 115px;
-      resize: vertical;
-    }
-
-    .error {
-      min-height: 25px;
-      margin-top: 12px;
-      color: #ff8295;
-      font-size: 13px;
-    }
-
-    .btn {
-      padding: 13px 19px;
-      color: white;
-      border-radius: 14px;
-      font-size: 14px;
-      font-weight: 800;
-      transition: .2s;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.1);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--blue), var(--purple));
-      box-shadow: 0 12px 30px rgba(102,117,255,.25);
-    }
-
-    .btn-green {
-      color: #06150e;
-      background: linear-gradient(135deg, #16b968, var(--green));
-    }
-
-    .btn-red {
-      color: #ff91a4;
-      background: rgba(255,88,116,.15);
-      border: 1px solid rgba(255,88,116,.3);
-    }
-
-    .btn-dark {
-      background: rgba(255,255,255,.07);
-      border: 1px solid var(--line);
-    }
-
-    .page-title {
-      margin-bottom: 22px;
-    }
-
-    .page-title h1 {
-      margin: 0;
-      font-size: 28px;
-    }
-
-    .page-title p {
-      color: var(--muted);
-      margin: 8px 0 0;
-      font-size: 13px;
-    }
-
-    .search-area {
+    #startScreen,
+    #questionBox,
+    #deadScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
       display: flex;
-      gap: 12px;
-      margin-bottom: 22px;
-    }
-
-    .search-area .input {
-      flex: 1;
-    }
-
-    .layout {
-      display: grid;
-      grid-template-columns: 1fr 330px;
-      gap: 22px;
-      align-items: start;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(3, 8, 20, .95), rgba(12, 33, 60, .94));
+      color: white;
+      text-align: center;
     }
 
     .panel {
-      padding: 22px;
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: var(--card);
-      box-shadow: 0 25px 80px rgba(0,0,0,.42);
-      backdrop-filter: blur(18px);
+      width: min(90%, 430px);
+      padding: 30px;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 25px;
+      background: rgba(255,255,255,.1);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 0 40px rgba(0, 190, 255, .25);
     }
 
-    .panel h2 {
-      margin: 0 0 17px;
-      font-size: 18px;
+    h1 {
+      margin-top: 0;
+      font-size: 38px;
+      color: #61e7ff;
+      text-shadow: 0 0 15px #00cfff;
     }
 
-    .community-list {
-      display: grid;
-      gap: 13px;
+    h2 {
+      font-size: 27px;
     }
 
-    .community-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      padding: 17px;
-      border: 1px solid var(--line);
-      border-radius: 19px;
-      background: rgba(255,255,255,.045);
-      transition: .2s;
+    p {
+      line-height: 1.8;
+      color: #d6edf5;
     }
 
-    .community-card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(102,117,255,.65);
-      background: rgba(102,117,255,.09);
-      box-shadow: 0 10px 30px rgba(102,117,255,.1);
-    }
-
-    .community-info {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      min-width: 0;
-    }
-
-    .community-avatar {
-      width: 54px;
-      height: 54px;
-      display: grid;
-      place-items: center;
-      flex-shrink: 0;
-      border-radius: 17px;
-      font-size: 22px;
-      font-weight: 900;
-      background: linear-gradient(135deg, #5968ff, #b14cff);
-      box-shadow: 0 0 22px rgba(102,117,255,.3);
-    }
-
-    .community-name {
-      overflow: hidden;
+    button {
+      border: 0;
+      border-radius: 15px;
+      padding: 15px 24px;
+      margin: 7px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
       color: white;
-      font-size: 16px;
-      font-weight: 900;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      background: linear-gradient(135deg, #00a8ff, #6c39ff);
+      box-shadow: 0 5px 18px rgba(0, 130, 255, .35);
     }
 
-    .community-description {
-      max-width: 430px;
-      overflow: hidden;
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 12px;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    button:active {
+      transform: scale(.94);
     }
 
-    .community-meta {
-      margin-top: 7px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .create-form {
-      display: grid;
-      gap: 12px;
-    }
-
-    .empty {
-      padding: 35px 15px;
-      color: var(--muted);
-      text-align: center;
-      border: 1px dashed var(--line);
-      border-radius: 17px;
-    }
-
-    .success-banner {
-      padding: 17px 20px;
-      margin-bottom: 20px;
-      color: #b9ffd8;
-      font-weight: 800;
-      border: 1px solid rgba(36,212,123,.3);
-      border-radius: 18px;
-      background: rgba(36,212,123,.1);
-    }
-
-    .back-btn {
-      margin-bottom: 18px;
-    }
-
-    .detail-box {
-      max-width: 820px;
-      margin: 0 auto;
-      padding: 34px;
-      text-align: center;
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      background: var(--card);
-      box-shadow: 0 25px 80px rgba(0,0,0,.42);
-      backdrop-filter: blur(20px);
-    }
-
-    .detail-avatar {
-      width: 100px;
-      height: 100px;
-      display: grid;
-      place-items: center;
-      margin: 0 auto 18px;
-      border-radius: 30px;
-      font-size: 42px;
-      font-weight: 900;
-      background: linear-gradient(135deg, var(--blue), var(--purple));
-      box-shadow: 0 0 35px rgba(102,117,255,.4);
-    }
-
-    .detail-box h1 {
-      margin: 0 0 8px;
-      font-size: 30px;
-    }
-
-    .detail-description {
-      margin-bottom: 27px;
-      color: var(--muted);
-      line-height: 2;
-      font-size: 14px;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin: 22px 0;
-    }
-
-    .stat {
-      padding: 19px 10px;
-      border: 1px solid var(--line);
-      border-radius: 17px;
-      background: rgba(255,255,255,.05);
-    }
-
-    .stat strong {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 24px;
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .rank-owner {
-      color: var(--yellow) !important;
-    }
-
-    .rank-member {
-      color: #8ab4ff !important;
-    }
-
-    .detail-actions {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    /* پنجره آپدیت */
-
-    .update-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      background: rgba(3, 6, 18, .78);
-      backdrop-filter: blur(16px);
-      animation: overlayShow .35s ease;
-    }
-
-    .update-overlay.hidden {
+    #questionBox,
+    #deadScreen {
       display: none;
     }
 
-    @keyframes overlayShow {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
+    #controls {
+      position: fixed;
+      z-index: 5;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      direction: ltr;
+      gap: 10px;
     }
 
-    .update-modal {
-      position: relative;
-      width: min(570px, 100%);
-      overflow: hidden;
-      padding: 42px 30px 30px;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,.18);
-      border-radius: 32px;
-      background:
-        radial-gradient(circle at 50% -20%, rgba(115,125,255,.4), transparent 45%),
-        linear-gradient(145deg, rgba(23,31,65,.98), rgba(12,16,35,.98));
-      box-shadow:
-        0 0 0 1px rgba(102,117,255,.12),
-        0 25px 100px rgba(0,0,0,.65),
-        0 0 60px rgba(102,117,255,.25);
-      animation: modalShow .45s cubic-bezier(.2,.8,.2,1);
+    .control {
+      width: 75px;
+      height: 58px;
+      padding: 0;
+      margin: 0;
+      font-size: 25px;
+      border-radius: 18px;
+      background: rgba(0, 0, 0, .55);
+      border: 1px solid rgba(255,255,255,.35);
+      backdrop-filter: blur(8px);
     }
 
-    @keyframes modalShow {
-      from {
-        opacity: 0;
-        transform: scale(.82) translateY(30px);
-      }
-
-      to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
-    }
-
-    .update-close {
-      position: absolute;
+    #status {
+      position: fixed;
+      z-index: 5;
       top: 15px;
-      left: 17px;
-      width: 34px;
-      height: 34px;
-      color: #aeb8d5;
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 50%;
-      background: rgba(255,255,255,.07);
-      font-size: 18px;
-      transition: .2s;
-    }
-
-    .update-close:hover {
+      left: 15px;
+      direction: rtl;
       color: white;
-      background: rgba(255,88,116,.25);
-      transform: rotate(90deg);
-    }
-
-    .update-icon {
-      width: 88px;
-      height: 88px;
-      display: grid;
-      place-items: center;
-      margin: 0 auto 21px;
-      border: 1px solid rgba(255,255,255,.2);
-      border-radius: 28px;
-      background: linear-gradient(135deg, #6475ff, #a855f7);
-      box-shadow: 0 0 35px rgba(102,117,255,.5);
-      font-size: 42px;
-      animation: iconFloat 2.5s ease-in-out infinite;
-    }
-
-    @keyframes iconFloat {
-      0%, 100% {
-        transform: translateY(0) rotate(-3deg);
-      }
-
-      50% {
-        transform: translateY(-8px) rotate(3deg);
-      }
-    }
-
-    .update-modal h2 {
-      margin: 0 0 10px;
-      font-size: 27px;
-      font-weight: 900;
-    }
-
-    .update-modal p {
-      margin: 0 auto 25px;
-      color: #aeb8d5;
-      line-height: 2;
+      background: rgba(0,0,0,.45);
+      padding: 10px 15px;
+      border-radius: 12px;
       font-size: 14px;
     }
 
-    .countdown-title {
-      margin-bottom: 11px;
-      color: #dce2ff;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .countdown {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      direction: ltr;
-      margin-bottom: 25px;
-    }
-
-    .time-box {
-      padding: 15px 8px 12px;
-      border: 1px solid rgba(255,255,255,.13);
-      border-radius: 18px;
-      background: rgba(255,255,255,.07);
-    }
-
-    .time-box strong {
-      display: block;
-      color: white;
-      font-size: 29px;
-      font-weight: 900;
-      line-height: 1.1;
-      text-shadow: 0 0 18px rgba(133,145,255,.8);
-    }
-
-    .time-box span {
-      display: block;
-      margin-top: 7px;
-      color: #9ba7c4;
-      font-size: 11px;
-    }
-
-    .update-action {
-      width: 100%;
-      padding: 16px;
-      color: white;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #6675ff, #a855f7);
-      box-shadow: 0 12px 30px rgba(102,117,255,.3);
-      font-size: 15px;
-      font-weight: 900;
-      transition: .2s;
-    }
-
-    .update-action:hover {
-      transform: translateY(-3px);
-      filter: brightness(1.12);
-    }
-
-    .update-note {
-      display: block;
-      margin-top: 14px;
-      color: #7582a3;
-      font-size: 11px;
-    }
-
-    /* پیام امنیتی پایین سمت راست */
-
-    .security-badge {
+    #hint {
       position: fixed;
-      right: 22px;
-      bottom: 20px;
-      z-index: 1000;
-      min-width: 235px;
-      padding: 13px 16px;
-      color: #d9ffe9;
-      border: 1px solid rgba(36,212,123,.3);
-      border-radius: 17px;
-      background:
-        linear-gradient(
-          135deg,
-          rgba(20,91,61,.94),
-          rgba(10,42,38,.94)
-        );
-      box-shadow:
-        0 12px 35px rgba(0,0,0,.35),
-        0 0 25px rgba(36,212,123,.14);
-      backdrop-filter: blur(14px);
-      direction: rtl;
-      text-align: right;
-      animation: securityAppear .7s ease;
-    }
-
-    .security-title {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      margin-bottom: 5px;
-      font-size: 13px;
-      font-weight: 900;
-    }
-
-    .security-title .check {
-      width: 21px;
-      height: 21px;
-      display: inline-grid;
-      place-items: center;
-      border-radius: 50%;
-      color: #062719;
-      background: #38e58b;
-      box-shadow: 0 0 13px rgba(56,229,139,.55);
+      z-index: 5;
+      top: 15px;
+      right: 15px;
+      color: #d9f9ff;
+      background: rgba(0,0,0,.4);
+      padding: 10px;
+      border-radius: 12px;
       font-size: 13px;
     }
 
-    .security-subtitle {
-      color: #99dcb6;
-      font-size: 11px;
-      line-height: 1.8;
+    .hidden {
+      display: none !important;
     }
 
-    .security-divider {
-      height: 1px;
-      margin: 9px 0 8px;
-      background: rgba(255,255,255,.13);
-    }
-
-    .security-team {
-      color: #b9c6e2;
-      font-size: 10px;
-    }
-
-    .security-team b {
-      color: white;
-    }
-
-    @keyframes securityAppear {
-      from {
-        opacity: 0;
-        transform: translateY(20px) scale(.92);
+    @media (max-width: 500px) {
+      h1 {
+        font-size: 30px;
       }
 
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    @media (max-width: 800px) {
-      .layout {
-        grid-template-columns: 1fr;
+      .control {
+        width: 68px;
+        height: 55px;
       }
 
-      .user-label {
-        display: none;
-      }
-    }
-
-    @media (max-width: 550px) {
-      .search-area {
-        flex-direction: column;
-      }
-
-      .community-card {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .community-card .btn {
-        width: 100%;
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-      }
-
-      .login-box,
-      .detail-box,
-      .update-modal {
-        padding: 28px 18px;
-      }
-
-      .update-modal {
-        padding-top: 38px;
-      }
-
-      .security-badge {
-        right: 12px;
-        bottom: 12px;
-        width: calc(100% - 24px);
-        min-width: auto;
+      .panel {
+        padding: 23px;
       }
     }
   </style>
 </head>
-
 <body>
 
-  <main class="app">
-
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-icon">✦</div>
-        <span>Community Hub</span>
-      </div>
-
-      <div class="user-area">
-        <div class="user-label" id="topUser">
-          وارد نشده‌اید
-        </div>
-
-        <button
-          class="btn btn-red"
-          id="logoutBtn"
-          style="display:none;padding:9px 13px;"
-        >
-          خروج
-        </button>
-      </div>
-    </header>
-
-    <!-- پنجره آپدیت -->
-
-    <div class="update-overlay" id="updateOverlay">
-      <div class="update-modal">
-
-        <button class="update-close" id="updateCloseBtn">
-          ×
-        </button>
-
-        <div class="update-icon">
-          🚀
-        </div>
-
-        <h2>آپدیت بعدی در راهه!</h2>
-
-        <p>
-          ما داریم Community Hub را بهتر، سریع‌تر و خفن‌تر می‌کنیم.
-          تا انتشار آپدیت بعدی زمان باقی مانده:
-        </p>
-
-        <div class="countdown-title">
-          زمان باقی‌مانده
-        </div>
-
-        <div class="countdown">
-          <div class="time-box">
-            <strong id="countdownHours">15</strong>
-            <span>ساعت</span>
-          </div>
-
-          <div class="time-box">
-            <strong id="countdownMinutes">00</strong>
-            <span>دقیقه</span>
-          </div>
-
-          <div class="time-box">
-            <strong id="countdownSeconds">00</strong>
-            <span>ثانیه</span>
-          </div>
-        </div>
-
-        <button class="update-action" id="startWorkBtn">
-          باشه، بزن بریم! ✨
-        </button>
-
-        <span class="update-note">
-          این پنجره را ببند و به کارت ادامه بده.
-        </span>
-      </div>
+  <div id="startScreen">
+    <div class="panel">
+      <h1>INFINITE ROAD</h1>
+      <p>
+        وارد مسیر بی‌نهایت شو، جلو برو و آدمک‌های مسیر را پیدا کن.
+      </p>
+      <button id="startButton">Start game</button>
     </div>
-
-    <!-- صفحه ورود -->
-
-    <section class="screen active" id="loginScreen">
-
-      <div class="login-box">
-
-        <div class="login-logo">👥</div>
-
-        <h1>Community Join</h1>
-
-        <p>
-          اگر username روبلاکستان را و پسورد واقعی روبلاکستان را درست وارد نکنید ممکن است اگر کامینوتی عضو شید یا بسازید اون کامینوتی که عضو شدید یه ساختید در روبلاکس وصل نشه 
-        </p>
-
-        <input
-          id="usernameInput"
-          class="input"
-          type="text"
-          placeholder="نام کاربری روبلاکس"
-          maxlength="24"
-          autocomplete="username"
-        >
-
-        <br><br>
-
-        <input
-          id="passwordInput"
-          class="input"
-          type="password"
-          placeholder="رمز عبوراکانت روبلاکستان"
-          minlength="8"
-          autocomplete="current-password"
-        >
-
-        <div class="error" id="loginError"></div>
-
-        <button class="btn btn-primary" id="continueBtn">
-          ورود 
-        </button>
-
-      </div>
-
-    </section>
-
-    <!-- صفحه کامیونیتی‌ها -->
-
-    <section class="screen" id="communitiesScreen">
-
-      <div class="page-title">
-        <h1>کامیونیتی‌ها</h1>
-
-        <p>
-          کامیونیتی موردنظر خود را جست‌وجو کنید یا کامیونیتی جدید بسازید.
-        </p>
-      </div>
-
-      <div class="search-area">
-
-        <input
-          id="searchInput"
-          class="input"
-          type="search"
-          placeholder="جست‌وجوی کامیونیتی..."
-        >
-
-        <button class="btn btn-primary" id="searchBtn">
-          جست‌وجو
-        </button>
-
-      </div>
-
-      <div class="layout">
-
-        <div class="panel">
-          <h2>لیست کامیونیتی‌ها</h2>
-          <div class="community-list" id="communityList"></div>
-        </div>
-
-        <aside class="panel">
-
-          <h2>ساختن کامیونیتی</h2>
-
-          <form class="create-form" id="createForm">
-
-            <input
-              id="newName"
-              class="input"
-              type="text"
-              placeholder="نام کامیونیتی"
-              maxlength="30"
-              required
-            >
-
-            <textarea
-              id="newDescription"
-              class="input"
-              placeholder="توضیحات کامیونیتی"
-              maxlength="160"
-              required
-            ></textarea>
-
-            <button class="btn btn-green" type="submit">
-              ساخت کامیونیتی
-            </button>
-
-          </form>
-
-        </aside>
-
-      </div>
-
-    </section>
-
-    <!-- صفحه جزئیات -->
-
-    <section class="screen" id="detailScreen">
-
-      <button class="btn btn-dark back-btn" id="backBtn">
-        ← بازگشت به لیست
-      </button>
-
-      <div class="success-banner">
-        ✅ ورود با موفقیت انجام شد
-      </div>
-
-      <div class="detail-box">
-
-        <div class="detail-avatar" id="detailAvatar">
-          C
-        </div>
-
-        <h1 id="detailName"></h1>
-
-        <p class="detail-description" id="detailDescription"></p>
-
-        <div class="stats">
-
-          <div class="stat">
-            <strong id="memberCount">0</strong>
-            <span>تعداد ممبر</span>
-          </div>
-
-          <div class="stat">
-            <strong id="detailRank" class="rank-member">
-              member
-            </strong>
-            <span>رنک شما</span>
-          </div>
-
-          <div class="stat">
-            <strong id="communityLevel">1</strong>
-            <span>لول کامیونیتی</span>
-          </div>
-
-        </div>
-
-        <div class="detail-actions">
-
-          <button class="btn btn-red" id="leaveBtn">
-            خروج از کامیونیتی
-          </button>
-
-          <button
-            class="btn btn-red"
-            id="deleteBtn"
-            style="display:none;"
-          >
-            حذف کامیونیتی
-          </button>
-
-          <button class="btn btn-dark" id="detailBackBtn">
-            مشاهده کامیونیتی‌ها
-          </button>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-  <!-- پیام امنیتی پایین سمت راست -->
-
-  <div class="security-badge">
-
-    <div class="security-title">
-      <span class="check">✓</span>
-      <span>امنیت بالا ✅</span>
-    </div>
-
-    <div class="security-subtitle">
-      <span class="check">✓</span>
-      </span>نگرانی وجود نداره ✅</span>
-    </div>
-
-    <div class="security-divider"></div>
-
-    <div class="security-team">
-      ساخته شده با <b>تیم دولوپری پایتون</b> 🐍
-    </div>
-
   </div>
 
-  <script>
-    const loginScreen =
-      document.getElementById("loginScreen");
+  <div id="questionBox">
+    <div class="panel">
+      <h2>تو بچه‌ای؟</h2>
+      <p>یک گزینه را انتخاب کن:</p>
+      <button id="kidButton">آره</button>
+      <button id="adultButton">من بزرگسالم</button>
+    </div>
+  </div>
 
-    const communitiesScreen =
-      document.getElementById("communitiesScreen");
+  <div id="deadScreen">
+    <div class="panel">
+      <h1>DID</h1>
+      <p>بازی تمام شد!</p>
+      <button onclick="location.reload()">دوباره بازی کن</button>
+    </div>
+  </div>
 
-    const detailScreen =
-      document.getElementById("detailScreen");
+  <div id="status">مسافت: 0 متر</div>
+  <div id="hint">برای حرکت از دکمه‌های پایین استفاده کن</div>
 
-    const usernameInput =
-      document.getElementById("usernameInput");
+  <div id="controls">
+    <button class="control" id="backButton">◀</button>
+    <button class="control" id="forwardButton">▶</button>
+    <button class="control" id="jumpButton">⬆</button>
+  </div>
 
-    const passwordInput =
-      document.getElementById("passwordInput");
+  <script type="module">
+    import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 
-    const continueBtn =
-      document.getElementById("continueBtn");
+    let scene, camera, renderer;
+    let player;
+    let gameStarted = false;
+    let gamePaused = true;
+    let isJumping = false;
+    let jumpVelocity = 0;
+    let playerSpeed = 0;
+    let distance = 0;
+    let npcIndex = 0;
+    let npcList = [];
+    let floorParts = [];
 
-    const loginError =
-      document.getElementById("loginError");
-
-    const topUser =
-      document.getElementById("topUser");
-
-    const logoutBtn =
-      document.getElementById("logoutBtn");
-
-    const searchInput =
-      document.getElementById("searchInput");
-
-    const searchBtn =
-      document.getElementById("searchBtn");
-
-    const communityList =
-      document.getElementById("communityList");
-
-    const createForm =
-      document.getElementById("createForm");
-
-    const newName =
-      document.getElementById("newName");
-
-    const newDescription =
-      document.getElementById("newDescription");
-
-    const detailAvatar =
-      document.getElementById("detailAvatar");
-
-    const detailName =
-      document.getElementById("detailName");
-
-    const detailDescription =
-      document.getElementById("detailDescription");
-
-    const memberCount =
-      document.getElementById("memberCount");
-
-    const detailRank =
-      document.getElementById("detailRank");
-
-    const communityLevel =
-      document.getElementById("communityLevel");
-
-    const leaveBtn =
-      document.getElementById("leaveBtn");
-
-    const deleteBtn =
-      document.getElementById("deleteBtn");
-
-    const backBtn =
-      document.getElementById("backBtn");
-
-    const detailBackBtn =
-      document.getElementById("detailBackBtn");
-
-    let currentUser =
-      localStorage.getItem("community_username") || "";
-
-    let currentCommunityId = null;
-
-    const defaultCommunity = {
-      id: "python_community",
-      name: "python_community",
-      description: "کامیونیتی برنامه‌نویسی پایتون و یادگیری مهارت‌های جدید.",
-      members: 128,
-      level: 40,
-      owner: "CommunityAdmin"
+    const keys = {
+      forward: false,
+      backward: false,
+      left: false,
+      right: false
     };
 
-    function saveCommunities(communities) {
-      localStorage.setItem(
-        "communities",
-        JSON.stringify(communities)
-      );
-    }
+    const startScreen = document.getElementById("startScreen");
+    const questionBox = document.getElementById("questionBox");
+    const deadScreen = document.getElementById("deadScreen");
+    const status = document.getElementById("status");
 
-    function getCommunities() {
-      const saved =
-        localStorage.getItem("communities");
+    init();
+    animate();
 
-      if (!saved) {
-        const communities = [defaultCommunity];
+    function init() {
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x081525);
+      scene.fog = new THREE.Fog(0x081525, 20, 150);
 
-        saveCommunities(communities);
-
-        return communities;
-      }
-
-      return JSON.parse(saved);
-    }
-
-    function showScreen(screen) {
-      document.querySelectorAll(".screen").forEach(item => {
-        item.classList.remove("active");
-      });
-
-      screen.classList.add("active");
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    }
-
-    function escapeHTML(text) {
-      return String(text)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
-    function firstLetter(name) {
-      return name.trim().charAt(0).toUpperCase() || "C";
-    }
-
-    function makeId(name) {
-      return name
-        .toLowerCase()
-        .trim()
-        .replace(/\s+/g, "_")
-        .replace(/[^\w\u0600-\u06FF-]/g, "");
-    }
-
-    function updateUserBar() {
-      if (currentUser) {
-        topUser.innerHTML =
-          `اکانت: <b>${escapeHTML(currentUser)}</b>`;
-
-        logoutBtn.style.display = "inline-block";
-      } else {
-        topUser.textContent = "وارد نشده‌اید";
-        logoutBtn.style.display = "none";
-      }
-    }
-
-    function renderCommunities() {
-      const communities = getCommunities();
-
-      const query =
-        searchInput.value.trim().toLowerCase();
-
-      const filtered = communities.filter(community => {
-        return (
-          community.name.toLowerCase().includes(query) ||
-          community.description.toLowerCase().includes(query)
-        );
-      });
-
-      communityList.innerHTML = "";
-
-      if (filtered.length === 0) {
-        communityList.innerHTML = `
-          <div class="empty">
-            کامیونیتی‌ای با این نام پیدا نشد.
-          </div>
-        `;
-
-        return;
-      }
-
-      filtered.forEach(community => {
-        const card =
-          document.createElement("div");
-
-        card.className = "community-card";
-
-        card.innerHTML = `
-          <div class="community-info">
-
-            <div class="community-avatar">
-              ${escapeHTML(firstLetter(community.name))}
-            </div>
-
-            <div>
-              <div class="community-name">
-                ${escapeHTML(community.name)}
-              </div>
-
-              <div class="community-description">
-                ${escapeHTML(community.description)}
-              </div>
-
-              <div class="community-meta">
-                👥 ${community.members} ممبر
-                &nbsp; • &nbsp;
-                ⭐ Level ${community.level}
-              </div>
-            </div>
-
-          </div>
-
-          <button class="btn btn-primary join-btn">
-            ورود
-          </button>
-        `;
-
-        card
-          .querySelector(".join-btn")
-          .addEventListener("click", () => {
-            joinCommunity(community.id);
-          });
-
-        communityList.appendChild(card);
-      });
-    }
-
-    function joinCommunity(id) {
-      const communities = getCommunities();
-
-      const community =
-        communities.find(item => item.id === id);
-
-      if (!community) return;
-
-      const joinedKey =
-        `joined_${id}_${currentUser}`;
-
-      const alreadyJoined =
-        localStorage.getItem(joinedKey);
-
-      if (!alreadyJoined) {
-        community.members++;
-
-        localStorage.setItem(joinedKey, "true");
-
-        saveCommunities(communities);
-      }
-
-      openCommunity(id);
-    }
-
-    function openCommunity(id) {
-      const communities = getCommunities();
-
-      const community =
-        communities.find(item => item.id === id);
-
-      if (!community) return;
-
-      currentCommunityId = id;
-
-      detailAvatar.textContent =
-        firstLetter(community.name);
-
-      detailName.textContent =
-        community.name;
-
-      detailDescription.textContent =
-        community.description;
-
-      memberCount.textContent =
-        community.members;
-
-      communityLevel.textContent =
-        community.level;
-
-      const isOwner =
-        community.owner === currentUser;
-
-      detailRank.textContent =
-        isOwner ? "owner" : "member";
-
-      detailRank.className =
-        isOwner ? "rank-owner" : "rank-member";
-
-      deleteBtn.style.display =
-        isOwner ? "inline-block" : "none";
-
-      showScreen(detailScreen);
-    }
-
-    function loginUser() {
-      const username =
-        usernameInput.value.trim();
-
-      const password =
-        passwordInput.value;
-
-      if (username.length < 3) {
-        loginError.textContent =
-          "نام کاربری باید حداقل ۳ کاراکتر باشد.";
-
-        return;
-      }
-
-      if (password.length < 8) {
-        loginError.textContent =
-          "رمز عبور باید حداقل ۸ کاراکتر باشد.";
-
-        return;
-      }
-
-      const users = JSON.parse(
-        localStorage.getItem("community_users") || "{}"
+      camera = new THREE.PerspectiveCamera(
+        65,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        500
       );
 
-      if (!users[username]) {
-        users[username] = {
-          password,
-          createdAt: Date.now()
-        };
+      camera.position.set(0, 4.5, -9);
 
-        localStorage.setItem(
-          "community_users",
-          JSON.stringify(users)
-        );
-      } else if (users[username].password !== password) {
-        loginError.textContent =
-          "رمز عبور اشتباه است.";
+      renderer = new THREE.WebGLRenderer({
+        antialias: true
+      });
 
-        return;
-      }
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.shadowMap.enabled = true;
+      document.body.appendChild(renderer.domElement);
 
-      currentUser = username;
+      addLights();
+      createWorld();
+      player = createCharacter(0x35d9ff, 0xffd0aa);
+      player.position.set(0, 0, 2);
+      scene.add(player);
 
-      localStorage.setItem(
-        "community_username",
-        currentUser
+      createNPC(0, 34);
+      createNPC(1, 78);
+      createNPC(2, 125);
+
+      setupControls();
+
+      window.addEventListener("resize", onResize);
+    }
+
+    function addLights() {
+      const ambient = new THREE.HemisphereLight(
+        0x9bdcff,
+        0x172238,
+        2.2
       );
+      scene.add(ambient);
 
-      loginError.style.color = "#24d47b";
-      loginError.textContent =
-        "ورود با موفقیت انجام شد.";
+      const moonLight = new THREE.DirectionalLight(0xffffff, 2.5);
+      moonLight.position.set(15, 30, -20);
+      moonLight.castShadow = true;
+      scene.add(moonLight);
 
-      updateUserBar();
-
-      setTimeout(() => {
-        showScreen(communitiesScreen);
-        renderCommunities();
-      }, 350);
+      const blueLight = new THREE.PointLight(0x00aaff, 15, 60);
+      blueLight.position.set(0, 8, 15);
+      scene.add(blueLight);
     }
 
-    function logoutUser() {
-      if (!confirm("آیا می‌خواهید خارج شوید؟")) {
-        return;
+    function createWorld() {
+      const roadMaterial = new THREE.MeshStandardMaterial({
+        color: 0x202b3b,
+        roughness: .85
+      });
+
+      const lineMaterial = new THREE.MeshBasicMaterial({
+        color: 0x8beeff,
+        emissive: 0x00aaff
+      });
+
+      const wallMaterial = new THREE.MeshStandardMaterial({
+        color: 0x182943,
+        metalness: .2,
+        roughness: .7
+      });
+
+      const segmentLength = 25;
+
+      for (let i = 0; i < 12; i++) {
+        const group = new THREE.Group();
+
+        const road = new THREE.Mesh(
+          new THREE.BoxGeometry(18, .3, segmentLength),
+          roadMaterial
+        );
+        road.position.y = -0.25;
+        road.receiveShadow = true;
+        group.add(road);
+
+        const leftWall = new THREE.Mesh(
+          new THREE.BoxGeometry(.5, 5, segmentLength),
+          wallMaterial
+        );
+        leftWall.position.set(-9.3, 2.2, 0);
+        leftWall.castShadow = true;
+        group.add(leftWall);
+
+        const rightWall = leftWall.clone();
+        rightWall.position.x = 9.3;
+        group.add(rightWall);
+
+        for (let z = -10; z <= 10; z += 5) {
+          const line = new THREE.Mesh(
+            new THREE.BoxGeometry(.16, .03, 2),
+            lineMaterial
+          );
+          line.position.set(0, -.07, z);
+          group.add(line);
+        }
+
+        group.position.z = i * segmentLength;
+        floorParts.push(group);
+        scene.add(group);
       }
+    }
 
-      currentUser = "";
-      currentCommunityId = null;
+    function createCharacter(bodyColor, skinColor) {
+      const character = new THREE.Group();
 
-      localStorage.removeItem(
-        "community_username"
+      const bodyMaterial = new THREE.MeshStandardMaterial({
+        color: bodyColor,
+        roughness: .45,
+        metalness: .15
+      });
+
+      const skinMaterial = new THREE.MeshStandardMaterial({
+        color: skinColor,
+        roughness: .7
+      });
+
+      const shoeMaterial = new THREE.MeshStandardMaterial({
+        color: 0x111827,
+        roughness: .5
+      });
+
+      const body = new THREE.Mesh(
+        new THREE.CapsuleGeometry(.42, 1.15, 6, 12),
+        bodyMaterial
       );
+      body.position.y = 1.45;
+      body.castShadow = true;
+      character.add(body);
 
-      usernameInput.value = "";
-      passwordInput.value = "";
-      loginError.textContent = "";
-      loginError.style.color = "#ff8295";
+      const head = new THREE.Mesh(
+        new THREE.SphereGeometry(.42, 20, 16),
+        skinMaterial
+      );
+      head.position.y = 2.65;
+      head.castShadow = true;
+      character.add(head);
 
-      updateUserBar();
-      showScreen(loginScreen);
-    }
+      const eyeMaterial = new THREE.MeshBasicMaterial({ color: 0x111111 });
 
-    function leaveCommunity() {
-      if (!currentCommunityId) return;
+      const eye1 = new THREE.Mesh(
+        new THREE.SphereGeometry(.045, 8, 8),
+        eyeMaterial
+      );
+      eye1.position.set(-.15, 2.72, -.37);
+      character.add(eye1);
 
-      const communities = getCommunities();
+      const eye2 = eye1.clone();
+      eye2.position.x = .15;
+      character.add(eye2);
 
-      const community =
-        communities.find(
-          item => item.id === currentCommunityId
-        );
+      const armGeometry = new THREE.CapsuleGeometry(.11, .72, 5, 8);
+      const legGeometry = new THREE.CapsuleGeometry(.14, .85, 5, 8);
+      const shoeGeometry = new THREE.BoxGeometry(.33, .2, .58);
 
-      if (!community) return;
+      const leftArm = new THREE.Mesh(armGeometry, bodyMaterial);
+      leftArm.position.set(-.55, 1.45, 0);
+      leftArm.rotation.z = -.15;
+      leftArm.castShadow = true;
+      character.add(leftArm);
 
-      if (community.owner === currentUser) {
-        alert("سازنده نمی‌تواند از کامیونیتی خودش خارج شود.");
-        return;
-      }
+      const rightArm = leftArm.clone();
+      rightArm.position.x = .55;
+      rightArm.rotation.z = .15;
+      character.add(rightArm);
 
-      const joinedKey =
-        `joined_${currentCommunityId}_${currentUser}`;
+      const leftLeg = new THREE.Mesh(legGeometry, bodyMaterial);
+      leftLeg.position.set(-.22, .45, 0);
+      leftLeg.castShadow = true;
+      character.add(leftLeg);
 
-      if (
-        localStorage.getItem(joinedKey) &&
-        community.members > 0
-      ) {
-        community.members--;
+      const rightLeg = leftLeg.clone();
+      rightLeg.position.x = .22;
+      character.add(rightLeg);
 
-        localStorage.removeItem(joinedKey);
+      const leftShoe = new THREE.Mesh(shoeGeometry, shoeMaterial);
+      leftShoe.position.set(-.22, .02, -.15);
+      leftShoe.castShadow = true;
+      character.add(leftShoe);
 
-        saveCommunities(communities);
-      }
+      const rightShoe = leftShoe.clone();
+      rightShoe.position.x = .22;
+      character.add(rightShoe);
 
-      currentCommunityId = null;
-
-      showScreen(communitiesScreen);
-      renderCommunities();
-    }
-
-    function deleteCommunity() {
-      if (!currentCommunityId) return;
-
-      const communities = getCommunities();
-
-      const community =
-        communities.find(
-          item => item.id === currentCommunityId
-        );
-
-      if (!community) return;
-
-      if (community.owner !== currentUser) {
-        alert("فقط سازنده می‌تواند کامیونیتی را حذف کند.");
-        return;
-      }
-
-      if (!confirm(`آیا از حذف «${community.name}» مطمئن هستید؟`)) {
-        return;
-      }
-
-      const updated =
-        communities.filter(
-          item => item.id !== currentCommunityId
-        );
-
-      saveCommunities(updated);
-
-      currentCommunityId = null;
-
-      alert("کامیونیتی با موفقیت حذف شد.");
-
-      showScreen(communitiesScreen);
-      renderCommunities();
-    }
-
-    createForm.addEventListener("submit", event => {
-      event.preventDefault();
-
-      const name =
-        newName.value.trim();
-
-      const description =
-        newDescription.value.trim();
-
-      if (name.length < 3 || description.length < 3) {
-        alert("نام و توضیحات را کامل وارد کنید.");
-        return;
-      }
-
-      const communities =
-        getCommunities();
-
-      const id =
-        makeId(name);
-
-      const exists =
-        communities.some(
-          community => community.id === id
-        );
-
-      if (exists) {
-        alert("این کامیونیتی قبلاً ساخته شده است.");
-        return;
-      }
-
-      const newCommunity = {
-        id,
-        name,
-        description,
-        members: 1,
-        level: 1,
-        owner: currentUser
+      character.userData = {
+        leftArm,
+        rightArm,
+        leftLeg,
+        rightLeg,
+        baseY: 0,
+        isNPC: false
       };
 
-      communities.push(newCommunity);
+      return character;
+    }
 
-      saveCommunities(communities);
-
-      localStorage.setItem(
-        `joined_${id}_${currentUser}`,
-        "true"
+    function createNPC(index, zPosition) {
+      const npc = createCharacter(
+        [0xff4d6d, 0xffb703, 0x9b5de5][index % 3],
+        0xffc7a8
       );
 
-      createForm.reset();
+      npc.position.set(0, 0, zPosition);
+      npc.rotation.y = Math.PI;
+      npc.userData.isNPC = true;
+      npc.userData.id = npcIndex++;
 
-      openCommunity(id);
-    });
-
-    continueBtn.addEventListener("click", loginUser);
-
-    usernameInput.addEventListener("keydown", event => {
-      if (event.key === "Enter") {
-        passwordInput.focus();
-      }
-    });
-
-    passwordInput.addEventListener("keydown", event => {
-      if (event.key === "Enter") {
-        loginUser();
-      }
-    });
-
-    logoutBtn.addEventListener("click", logoutUser);
-
-    searchBtn.addEventListener(
-      "click",
-      renderCommunities
-    );
-
-    searchInput.addEventListener(
-      "input",
-      renderCommunities
-    );
-
-    leaveBtn.addEventListener(
-      "click",
-      leaveCommunity
-    );
-
-    deleteBtn.addEventListener(
-      "click",
-      deleteCommunity
-    );
-
-    backBtn.addEventListener("click", () => {
-      showScreen(communitiesScreen);
-      renderCommunities();
-    });
-
-    detailBackBtn.addEventListener("click", () => {
-      showScreen(communitiesScreen);
-      renderCommunities();
-    });
-
-    /* شمارش معکوس آپدیت */
-
-    const updateOverlay =
-      document.getElementById("updateOverlay");
-
-    const updateCloseBtn =
-      document.getElementById("updateCloseBtn");
-
-    const startWorkBtn =
-      document.getElementById("startWorkBtn");
-
-    const countdownHours =
-      document.getElementById("countdownHours");
-
-    const countdownMinutes =
-      document.getElementById("countdownMinutes");
-
-    const countdownSeconds =
-      document.getElementById("countdownSeconds");
-
-    const UPDATE_TIME =
-      15 * 60 * 60 * 1000;
-
-    const UPDATE_DEADLINE_KEY =
-      "community_update_deadline";
-
-    function getUpdateDeadline() {
-      let deadline =
-        Number(
-          localStorage.getItem(UPDATE_DEADLINE_KEY)
-        );
-
-      if (!deadline || deadline <= Date.now()) {
-        deadline =
-          Date.now() + UPDATE_TIME;
-
-        localStorage.setItem(
-          UPDATE_DEADLINE_KEY,
-          deadline
-        );
-      }
-
-      return deadline;
+      npcList.push(npc);
+      scene.add(npc);
     }
 
-    function twoDigits(number) {
-      return String(number).padStart(2, "0");
+    function setupControls() {
+      document.getElementById("startButton").addEventListener("click", () => {
+        startScreen.style.display = "none";
+        gameStarted = true;
+        gamePaused = false;
+
+        // تلپورت بازیکن به جلو
+        player.position.z = 12;
+        distance = 10;
+        status.textContent = "مسافت: 10 متر";
+      });
+
+      document.getElementById("kidButton").addEventListener("click", () => {
+        questionBox.style.display = "none";
+        gamePaused = true;
+        deadScreen.style.display = "flex";
+      });
+
+      document.getElementById("adultButton").addEventListener("click", () => {
+        questionBox.style.display = "none";
+        gamePaused = false;
+
+        // آدمک قبلی حذف شود
+        if (npcList.length > 0) {
+          const npc = npcList.shift();
+          scene.remove(npc);
+        }
+
+        // آدمک جدید جلوتر ظاهر شود
+        const lastNPC = npcList[npcList.length - 1];
+        const nextZ = lastNPC
+          ? lastNPC.position.z + 48
+          : player.position.z + 50;
+
+        createNPC(npcIndex, nextZ);
+      });
+
+      holdButton("forwardButton", "forward");
+      holdButton("backButton", "backward");
+
+      document.getElementById("jumpButton").addEventListener("pointerdown", jump);
+
+      window.addEventListener("keydown", (event) => {
+        if (event.code === "ArrowUp" || event.code === "KeyW") {
+          keys.forward = true;
+        }
+
+        if (event.code === "ArrowDown" || event.code === "KeyS") {
+          keys.backward = true;
+        }
+
+        if (event.code === "ArrowLeft" || event.code === "KeyA") {
+          keys.left = true;
+        }
+
+        if (event.code === "ArrowRight" || event.code === "KeyD") {
+          keys.right = true;
+        }
+
+        if (event.code === "Space") {
+          jump();
+        }
+      });
+
+      window.addEventListener("keyup", (event) => {
+        if (event.code === "ArrowUp" || event.code === "KeyW") {
+          keys.forward = false;
+        }
+
+        if (event.code === "ArrowDown" || event.code === "KeyS") {
+          keys.backward = false;
+        }
+
+        if (event.code === "ArrowLeft" || event.code === "KeyA") {
+          keys.left = false;
+        }
+
+        if (event.code === "ArrowRight" || event.code === "KeyD") {
+          keys.right = false;
+        }
+      });
     }
 
-    function updateCountdown() {
-      const deadline =
-        getUpdateDeadline();
+    function holdButton(id, keyName) {
+      const button = document.getElementById(id);
 
-      let remaining =
-        deadline - Date.now();
+      button.addEventListener("pointerdown", (event) => {
+        event.preventDefault();
+        keys[keyName] = true;
+      });
 
-      if (remaining <= 0) {
-        remaining = UPDATE_TIME;
+      button.addEventListener("pointerup", () => {
+        keys[keyName] = false;
+      });
 
-        localStorage.setItem(
-          UPDATE_DEADLINE_KEY,
-          Date.now() + UPDATE_TIME
-        );
+      button.addEventListener("pointerleave", () => {
+        keys[keyName] = false;
+      });
+
+      button.addEventListener("pointercancel", () => {
+        keys[keyName] = false;
+      });
+    }
+
+    function jump() {
+      if (!gameStarted || gamePaused || isJumping) return;
+
+      isJumping = true;
+      jumpVelocity = .22;
+    }
+
+    function updatePlayer() {
+      if (!gameStarted || gamePaused) return;
+
+      if (keys.forward) {
+        playerSpeed += .012;
+      } else if (keys.backward) {
+        playerSpeed -= .014;
+      } else {
+        playerSpeed *= .88;
       }
 
-      const totalSeconds =
-        Math.floor(remaining / 1000);
+      playerSpeed = THREE.MathUtils.clamp(playerSpeed, -.18, .34);
 
-      const hours =
-        Math.floor(totalSeconds / 3600);
+      player.position.z += playerSpeed;
 
-      const minutes =
-        Math.floor((totalSeconds % 3600) / 60);
+      if (keys.left) {
+        player.position.x -= .16;
+      }
 
-      const seconds =
-        totalSeconds % 60;
+      if (keys.right) {
+        player.position.x += .16;
+      }
 
-      countdownHours.textContent =
-        twoDigits(hours);
+      player.position.x = THREE.MathUtils.clamp(player.position.x, -7.5, 7.5);
 
-      countdownMinutes.textContent =
-        twoDigits(minutes);
+      if (isJumping) {
+        player.position.y += jumpVelocity;
+        jumpVelocity -= .012;
 
-      countdownSeconds.textContent =
-        twoDigits(seconds);
+        if (player.position.y <= 0) {
+          player.position.y = 0;
+          isJumping = false;
+          jumpVelocity = 0;
+        }
+      }
+
+      const walking = Math.abs(playerSpeed) > .025;
+      animateCharacter(player, walking);
+
+      distance = Math.max(0, Math.floor(player.position.z - 2));
+      status.textContent = "مسافت: " + distance + " متر";
+
+      checkNPCContact();
     }
 
-    function closeUpdatePopup() {
-      updateOverlay.classList.add("hidden");
+    function animateCharacter(character, walking) {
+      const parts = character.userData;
+      if (!parts) return;
+
+      const time = performance.now() * .012;
+      const movement = walking ? Math.sin(time) * .55 : 0;
+
+      parts.leftArm.rotation.x = movement;
+      parts.rightArm.rotation.x = -movement;
+      parts.leftLeg.rotation.x = -movement;
+      parts.rightLeg.rotation.x = movement;
     }
 
-    updateCloseBtn.addEventListener(
-      "click",
-      closeUpdatePopup
-    );
+    function checkNPCContact() {
+      for (const npc of npcList) {
+        if (npc.userData.used) continue;
 
-    startWorkBtn.addEventListener(
-      "click",
-      closeUpdatePopup
-    );
+        const distanceZ = Math.abs(player.position.z - npc.position.z);
+        const distanceX = Math.abs(player.position.x - npc.position.x);
 
-    updateCountdown();
+        if (distanceZ < 2.4 && distanceX < 2.2) {
+          npc.userData.used = true;
+          gamePaused = true;
+          questionBox.style.display = "flex";
+          break;
+        }
+      }
+    }
 
-    setInterval(
-      updateCountdown,
-      1000
-    );
+    function updateInfiniteWorld() {
+      for (const part of floorParts) {
+        if (part.position.z + 25 < player.position.z - 30) {
+          part.position.z += floorParts.length * 25;
+        }
+      }
+    }
 
-    updateUserBar();
+    function updateCamera() {
+      const targetCameraPosition = new THREE.Vector3(
+        player.position.x * .35,
+        player.position.y + 4.4,
+        player.position.z - 8
+      );
 
-    if (currentUser) {
-      showScreen(communitiesScreen);
-      renderCommunities();
+      camera.position.lerp(targetCameraPosition, .08);
+
+      const lookTarget = new THREE.Vector3(
+        player.position.x,
+        player.position.y + 1.4,
+        player.position.z + 7
+      );
+
+      camera.lookAt(lookTarget);
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      updatePlayer();
+      updateInfiniteWorld();
+      updateCamera();
+
+      renderer.render(scene, camera);
+    }
+
+    function onResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
     }
   </script>
-<script>
-fetch("data.json")
-  .then(response => response.json())
-  .then(data => {
-    const members = document.getElementById("members");
-    const title = document.getElementById("title");
-
-    if (members) members.textContent = data.members;
-    if (title) title.textContent = data.title;
-  })
-  .catch(error => console.log("خطا در خواندن اطلاعات:", error));
-</script>
 </body>
 </html>
