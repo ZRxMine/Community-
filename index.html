@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Infinite Road Game</title>
+  <title>Infinite Road</title>
 
   <style>
     * {
@@ -15,7 +15,7 @@
       margin: 0;
       overflow: hidden;
       background: #07111f;
-      font-family: Arial, sans-serif;
+      font-family: Tahoma, Arial, sans-serif;
       touch-action: none;
     }
 
@@ -23,118 +23,115 @@
       display: block;
     }
 
-    #startScreen,
-    #questionBox,
-    #deadScreen {
+    .screen {
       position: fixed;
       inset: 0;
-      z-index: 10;
+      z-index: 20;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, rgba(3, 8, 20, .95), rgba(12, 33, 60, .94));
-      color: white;
       text-align: center;
+      color: white;
+      background:
+        radial-gradient(circle at center, rgba(0, 160, 255, .2), transparent 45%),
+        linear-gradient(135deg, rgba(2, 7, 20, .97), rgba(10, 35, 65, .97));
     }
 
     .panel {
       width: min(90%, 430px);
-      padding: 30px;
-      border: 1px solid rgba(255,255,255,.25);
+      padding: 30px 22px;
+      border: 1px solid rgba(255, 255, 255, .25);
       border-radius: 25px;
-      background: rgba(255,255,255,.1);
+      background: rgba(255, 255, 255, .1);
       backdrop-filter: blur(15px);
-      box-shadow: 0 0 40px rgba(0, 190, 255, .25);
+      box-shadow: 0 0 40px rgba(0, 190, 255, .3);
     }
 
     h1 {
-      margin-top: 0;
+      margin: 0 0 15px;
+      color: #6deaff;
       font-size: 38px;
-      color: #61e7ff;
-      text-shadow: 0 0 15px #00cfff;
+      text-shadow: 0 0 18px #00cfff;
     }
 
     h2 {
-      font-size: 27px;
+      margin-top: 0;
+      font-size: 28px;
     }
 
     p {
-      line-height: 1.8;
-      color: #d6edf5;
+      color: #d9f6ff;
+      line-height: 2;
     }
 
     button {
+      margin: 7px;
+      padding: 14px 23px;
       border: 0;
       border-radius: 15px;
-      padding: 15px 24px;
-      margin: 7px;
+      color: white;
+      background: linear-gradient(135deg, #009dff, #723cff);
+      box-shadow: 0 5px 18px rgba(0, 130, 255, .4);
+      font-family: inherit;
       font-size: 17px;
       font-weight: bold;
       cursor: pointer;
-      color: white;
-      background: linear-gradient(135deg, #00a8ff, #6c39ff);
-      box-shadow: 0 5px 18px rgba(0, 130, 255, .35);
     }
 
     button:active {
-      transform: scale(.94);
+      transform: scale(.93);
     }
 
-    #questionBox,
+    #questionScreen,
     #deadScreen {
       display: none;
     }
 
-    #controls {
-      position: fixed;
-      z-index: 5;
-      bottom: 18px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      direction: ltr;
-      gap: 10px;
-    }
-
-    .control {
-      width: 75px;
-      height: 58px;
-      padding: 0;
-      margin: 0;
-      font-size: 25px;
-      border-radius: 18px;
-      background: rgba(0, 0, 0, .55);
-      border: 1px solid rgba(255,255,255,.35);
-      backdrop-filter: blur(8px);
-    }
-
     #status {
       position: fixed;
-      z-index: 5;
       top: 15px;
       left: 15px;
-      direction: rtl;
-      color: white;
-      background: rgba(0,0,0,.45);
+      z-index: 5;
       padding: 10px 15px;
       border-radius: 12px;
+      color: white;
+      background: rgba(0, 0, 0, .5);
       font-size: 14px;
     }
 
-    #hint {
+    #help {
       position: fixed;
-      z-index: 5;
       top: 15px;
       right: 15px;
-      color: #d9f9ff;
-      background: rgba(0,0,0,.4);
+      z-index: 5;
       padding: 10px;
       border-radius: 12px;
+      color: #d9f6ff;
+      background: rgba(0, 0, 0, .45);
       font-size: 13px;
     }
 
-    .hidden {
-      display: none !important;
+    #controls {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      z-index: 5;
+      display: flex;
+      gap: 10px;
+      direction: ltr;
+      transform: translateX(-50%);
+    }
+
+    .control {
+      width: 78px;
+      height: 60px;
+      margin: 0;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, .3);
+      border-radius: 18px;
+      background: rgba(0, 0, 0, .55);
+      backdrop-filter: blur(8px);
+      font-size: 26px;
     }
 
     @media (max-width: 500px) {
@@ -146,35 +143,35 @@
         width: 68px;
         height: 55px;
       }
-
-      .panel {
-        padding: 23px;
-      }
     }
   </style>
 </head>
+
 <body>
 
-  <div id="startScreen">
+  <!-- صفحه شروع -->
+  <div id="startScreen" class="screen">
     <div class="panel">
       <h1>INFINITE ROAD</h1>
       <p>
-        وارد مسیر بی‌نهایت شو، جلو برو و آدمک‌های مسیر را پیدا کن.
+        در مسیر بی‌نهایت حرکت کن و آدمک مسیر را پیدا کن.
       </p>
       <button id="startButton">Start game</button>
     </div>
   </div>
 
-  <div id="questionBox">
+  <!-- صفحه سؤال -->
+  <div id="questionScreen" class="screen">
     <div class="panel">
       <h2>تو بچه‌ای؟</h2>
-      <p>یک گزینه را انتخاب کن:</p>
+      <p>یکی از گزینه‌ها را انتخاب کن:</p>
       <button id="kidButton">آره</button>
       <button id="adultButton">من بزرگسالم</button>
     </div>
   </div>
 
-  <div id="deadScreen">
+  <!-- صفحه پایان -->
+  <div id="deadScreen" class="screen">
     <div class="panel">
       <h1>DID</h1>
       <p>بازی تمام شد!</p>
@@ -183,28 +180,35 @@
   </div>
 
   <div id="status">مسافت: 0 متر</div>
-  <div id="hint">برای حرکت از دکمه‌های پایین استفاده کن</div>
+  <div id="help">W / ↑ برای جلو رفتن</div>
 
+  <!-- کنترل‌ها -->
   <div id="controls">
-    <button class="control" id="backButton">◀</button>
-    <button class="control" id="forwardButton">▶</button>
-    <button class="control" id="jumpButton">⬆</button>
+    <button id="backButton" class="control">◀</button>
+    <button id="forwardButton" class="control">▶</button>
+    <button id="jumpButton" class="control">⬆</button>
   </div>
 
   <script type="module">
-    import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
+    import * as THREE from
+      "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 
-    let scene, camera, renderer;
+    let scene;
+    let camera;
+    let renderer;
     let player;
+
     let gameStarted = false;
     let gamePaused = true;
-    let isJumping = false;
-    let jumpVelocity = 0;
+
     let playerSpeed = 0;
     let distance = 0;
-    let npcIndex = 0;
-    let npcList = [];
-    let floorParts = [];
+
+    let jumping = false;
+    let jumpVelocity = 0;
+
+    let npc = null;
+    let npcNumber = 0;
 
     const keys = {
       forward: false,
@@ -214,17 +218,20 @@
     };
 
     const startScreen = document.getElementById("startScreen");
-    const questionBox = document.getElementById("questionBox");
+    const questionScreen = document.getElementById("questionScreen");
     const deadScreen = document.getElementById("deadScreen");
     const status = document.getElementById("status");
+
+    const worldSegments = [];
 
     init();
     animate();
 
     function init() {
       scene = new THREE.Scene();
+
       scene.background = new THREE.Color(0x081525);
-      scene.fog = new THREE.Fog(0x081525, 20, 150);
+      scene.fog = new THREE.Fog(0x081525, 25, 160);
 
       camera = new THREE.PerspectiveCamera(
         65,
@@ -233,7 +240,7 @@
         500
       );
 
-      camera.position.set(0, 4.5, -9);
+      camera.position.set(0, 4.5, -8);
 
       renderer = new THREE.WebGLRenderer({
         antialias: true
@@ -242,109 +249,121 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.shadowMap.enabled = true;
+
       document.body.appendChild(renderer.domElement);
 
-      addLights();
-      createWorld();
-      player = createCharacter(0x35d9ff, 0xffd0aa);
+      createLights();
+      createInfiniteRoad();
+
+      player = createCharacter(0x28d7ff);
       player.position.set(0, 0, 2);
       scene.add(player);
 
-      createNPC(0, 34);
-      createNPC(1, 78);
-      createNPC(2, 125);
+      // فقط یک آدمک ساخته می‌شود
+      createOneNPC(34);
 
       setupControls();
 
-      window.addEventListener("resize", onResize);
+      window.addEventListener("resize", resizeGame);
     }
 
-    function addLights() {
-      const ambient = new THREE.HemisphereLight(
+    function createLights() {
+      const ambientLight = new THREE.HemisphereLight(
         0x9bdcff,
         0x172238,
         2.2
       );
-      scene.add(ambient);
 
-      const moonLight = new THREE.DirectionalLight(0xffffff, 2.5);
-      moonLight.position.set(15, 30, -20);
-      moonLight.castShadow = true;
-      scene.add(moonLight);
+      scene.add(ambientLight);
 
-      const blueLight = new THREE.PointLight(0x00aaff, 15, 60);
-      blueLight.position.set(0, 8, 15);
+      const directionalLight = new THREE.DirectionalLight(
+        0xffffff,
+        2.5
+      );
+
+      directionalLight.position.set(15, 30, -20);
+      directionalLight.castShadow = true;
+      scene.add(directionalLight);
+
+      const blueLight = new THREE.PointLight(
+        0x00aaff,
+        15,
+        70
+      );
+
+      blueLight.position.set(0, 8, 20);
       scene.add(blueLight);
     }
 
-    function createWorld() {
+    function createInfiniteRoad() {
       const roadMaterial = new THREE.MeshStandardMaterial({
         color: 0x202b3b,
         roughness: .85
       });
 
-      const lineMaterial = new THREE.MeshBasicMaterial({
-        color: 0x8beeff,
-        emissive: 0x00aaff
+      const wallMaterial = new THREE.MeshStandardMaterial({
+        color: 0x172945,
+        roughness: .65
       });
 
-      const wallMaterial = new THREE.MeshStandardMaterial({
-        color: 0x182943,
-        metalness: .2,
-        roughness: .7
+      const lineMaterial = new THREE.MeshBasicMaterial({
+        color: 0x8beeff
       });
 
       const segmentLength = 25;
 
-      for (let i = 0; i < 12; i++) {
-        const group = new THREE.Group();
+      for (let i = 0; i < 14; i++) {
+        const segment = new THREE.Group();
 
         const road = new THREE.Mesh(
           new THREE.BoxGeometry(18, .3, segmentLength),
           roadMaterial
         );
-        road.position.y = -0.25;
+
+        road.position.y = -.25;
         road.receiveShadow = true;
-        group.add(road);
+        segment.add(road);
 
         const leftWall = new THREE.Mesh(
           new THREE.BoxGeometry(.5, 5, segmentLength),
           wallMaterial
         );
+
         leftWall.position.set(-9.3, 2.2, 0);
         leftWall.castShadow = true;
-        group.add(leftWall);
+        segment.add(leftWall);
 
         const rightWall = leftWall.clone();
         rightWall.position.x = 9.3;
-        group.add(rightWall);
+        segment.add(rightWall);
 
         for (let z = -10; z <= 10; z += 5) {
-          const line = new THREE.Mesh(
-            new THREE.BoxGeometry(.16, .03, 2),
+          const roadLine = new THREE.Mesh(
+            new THREE.BoxGeometry(.16, .04, 2),
             lineMaterial
           );
-          line.position.set(0, -.07, z);
-          group.add(line);
+
+          roadLine.position.set(0, -.07, z);
+          segment.add(roadLine);
         }
 
-        group.position.z = i * segmentLength;
-        floorParts.push(group);
-        scene.add(group);
+        segment.position.z = i * segmentLength;
+        worldSegments.push(segment);
+        scene.add(segment);
       }
     }
 
-    function createCharacter(bodyColor, skinColor) {
+    function createCharacter(color) {
       const character = new THREE.Group();
 
       const bodyMaterial = new THREE.MeshStandardMaterial({
-        color: bodyColor,
+        color: color,
         roughness: .45,
         metalness: .15
       });
 
       const skinMaterial = new THREE.MeshStandardMaterial({
-        color: skinColor,
+        color: 0xffc7a8,
         roughness: .7
       });
 
@@ -353,40 +372,51 @@
         roughness: .5
       });
 
+      // بدن
       const body = new THREE.Mesh(
         new THREE.CapsuleGeometry(.42, 1.15, 6, 12),
         bodyMaterial
       );
+
       body.position.y = 1.45;
       body.castShadow = true;
       character.add(body);
 
+      // سر
       const head = new THREE.Mesh(
-        new THREE.SphereGeometry(.42, 20, 16),
+        new THREE.SphereGeometry(.43, 20, 16),
         skinMaterial
       );
+
       head.position.y = 2.65;
       head.castShadow = true;
       character.add(head);
 
-      const eyeMaterial = new THREE.MeshBasicMaterial({ color: 0x111111 });
+      // چشم‌ها
+      const eyeMaterial = new THREE.MeshBasicMaterial({
+        color: 0x111111
+      });
 
-      const eye1 = new THREE.Mesh(
-        new THREE.SphereGeometry(.045, 8, 8),
+      const eyeLeft = new THREE.Mesh(
+        new THREE.SphereGeometry(.05, 8, 8),
         eyeMaterial
       );
-      eye1.position.set(-.15, 2.72, -.37);
-      character.add(eye1);
 
-      const eye2 = eye1.clone();
-      eye2.position.x = .15;
-      character.add(eye2);
+      eyeLeft.position.set(-.15, 2.72, -.38);
+      character.add(eyeLeft);
 
+      const eyeRight = eyeLeft.clone();
+      eyeRight.position.x = .15;
+      character.add(eyeRight);
+
+      // دست‌ها
       const armGeometry = new THREE.CapsuleGeometry(.11, .72, 5, 8);
-      const legGeometry = new THREE.CapsuleGeometry(.14, .85, 5, 8);
-      const shoeGeometry = new THREE.BoxGeometry(.33, .2, .58);
 
-      const leftArm = new THREE.Mesh(armGeometry, bodyMaterial);
+      const leftArm = new THREE.Mesh(
+        armGeometry,
+        bodyMaterial
+      );
+
       leftArm.position.set(-.55, 1.45, 0);
       leftArm.rotation.z = -.15;
       leftArm.castShadow = true;
@@ -397,7 +427,14 @@
       rightArm.rotation.z = .15;
       character.add(rightArm);
 
-      const leftLeg = new THREE.Mesh(legGeometry, bodyMaterial);
+      // پاها
+      const legGeometry = new THREE.CapsuleGeometry(.14, .85, 5, 8);
+
+      const leftLeg = new THREE.Mesh(
+        legGeometry,
+        bodyMaterial
+      );
+
       leftLeg.position.set(-.22, .45, 0);
       leftLeg.castShadow = true;
       character.add(leftLeg);
@@ -406,7 +443,14 @@
       rightLeg.position.x = .22;
       character.add(rightLeg);
 
-      const leftShoe = new THREE.Mesh(shoeGeometry, shoeMaterial);
+      // کفش‌ها
+      const shoeGeometry = new THREE.BoxGeometry(.33, .2, .58);
+
+      const leftShoe = new THREE.Mesh(
+        shoeGeometry,
+        shoeMaterial
+      );
+
       leftShoe.position.set(-.22, .02, -.15);
       leftShoe.castShadow = true;
       character.add(leftShoe);
@@ -419,70 +463,86 @@
         leftArm,
         rightArm,
         leftLeg,
-        rightLeg,
-        baseY: 0,
-        isNPC: false
+        rightLeg
       };
 
       return character;
     }
 
-    function createNPC(index, zPosition) {
-      const npc = createCharacter(
-        [0xff4d6d, 0xffb703, 0x9b5de5][index % 3],
-        0xffc7a8
-      );
+    function createOneNPC(zPosition) {
+      // اگر آدمک قبلی بود، حذف می‌شود
+      if (npc !== null) {
+        scene.remove(npc);
+        npc = null;
+      }
+
+      const colors = [
+        0xff4d6d,
+        0xffb703,
+        0x9b5de5,
+        0x00c896
+      ];
+
+      npc = createCharacter(colors[npcNumber % colors.length]);
+      npcNumber++;
 
       npc.position.set(0, 0, zPosition);
       npc.rotation.y = Math.PI;
-      npc.userData.isNPC = true;
-      npc.userData.id = npcIndex++;
 
-      npcList.push(npc);
+      npc.userData.used = false;
+
       scene.add(npc);
     }
 
     function setupControls() {
-      document.getElementById("startButton").addEventListener("click", () => {
-        startScreen.style.display = "none";
-        gameStarted = true;
-        gamePaused = false;
+      document.getElementById("startButton").addEventListener(
+        "click",
+        () => {
+          startScreen.style.display = "none";
 
-        // تلپورت بازیکن به جلو
-        player.position.z = 12;
-        distance = 10;
-        status.textContent = "مسافت: 10 متر";
-      });
+          gameStarted = true;
+          gamePaused = false;
 
-      document.getElementById("kidButton").addEventListener("click", () => {
-        questionBox.style.display = "none";
-        gamePaused = true;
-        deadScreen.style.display = "flex";
-      });
-
-      document.getElementById("adultButton").addEventListener("click", () => {
-        questionBox.style.display = "none";
-        gamePaused = false;
-
-        // آدمک قبلی حذف شود
-        if (npcList.length > 0) {
-          const npc = npcList.shift();
-          scene.remove(npc);
+          // تلپورت بازیکن به جلو
+          player.position.z = 10;
+          distance = 8;
+          updateStatus();
         }
+      );
 
-        // آدمک جدید جلوتر ظاهر شود
-        const lastNPC = npcList[npcList.length - 1];
-        const nextZ = lastNPC
-          ? lastNPC.position.z + 48
-          : player.position.z + 50;
+      document.getElementById("kidButton").addEventListener(
+        "click",
+        () => {
+          questionScreen.style.display = "none";
+          gamePaused = true;
+          deadScreen.style.display = "flex";
+        }
+      );
 
-        createNPC(npcIndex, nextZ);
-      });
+      document.getElementById("adultButton").addEventListener(
+        "click",
+        () => {
+          questionScreen.style.display = "none";
+          gamePaused = false;
+
+          // آدمک قبلی حذف می‌شود
+          if (npc !== null) {
+            scene.remove(npc);
+            npc = null;
+          }
+
+          // فقط یک آدمک جدید جلوتر ساخته می‌شود
+          createOneNPC(player.position.z + 55);
+        }
+      );
 
       holdButton("forwardButton", "forward");
       holdButton("backButton", "backward");
 
-      document.getElementById("jumpButton").addEventListener("pointerdown", jump);
+      document.getElementById("jumpButton").addEventListener(
+        "pointerdown",
+        jump
+      );
 
       window.addEventListener("keydown", (event) => {
         if (event.code === "ArrowUp" || event.code === "KeyW") {
@@ -523,10 +583,16 @@
           keys.right = false;
         }
       });
+
+      // اگر انگشت یا ماوس از دکمه خارج شد، حرکت متوقف شود
+      window.addEventListener("pointerup", () => {
+        keys.forward = false;
+        keys.backward = false;
+      });
     }
 
-    function holdButton(id, keyName) {
-      const button = document.getElementById(id);
+    function holdButton(buttonId, keyName) {
+      const button = document.getElementById(buttonId);
 
       button.addEventListener("pointerdown", (event) => {
         event.preventDefault();
@@ -547,14 +613,18 @@
     }
 
     function jump() {
-      if (!gameStarted || gamePaused || isJumping) return;
+      if (!gameStarted || gamePaused || jumping) {
+        return;
+      }
 
-      isJumping = true;
-      jumpVelocity = .22;
+      jumping = true;
+      jumpVelocity = .23;
     }
 
     function updatePlayer() {
-      if (!gameStarted || gamePaused) return;
+      if (!gameStarted || gamePaused) {
+        return;
+      }
 
       if (keys.forward) {
         playerSpeed += .012;
@@ -564,7 +634,11 @@
         playerSpeed *= .88;
       }
 
-      playerSpeed = THREE.MathUtils.clamp(playerSpeed, -.18, .34);
+      playerSpeed = THREE.MathUtils.clamp(
+        playerSpeed,
+        -.18,
+        .34
+      );
 
       player.position.z += playerSpeed;
 
@@ -576,73 +650,101 @@
         player.position.x += .16;
       }
 
-      player.position.x = THREE.MathUtils.clamp(player.position.x, -7.5, 7.5);
+      player.position.x = THREE.MathUtils.clamp(
+        player.position.x,
+        -7.5,
+        7.5
+      );
 
-      if (isJumping) {
+      // حرکت پرش
+      if (jumping) {
         player.position.y += jumpVelocity;
         jumpVelocity -= .012;
 
         if (player.position.y <= 0) {
           player.position.y = 0;
-          isJumping = false;
           jumpVelocity = 0;
+          jumping = false;
         }
       }
 
-      const walking = Math.abs(playerSpeed) > .025;
-      animateCharacter(player, walking);
+      const isWalking = Math.abs(playerSpeed) > .025;
+      animateCharacter(player, isWalking);
 
-      distance = Math.max(0, Math.floor(player.position.z - 2));
-      status.textContent = "مسافت: " + distance + " متر";
+      distance = Math.max(
+        0,
+        Math.floor(player.position.z - 2)
+      );
+
+      updateStatus();
 
       checkNPCContact();
     }
 
+    function checkNPCContact() {
+      if (!gameStarted || gamePaused || npc === null) {
+        return;
+      }
+
+      if (npc.userData.used) {
+        return;
+      }
+
+      const xDistance =
+        player.position.x - npc.position.x;
+
+      const zDistance =
+        player.position.z - npc.position.z;
+
+      // برخورد دایره‌ای؛ از بغل هم رد شوی سؤال باز می‌شود
+      const realDistance = Math.sqrt(
+        (xDistance * xDistance) +
+        (zDistance * zDistance)
+      );
+
+      if (realDistance <= 5.5) {
+        npc.userData.used = true;
+        playerSpeed = 0;
+        gamePaused = true;
+        questionScreen.style.display = "flex";
+      }
+    }
+
     function animateCharacter(character, walking) {
       const parts = character.userData;
-      if (!parts) return;
+
+      if (!parts) {
+        return;
+      }
 
       const time = performance.now() * .012;
-      const movement = walking ? Math.sin(time) * .55 : 0;
+      const movement = walking
+        ? Math.sin(time) * .55
+        : 0;
 
       parts.leftArm.rotation.x = movement;
       parts.rightArm.rotation.x = -movement;
+
       parts.leftLeg.rotation.x = -movement;
       parts.rightLeg.rotation.x = movement;
     }
 
-    function checkNPCContact() {
-      for (const npc of npcList) {
-        if (npc.userData.used) continue;
-
-        const distanceZ = Math.abs(player.position.z - npc.position.z);
-        const distanceX = Math.abs(player.position.x - npc.position.x);
-
-        if (distanceZ < 2.4 && distanceX < 2.2) {
-          npc.userData.used = true;
-          gamePaused = true;
-          questionBox.style.display = "flex";
-          break;
-        }
-      }
-    }
-
-    function updateInfiniteWorld() {
-      for (const part of floorParts) {
-        if (part.position.z + 25 < player.position.z - 30) {
-          part.position.z += floorParts.length * 25;
+    function updateInfiniteRoad() {
+      for (const segment of worldSegments) {
+        if (segment.position.z + 25 < player.position.z - 30) {
+          segment.position.z += worldSegments.length * 25;
         }
       }
     }
 
     function updateCamera() {
-      const targetCameraPosition = new THREE.Vector3(
+      const cameraTarget = new THREE.Vector3(
         player.position.x * .35,
         player.position.y + 4.4,
         player.position.z - 8
       );
 
-      camera.position.lerp(targetCameraPosition, .08);
+      camera.position.lerp(cameraTarget, .08);
 
       const lookTarget = new THREE.Vector3(
         player.position.x,
@@ -653,20 +755,30 @@
       camera.lookAt(lookTarget);
     }
 
+    function updateStatus() {
+      status.textContent = "مسافت: " + distance + " متر";
+    }
+
+    function resizeGame() {
+      camera.aspect =
+        window.innerWidth / window.innerHeight;
+
+      camera.updateProjectionMatrix();
+
+      renderer.setSize(
+        window.innerWidth,
+        window.innerHeight
+      );
+    }
+
     function animate() {
       requestAnimationFrame(animate);
 
       updatePlayer();
-      updateInfiniteWorld();
+      updateInfiniteRoad();
       updateCamera();
 
       renderer.render(scene, camera);
-    }
-
-    function onResize() {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
     }
   </script>
 </body>
