@@ -1732,6 +1732,17 @@
       renderCommunities();
     }
   </script>
+<script>
+fetch("data.json")
+  .then(response => response.json())
+  .then(data => {
+    const members = document.getElementById("members");
+    const title = document.getElementById("title");
 
+    if (members) members.textContent = data.members;
+    if (title) title.textContent = data.title;
+  })
+  .catch(error => console.log("خطا در خواندن اطلاعات:", error));
+</script>
 </body>
 </html>
