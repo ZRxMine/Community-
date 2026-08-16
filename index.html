@@ -20,7 +20,7 @@
             width: 350px;
             text-align: center;
         }
-        h1 { color: #333; font-size: 22px; }
+        h1 { color: #333; font-size: 22px; margin-bottom: 20px; }
         input {
             width: 100%;
             padding: 12px;
@@ -55,14 +55,21 @@
             letter-spacing: 6px;
         }
         .err { color: red; font-size: 13px; }
-        .profile { font-size: 18px; }
-        .coins {
+        .member-box {
             background: #f0f4ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        .member-box h2 { color: #667eea; margin: 0 0 10px 0; }
+        .member-box p { color: #555; margin: 5px 0; }
+        .coins {
+            background: #fff3cd;
             padding: 15px;
             border-radius: 8px;
             margin-top: 15px;
-            color: #667eea;
-            font-size: 20px;
+            color: #856404;
+            font-size: 18px;
         }
     </style>
 </head>
@@ -73,24 +80,27 @@
         <!-- مرحله ۱: شماره -->
         <div id="s1">
             <input type="tel" id="phone" placeholder="09xxxxxxxxx" maxlength="11">
-            <button onclick="sendCode()">ارسال کد</button>
+            <button onclick="sendCode()">ادامه</button>
         </div>
 
         <!-- مرحله ۲: کد -->
         <div id="s2" class="hidden">
-            <p>کد تأیید (شبیهساز):</p>
+            <p>یه کد برات فرستادیم، وارد کن:</p>
             <div class="code-box" id="showCode">----</div>
             <input type="text" id="code" placeholder="کد ۴ رقمی" maxlength="4">
             <div class="err" id="err"></div>
-            <button onclick="verify()">تأیید</button>
+            <button onclick="verify()">تأیید کد</button>
         </div>
 
-        <!-- مرحله ۳: پروفایل -->
+        <!-- مرحله ۳: عضو بگیر -->
         <div id="s3" class="hidden">
-            <div class="profile">👤 کاربر روبیکا</div>
-            <div id="showPhone"></div>
+            <div class="member-box">
+                <h2>🎉 عضو شدی!</h2>
+                <p>شماره: <span id="showPhone"></span></p>
+                <p>خوش اومدی به جمع ما 👋</p>
+            </div>
             <div class="coins">🪙 ۵۰ سکه هدیه گرفتی!</div>
-            <button onclick="reset()">برگشت</button>
+            <button onclick="reset()">برگشت به اول</button>
         </div>
     </div>
 
@@ -103,6 +113,7 @@
                 alert('شماره معتبر نیست!');
                 return;
             }
+            // ساخت کد رندوم ۴ رقمی
             myCode = Math.floor(1000 + Math.random() * 9000).toString();
             document.getElementById('showCode').textContent = myCode;
             document.getElementById('s1').classList.add('hidden');
@@ -116,7 +127,7 @@
                 document.getElementById('s2').classList.add('hidden');
                 document.getElementById('s3').classList.remove('hidden');
             } else {
-                document.getElementById('err').textContent = 'کد اشتباهه!';
+                document.getElementById('err').textContent = 'کد اشتباهه! دوباره تلاش کن';
             }
         }
 
