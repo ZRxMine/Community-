@@ -2,141 +2,579 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سکه عضو بگیر</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
         body {
-            font-family: Tahoma, sans-serif;
-            background: #667eea;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-        .box {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            width: 350px;
-            text-align: center;
-        }
-        h1 { color: #333; font-size: 22px; margin-bottom: 20px; }
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            text-align: center;
-            box-sizing: border-box;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 5px;
-        }
-        .hidden { display: none; }
-        .code-box {
-            background: #f0f4ff;
-            border: 2px dashed #667eea;
-            padding: 10px;
-            border-radius: 8px;
-            margin: 10px 0;
-            font-size: 24px;
-            font-weight: bold;
-            color: #667eea;
-            letter-spacing: 6px;
-        }
-        .err { color: red; font-size: 13px; }
-        .member-box {
-            background: #f0f4ff;
             padding: 20px;
-            border-radius: 10px;
-            margin-top: 10px;
+            overflow: hidden;
         }
-        .member-box h2 { color: #667eea; margin: 0 0 10px 0; }
-        .member-box p { color: #555; margin: 5px 0; }
-        .coins {
-            background: #fff3cd;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            color: #856404;
+        /* ذرات پسزمینه */
+        .particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            animation: float 6s infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); opacity: 0.3; }
+            50% { transform: translateY(-30px) scale(1.2); opacity: 0.8; }
+            100% { transform: translateY(0) scale(1); opacity: 0.3; }
+        }
+
+        .card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 25px;
+            padding: 35px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 1;
+            animation: cardIn 0.6s ease;
+        }
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 50px;
+            margin-bottom: 10px;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        h1 {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 26px;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        .step { display: none; animation: fadeIn 0.5s ease; }
+        .step.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .input-wrap {
+            position: relative;
+            margin-bottom: 15px;
+        }
+        .input-wrap .icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
             font-size: 18px;
         }
+        input {
+            width: 100%;
+            padding: 14px 40px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background: #fafafa;
+        }
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.2);
+        }
+        .password-wrap { position: relative; }
+        .toggle-pass {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            background: none;
+            border: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102,126,234,0.4);
+        }
+        .btn:active { transform: translateY(0); }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .btn .shine {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 3s infinite;
+        }
+        @keyframes shine {
+            0% { left: -100%; }
+            50% { left: 200%; }
+            100% { left: 200%; }
+        }
+
+        .code-box {
+            background: linear-gradient(135deg, #f0f4ff, #e8ecff);
+            border: 2px dashed #667eea;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(102,126,234,0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(102,126,234,0); }
+        }
+        .code-box p { color: #888; font-size: 13px; margin-bottom: 5px; }
+        .code-box .code {
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+            letter-spacing: 10px;
+        }
+
+        .msg {
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            text-align: center;
+            display: none;
+            animation: shake 0.5s;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .msg.error { background: #fdecea; color: #e74c3c; border: 1px solid #f5c6cb; }
+        .msg.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .msg.warning { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+
+        .timer {
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+        .timer span { color: #667eea; font-weight: bold; }
+
+        .back {
+            background: none;
+            border: none;
+            color: #667eea;
+            cursor: pointer;
+            font-size: 13px;
+            margin-top: 15px;
+            width: 100%;
+            text-align: center;
+        }
+        .back:hover { text-decoration: underline; }
+
+        .strength {
+            height: 5px;
+            border-radius: 5px;
+            margin-top: 8px;
+            background: #e0e0e0;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        .strength-bar {
+            height: 100%;
+            width: 0;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        .strength-text {
+            font-size: 12px;
+            margin-top: 5px;
+            text-align: left;
+            color: #888;
+        }
+
+        .success-check {
+            text-align: center;
+            font-size: 70px;
+            animation: popIn 0.6s ease;
+        }
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            70% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        .member-box {
+            background: linear-gradient(135deg, #f0f4ff, #e8ecff);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 15px;
+            text-align: center;
+        }
+        .member-box h2 { color: #667eea; margin-bottom: 10px; }
+        .member-box p { color: #555; margin: 5px 0; }
+        .coins {
+            background: linear-gradient(135deg, #fff3cd, #ffeeba);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+            text-align: center;
+            color: #856404;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .lock-msg {
+            text-align: center;
+            padding: 20px;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .lock-msg .icon { font-size: 50px; display: block; margin-bottom: 10px; }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h1>🪙 سکه عضو بگیر</h1>
+    <!-- ذرات پسزمینه -->
+    <div class="particles" id="particles"></div>
+
+    <div class="card">
+        <div class="logo">🪙</div>
+        <h1>سکه عضو بگیر</h1>
+        <p class="subtitle">سیستم امن ورود و عضویت</p>
 
         <!-- مرحله ۱: شماره -->
-        <div id="s1">
-            <input type="tel" id="phone" placeholder="09xxxxxxxxx" maxlength="11">
-            <button onclick="sendCode()">ادامه</button>
+        <div class="step active" id="s1">
+            <label>📱 شماره موبایل</label>
+            <div class="input-wrap">
+                <span class="icon">📞</span>
+                <input type="tel" id="phone" placeholder="09xxxxxxxxx" maxlength="11">
+            </div>
+            <div class="msg error" id="phoneErr">شماره معتبر نیست! (مثال: 09123456789)</div>
+            <button class="btn" onclick="sendCode()">
+                <span class="shine"></span>
+                ورود
+            </button>
         </div>
 
-        <!-- مرحله ۲: کد -->
-        <div id="s2" class="hidden">
-            <p>یه کد برات فرستادیم، وارد کن:</p>
-            <div class="code-box" id="showCode">----</div>
-            <input type="text" id="code" placeholder="کد ۴ رقمی" maxlength="4">
-            <div class="err" id="err"></div>
-            <button onclick="verify()">تأیید کد</button>
+        <!-- مرحله ۲: کد تأیید -->
+        <div class="step" id="s2">
+            <label>🔐 کد تأیید</label>
+            <div class="code-box">
+                <p>📩 کد تأیید (شبیهساز):</p>
+                <div class="code" id="showCode">----</div>
+            </div>
+            <div class="input-wrap">
+                <span class="icon">🔑</span>
+                <input type="text" id="code" placeholder="کد ۴ رقمی" maxlength="4">
+            </div>
+            <div class="msg error" id="codeErr"></div>
+            <button class="btn" onclick="verifyCode()">
+                <span class="shine"></span>
+                تأیید کد
+            </button>
+            <button class="back" onclick="goBack(1)">← تغییر شماره</button>
         </div>
 
-        <!-- مرحله ۳: عضو بگیر -->
-        <div id="s3" class="hidden">
+        <!-- مرحله ۳: ساخت پسورد (اولین بار) -->
+        <div class="step" id="s3">
+            <label>🔒 ساخت پسورد</label>
+            <p class="subtitle">برای اکانتت یه پسورد قوی بساز</p>
+            <div class="input-wrap password-wrap">
+                <span class="icon">🔐</span>
+                <input type="password" id="newPass" placeholder="پسورد جدید" oninput="checkStrength()">
+                <button class="toggle-pass" onclick="togglePass('newPass', this)">👁️</button>
+            </div>
+            <div class="strength"><div class="strength-bar" id="strengthBar"></div></div>
+            <div class="strength-text" id="strengthText"></div>
+            <div class="input-wrap password-wrap">
+                <span class="icon">🔁</span>
+                <input type="password" id="confirmPass" placeholder="تکرار پسورد">
+                <button class="toggle-pass" onclick="togglePass('confirmPass', this)">👁️</button>
+            </div>
+            <div class="msg error" id="passErr"></div>
+            <button class="btn" onclick="createPassword()">
+                <span class="shine"></span>
+                ساخت اکانت
+            </button>
+        </div>
+
+        <!-- مرحله ۴: ورود پسورد (دفعه بعد) -->
+        <div class="step" id="s4">
+            <label>🔑 ورود پسورد</label>
+            <p class="subtitle">خوش برگشتی! پسوردت رو وارد کن</p>
+            <div class="input-wrap password-wrap">
+                <span class="icon">🔐</span>
+                <input type="password" id="loginPass" placeholder="پسورد">
+                <button class="toggle-pass" onclick="togglePass('loginPass', this)">👁️</button>
+            </div>
+            <div class="msg error" id="loginErr"></div>
+            <div class="msg warning" id="lockWarn"></div>
+            <button class="btn" onclick="login()">
+                <span class="shine"></span>
+                ورود
+            </button>
+            <button class="back" onclick="goBack(1)">← تغییر شماره</button>
+        </div>
+
+        <!-- مرحله ۵: عضو شدی -->
+        <div class="step" id="s5">
+            <div class="success-check">✅</div>
+            <h1 style="text-align:center; margin-bottom:10px;">عضو شدی!</h1>
             <div class="member-box">
-                <h2>🎉 عضو شدی!</h2>
+                <h2>🎉 خوش اومدی</h2>
                 <p>شماره: <span id="showPhone"></span></p>
-                <p>خوش اومدی به جمع ما 👋</p>
+                <p>به جمع ما پیوستی 👋</p>
             </div>
             <div class="coins">🪙 ۵۰ سکه هدیه گرفتی!</div>
-            <button onclick="reset()">برگشت به اول</button>
+            <button class="btn" onclick="resetAll()" style="margin-top:15px;">
+                <span class="shine"></span>
+                خروج
+            </button>
         </div>
     </div>
 
     <script>
-        let myCode = '';
+        // ===== دیتابیس محلی (شبیهساز) =====
+        // در نسخه واقعی اینجا باید به سرور وصل بشه
+        const users = JSON.parse(localStorage.getItem('users') || '{}');
 
+        // ===== متغیرها =====
+        let myCode = '';
+        let currentPhone = '';
+        let attempts = 0;
+        let lockUntil = 0;
+
+        // ===== ذرات پسزمینه =====
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 20; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = Math.random() * 8 + 3;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = Math.random() * 100 + '%';
+                p.style.animationDelay = Math.random() * 6 + 's';
+                container.appendChild(p);
+            }
+        }
+        createParticles();
+
+        // ===== نمایش/مخفی کردن پسورد =====
+        function togglePass(id, btn) {
+            const input = document.getElementById(id);
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                btn.textContent = '👁️';
+            }
+        }
+
+        // ===== مرحله ۱: ارسال کد =====
         function sendCode() {
-            let p = document.getElementById('phone').value;
-            if (!/^09\d{9}$/.test(p)) {
-                alert('شماره معتبر نیست!');
+            const phone = document.getElementById('phone').value;
+            const err = document.getElementById('phoneErr');
+
+            if (!/^09\d{9}$/.test(phone)) {
+                err.style.display = 'block';
                 return;
             }
-            // ساخت کد رندوم ۴ رقمی
+            err.style.display = 'none';
+            currentPhone = phone;
+
+            // ساخت کد رندوم
             myCode = Math.floor(1000 + Math.random() * 9000).toString();
             document.getElementById('showCode').textContent = myCode;
-            document.getElementById('s1').classList.add('hidden');
-            document.getElementById('s2').classList.remove('hidden');
+
+            // رفتن به مرحله ۲
+            showStep(2);
         }
 
-        function verify() {
-            let c = document.getElementById('code').value;
-            if (c === myCode) {
-                document.getElementById('showPhone').textContent = document.getElementById('phone').value;
-                document.getElementById('s2').classList.add('hidden');
-                document.getElementById('s3').classList.remove('hidden');
+        // ===== مرحله ۲: تأیید کد =====
+        function verifyCode() {
+            const input = document.getElementById('code').value;
+            const err = document.getElementById('codeErr');
+
+            if (input === myCode) {
+                err.style.display = 'none';
+                // اگه کاربر قبلاً پسورد ساخته → ورود پسورد
+                if (users[currentPhone]) {
+                    showStep(4);
+                } else {
+                    // اولین بار → ساخت پسورد
+                    showStep(3);
+                }
             } else {
-                document.getElementById('err').textContent = 'کد اشتباهه! دوباره تلاش کن';
+                err.textContent = 'کد اشتباهه!';
+                err.style.display = 'block';
             }
         }
 
-        function reset() {
-            document.getElementById('s3').classList.add('hidden');
-            document.getElementById('s1').classList.remove('hidden');
+        // ===== مرحله ۳: ساخت پسورد =====
+        function checkStrength() {
+            const pass = document.getElementById('newPass').value;
+            const bar = document.getElementById('strengthBar');
+            const text = document.getElementById('strengthText');
+            let score = 0;
+
+            if (pass.length >= 8) score++;
+            if (/[A-Z]/.test(pass)) score++;
+            if (/[0-9]/.test(pass)) score++;
+            if (/[^A-Za-z0-9]/.test(pass)) score++;
+
+            const colors = ['#e74c3c', '#e67e22', '#f1c40f', '#2ecc71'];
+            const labels = ['ضعیف', 'متوسط', 'خوب', 'قوی'];
+            const widths = ['25%', '50%', '75%', '100%'];
+
+            if (pass.length === 0) {
+                bar.style.width = '0';
+                text.textContent = '';
+            } else {
+                bar.style.width = widths[score];
+                bar.style.background = colors[score];
+                text.textContent = 'قدرت پسورد: ' + labels[score];
+            }
+        }
+
+        function createPassword() {
+            const pass = document.getElementById('newPass').value;
+            const confirm = document.getElementById('confirmPass').value;
+            const err = document.getElementById('passErr');
+
+            if (pass.length < 8) {
+                err.textContent = 'پسورد باید حداقل ۸ کاراکتر باشه!';
+                err.style.display = 'block';
+                return;
+            }
+            if (pass !== confirm) {
+                err.textContent = 'پسوردها یکی نیستن!';
+                err.style.display = 'block';
+                return;
+            }
+
+            // ذخیره کاربر (شبیهساز - در واقعیت روی سرور)
+            users[currentPhone] = pass;
+            localStorage.setItem('users', JSON.stringify(users));
+
+            err.style.display = 'none';
+            showStep(5);
+        }
+
+        // ===== مرحله ۴: ورود پسورد =====
+        function login() {
+            const pass = document.getElementById('loginPass').value;
+            const err = document.getElementById('loginErr');
+            const warn = document.getElementById('lockWarn');
+
+            // بررسی قفل
+            if (Date.now() < lockUntil) {
+                const secs = Math.ceil((lockUntil - Date.now()) / 1000);
+                warn.textContent = '🔒 خیلی تلاش کردی! ' + secs + ' ثانیه صبر کن';
+                warn.style.display = 'block';
+                return;
+            }
+            warn.style.display = 'none';
+
+            if (pass === users[currentPhone]) {
+                attempts = 0;
+                err.style.display = 'none';
+                showStep(5);
+            } else {
+                attempts++;
+                err.textContent = 'پسورد اشتباهه! (' + attempts + '/3)';
+                err.style.display = 'block';
+
+                // قفل بعد از ۳ بار اشتباه
+                if (attempts >= 3) {
+                    lockUntil = Date.now() + 30000; // ۳۰ ثانیه قفل
+                    attempts = 0;
+                    err.textContent = '🔒 ۳ بار اشتباه! ۳۰ ثانیه قفل شدی';
+                    document.getElementById('loginPass').value = '';
+                }
+            }
+        }
+
+        // ===== نمایش مرحله =====
+        function showStep(n) {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById('s' + n).classList.add('active');
+        }
+
+        // ===== برگشت =====
+        function goBack(n) {
+            showStep(n);
+            document.getElementById('code').value = '';
+            document.getElementById('codeErr').style.display = 'none';
+        }
+
+        // ===== ریست کامل =====
+        function resetAll() {
+            showStep(1);
             document.getElementById('phone').value = '';
             document.getElementById('code').value = '';
-            document.getElementById('err').textContent = '';
+            document.getElementById('newPass').value = '';
+            document.getElementById('confirmPass').value = '';
+            document.getElementById('loginPass').value = '';
+            document.getElementById('showPhone').textContent = '';
+            document.getElementById('strengthBar').style.width = '0';
+            document.getElementById('strengthText').textContent = '';
+            currentPhone = '';
         }
     </script>
 </body>
