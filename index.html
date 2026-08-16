@@ -2,182 +2,130 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سکه عضو بگیر</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-        }
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: Tahoma, sans-serif;
+            background: #667eea;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            min-height: 100vh;
+            margin: 0;
         }
-        .card {
+        .box {
             background: white;
-            border-radius: 20px;
             padding: 30px;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-        }
-        h1 {
+            border-radius: 15px;
+            width: 350px;
             text-align: center;
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 24px;
         }
-        .subtitle {
-            text-align: center;
-            color: #888;
-            font-size: 14px;
-            margin-bottom: 25px;
-        }
-        .step {
-            display: none;
-        }
-        .step.active {
-            display: block;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-            font-size: 14px;
-        }
+        h1 { color: #333; font-size: 22px; }
         input {
             width: 100%;
-            padding: 12px 15px;
+            padding: 12px;
+            margin: 10px 0;
             border: 2px solid #ddd;
-            border-radius: 10px;
+            border-radius: 8px;
             font-size: 16px;
-            margin-bottom: 15px;
-            transition: border-color 0.3s;
+            text-align: center;
+            box-sizing: border-box;
         }
-        input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-        .btn {
+        button {
             width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 12px;
+            background: #667eea;
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             font-size: 16px;
-            font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s, opacity 0.2s;
+            margin-top: 5px;
         }
-        .btn:hover {
-            transform: translateY(-2px);
-            opacity: 0.9;
-        }
-        .profile {
-            text-align: center;
-        }
-        .avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 40px;
-            color: white;
-            margin: 0 auto 15px;
-        }
-        .name {
-            font-size: 20px;
+        .hidden { display: none; }
+        .code-box {
+            background: #f0f4ff;
+            border: 2px dashed #667eea;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 24px;
             font-weight: bold;
-            color: #333;
-            margin-bottom: 5px;
+            color: #667eea;
+            letter-spacing: 6px;
         }
-        .phone {
-            color: #888;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
+        .err { color: red; font-size: 13px; }
+        .profile { font-size: 18px; }
         .coins {
             background: #f0f4ff;
-            border-radius: 10px;
             padding: 15px;
-            margin-bottom: 20px;
-        }
-        .coins h3 {
+            border-radius: 8px;
+            margin-top: 15px;
             color: #667eea;
-            margin-bottom: 5px;
-        }
-        .back {
-            background: none;
-            border: none;
-            color: #667eea;
-            cursor: pointer;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-        .error {
-            color: #e74c3c;
-            font-size: 13px;
-            margin-bottom: 10px;
-            display: none;
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="card">
-        <!-- مرحله ۱: ورود شماره -->
-        <div class="step active" id="step1">
-            <h1>🪙 سکه عضو بگیر</h1>
-            <p class="subtitle">شماره روبیکات رو وارد کن تا پروفایلت بیاد</p>
-            <label>شماره موبایل</label>
-            <input type="tel" id="phoneInput" placeholder="09xxxxxxxxx" maxlength="11">
-            <div class="error" id="errorMsg">شماره معتبر نیست!</div>
-            <button class="btn" onclick="checkPhone()">ادامه</button>
+    <div class="box">
+        <h1>🪙 سکه عضو بگیر</h1>
+
+        <!-- مرحله ۱: شماره -->
+        <div id="s1">
+            <input type="tel" id="phone" placeholder="09xxxxxxxxx" maxlength="11">
+            <button onclick="sendCode()">ارسال کد</button>
         </div>
 
-        <!-- مرحله ۲: پروفایل -->
-        <div class="step" id="step2">
-            <div class="profile">
-                <div class="avatar">👤</div>
-                <div class="name" id="profileName">کاربر روبیکا</div>
-                <div class="phone" id="profilePhone"></div>
-                <div class="coins">
-                    <h3>🪙 ۵۰ سکه</h3>
-                    <p>به خاطر عضویتت هدیه گرفتی!</p>
-                </div>
-                <button class="btn" onclick="goBack()">برگشت</button>
-            </div>
+        <!-- مرحله ۲: کد -->
+        <div id="s2" class="hidden">
+            <p>کد تأیید (شبیهساز):</p>
+            <div class="code-box" id="showCode">----</div>
+            <input type="text" id="code" placeholder="کد ۴ رقمی" maxlength="4">
+            <div class="err" id="err"></div>
+            <button onclick="verify()">تأیید</button>
+        </div>
+
+        <!-- مرحله ۳: پروفایل -->
+        <div id="s3" class="hidden">
+            <div class="profile">👤 کاربر روبیکا</div>
+            <div id="showPhone"></div>
+            <div class="coins">🪙 ۵۰ سکه هدیه گرفتی!</div>
+            <button onclick="reset()">برگشت</button>
         </div>
     </div>
 
     <script>
-        function checkPhone() {
-            const phone = document.getElementById('phoneInput').value;
-            const error = document.getElementById('errorMsg');
-            
-            // بررسی ساده شماره ایرانی
-            if (/^09\d{9}$/.test(phone)) {
-                error.style.display = 'none';
-                document.getElementById('profilePhone').textContent = phone;
-                document.getElementById('step1').classList.remove('active');
-                document.getElementById('step2').classList.add('active');
+        let myCode = '';
+
+        function sendCode() {
+            let p = document.getElementById('phone').value;
+            if (!/^09\d{9}$/.test(p)) {
+                alert('شماره معتبر نیست!');
+                return;
+            }
+            myCode = Math.floor(1000 + Math.random() * 9000).toString();
+            document.getElementById('showCode').textContent = myCode;
+            document.getElementById('s1').classList.add('hidden');
+            document.getElementById('s2').classList.remove('hidden');
+        }
+
+        function verify() {
+            let c = document.getElementById('code').value;
+            if (c === myCode) {
+                document.getElementById('showPhone').textContent = document.getElementById('phone').value;
+                document.getElementById('s2').classList.add('hidden');
+                document.getElementById('s3').classList.remove('hidden');
             } else {
-                error.style.display = 'block';
+                document.getElementById('err').textContent = 'کد اشتباهه!';
             }
         }
 
-        function goBack() {
-            document.getElementById('step2').classList.remove('active');
-            document.getElementById('step1').classList.add('active');
+        function reset() {
+            document.getElementById('s3').classList.add('hidden');
+            document.getElementById('s1').classList.remove('hidden');
+            document.getElementById('phone').value = '';
+            document.getElementById('code').value = '';
+            document.getElementById('err').textContent = '';
         }
     </script>
 </body>
