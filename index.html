@@ -12,16 +12,13 @@
   <style>
     :root {
       --bg: #070b14;
-      --panel: #111a2d;
-      --panel-2: #172238;
-      --border: #293953;
+      --card: #111a2d;
+      --card2: #18253c;
+      --border: #2b3c59;
       --text: #f5f7ff;
-      --muted: #91a0ba;
+      --muted: #94a3bd;
       --cyan: #00f0e8;
-      --blue: #4c9dff;
-      --purple: #8b5cf6;
-      --green: #24ef9f;
-      --danger: #ff6689;
+      --green: #5affc9;
     }
 
     * {
@@ -35,8 +32,8 @@
       color: var(--text);
       font-family: "Vazirmatn", sans-serif;
       background:
-        radial-gradient(circle at 15% 10%, rgba(0, 240, 232, .12), transparent 24rem),
-        radial-gradient(circle at 90% 85%, rgba(139, 92, 246, .14), transparent 25rem),
+        radial-gradient(circle at 15% 10%, rgba(0,240,232,.13), transparent 380px),
+        radial-gradient(circle at 90% 90%, rgba(104,62,255,.14), transparent 420px),
         var(--bg);
       overflow-x: hidden;
     }
@@ -46,12 +43,11 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      opacity: .3;
+      opacity: .25;
       background-image:
-        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
       background-size: 45px 45px;
-      mask-image: linear-gradient(to bottom, black, transparent);
     }
 
     header {
@@ -60,95 +56,100 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 5%;
-      border-bottom: 1px solid rgba(117, 146, 190, .2);
-      background: rgba(8, 13, 25, .78);
-      backdrop-filter: blur(18px);
       position: sticky;
       top: 0;
       z-index: 10;
+      background: rgba(7,11,20,.8);
+      border-bottom: 1px solid rgba(100,130,170,.22);
+      backdrop-filter: blur(18px);
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 12px;
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 900;
-      letter-spacing: .5px;
     }
 
     .brand-icon {
-      width: 38px;
-      height: 38px;
+      width: 39px;
+      height: 39px;
       display: grid;
       place-items: center;
-      color: var(--cyan);
-      border: 1px solid rgba(0, 240, 232, .45);
+      border: 1px solid rgba(0,240,232,.4);
       border-radius: 12px;
-      background: rgba(0, 240, 232, .08);
-      box-shadow: 0 0 25px rgba(0, 240, 232, .12);
-      font-size: 22px;
+      color: var(--cyan);
+      background: rgba(0,240,232,.08);
+      font-size: 24px;
     }
 
     .brand span {
       color: var(--cyan);
     }
 
-    .lang {
-      padding: 10px 17px;
+    .language {
+      padding: 9px 16px;
       border: 1px solid var(--border);
       border-radius: 10px;
-      color: #d8e2f2;
-      background: rgba(255,255,255,.035);
+      color: #dce7f8;
+      background: rgba(255,255,255,.04);
       font-weight: 700;
     }
 
-    .screen {
+    .page {
       min-height: calc(100vh - 78px);
-      padding: 70px 5%;
-      animation: fade .5s ease;
+      padding: 65px 5%;
+      animation: pageShow .5s ease;
     }
 
     .hidden {
       display: none !important;
     }
 
-    @keyframes fade {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes pageShow {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .hero {
       max-width: 800px;
-      margin: 35px auto 65px;
+      margin: 35px auto 60px;
       text-align: center;
     }
 
-    .eyebrow {
-      display: inline-flex;
-      padding: 8px 16px;
-      border: 1px solid rgba(0, 240, 232, .3);
-      border-radius: 999px;
+    .badge {
+      display: inline-block;
+      margin-bottom: 22px;
+      padding: 8px 17px;
+      border: 1px solid rgba(0,240,232,.35);
+      border-radius: 50px;
       color: var(--cyan);
-      background: rgba(0, 240, 232, .07);
+      background: rgba(0,240,232,.07);
       font-size: 13px;
       font-weight: 700;
-      margin-bottom: 22px;
     }
 
     h1 {
-      font-size: clamp(32px, 6vw, 65px);
-      line-height: 1.25;
+      margin-bottom: 18px;
+      font-size: clamp(32px, 6vw, 64px);
+      line-height: 1.3;
       font-weight: 900;
-      margin-bottom: 20px;
-      background: linear-gradient(100deg, #fff 15%, #b9c7e4 45%, var(--cyan));
+      background: linear-gradient(100deg, #fff, #b9c7e4, var(--cyan));
       -webkit-background-clip: text;
       color: transparent;
     }
 
     .hero p {
       color: var(--muted);
-      font-size: 17px;
+      font-size: 16px;
       line-height: 2;
     }
 
@@ -162,39 +163,27 @@
 
     .protocol {
       min-height: 225px;
-      cursor: pointer;
-      color: var(--text);
+      padding: 28px 18px;
       border: 1px solid var(--border);
-      border-radius: 25px;
-      background: linear-gradient(145deg, rgba(21, 34, 57, .95), rgba(12, 20, 36, .95));
-      padding: 28px 20px;
+      border-radius: 24px;
+      color: var(--text);
+      background: linear-gradient(145deg, #17253d, #0d172a);
+      cursor: pointer;
+      transition: .3s ease;
+      font-family: inherit;
       position: relative;
       overflow: hidden;
-      transition: .3s ease;
-    }
-
-    .protocol::before {
-      content: "";
-      position: absolute;
-      width: 150px;
-      height: 150px;
-      left: -55px;
-      top: -70px;
-      border-radius: 50%;
-      background: var(--cyan);
-      filter: blur(70px);
-      opacity: .12;
     }
 
     .protocol:hover {
-      transform: translateY(-9px);
+      transform: translateY(-8px);
       border-color: var(--cyan);
-      box-shadow: 0 18px 45px rgba(0,0,0,.3), 0 0 30px rgba(0, 240, 232, .1);
+      box-shadow: 0 18px 45px rgba(0,0,0,.3), 0 0 28px rgba(0,240,232,.12);
     }
 
     .protocol.disabled {
+      opacity: .6;
       cursor: not-allowed;
-      opacity: .63;
     }
 
     .protocol.disabled:hover {
@@ -208,59 +197,55 @@
       height: 72px;
       display: grid;
       place-items: center;
-      margin: 0 auto 23px;
+      margin: auto auto 22px;
+      border: 1px solid rgba(0,240,232,.3);
       border-radius: 20px;
       color: var(--cyan);
-      font-size: 35px;
-      background: rgba(0, 240, 232, .09);
-      border: 1px solid rgba(0, 240, 232, .25);
+      background: rgba(0,240,232,.08);
+      font-size: 36px;
     }
 
     .protocol h2 {
+      margin-bottom: 9px;
       text-align: center;
       font-size: 20px;
-      margin-bottom: 10px;
     }
 
     .protocol small {
       display: block;
-      text-align: center;
       color: var(--muted);
+      text-align: center;
     }
 
     .soon {
       display: inline-block;
       margin-top: 15px;
       padding: 5px 12px;
-      border-radius: 999px;
-      color: #c8d1e3;
+      border-radius: 50px;
+      color: #cbd5e1;
       background: rgba(255,255,255,.08);
       font-size: 11px;
     }
 
     .back {
+      margin-bottom: 25px;
       border: 0;
       color: var(--cyan);
       background: transparent;
       font: inherit;
+      font-weight: 800;
       cursor: pointer;
-      margin-bottom: 24px;
-      font-weight: 700;
     }
 
     .app-title {
       max-width: 1220px;
-      margin: auto auto 24px;
-      display: flex;
-      align-items: center;
-      gap: 13px;
+      margin: auto auto 22px;
       font-size: 29px;
       font-weight: 900;
     }
 
-    .app-title i {
+    .app-title span {
       color: var(--cyan);
-      font-style: normal;
     }
 
     .dashboard {
@@ -268,32 +253,32 @@
       margin: auto;
       display: grid;
       grid-template-columns: 1.3fr .8fr;
-      gap: 28px;
+      gap: 26px;
     }
 
     .card {
+      overflow: hidden;
       border: 1px solid var(--border);
       border-radius: 20px;
-      background: rgba(17, 26, 45, .82);
-      box-shadow: 0 20px 50px rgba(0,0,0,.14);
-      overflow: hidden;
+      background: rgba(17,26,45,.85);
+      box-shadow: 0 20px 50px rgba(0,0,0,.15);
     }
 
-    .card-head {
+    .card-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       padding: 19px 23px;
       border-bottom: 1px solid var(--border);
       color: var(--cyan);
       font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
     }
 
     .form {
-      padding: 24px;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 19px;
+      gap: 18px;
+      padding: 24px;
     }
 
     label {
@@ -305,25 +290,28 @@
       font-weight: 700;
     }
 
-    input, select {
+    input,
+    select {
       width: 100%;
       height: 54px;
-      border: 1px solid #344662;
+      padding: 0 14px;
       outline: none;
+      border: 1px solid #344762;
       border-radius: 12px;
-      padding: 0 15px;
-      color: var(--text);
+      color: white;
       background: #1a263b;
       font: inherit;
       transition: .2s;
     }
 
-    input:focus, select:focus {
+    input:focus,
+    select:focus {
       border-color: var(--cyan);
-      box-shadow: 0 0 0 3px rgba(0, 240, 232, .1);
+      box-shadow: 0 0 0 3px rgba(0,240,232,.1);
     }
 
-    select option {
+    option {
+      color: white;
       background: #172238;
     }
 
@@ -335,65 +323,69 @@
       height: 58px;
       border: 0;
       border-radius: 13px;
-      cursor: pointer;
       color: #001313;
-      background: linear-gradient(100deg, var(--cyan), #5affc9);
+      background: linear-gradient(100deg, var(--cyan), var(--green));
       font: inherit;
       font-weight: 900;
+      cursor: pointer;
       box-shadow: 0 10px 25px rgba(0,240,232,.18);
       transition: .25s;
     }
 
     .generate:hover {
       transform: translateY(-2px);
-      box-shadow: 0 14px 32px rgba(0,240,232,.28);
+      box-shadow: 0 14px 32px rgba(0,240,232,.3);
+    }
+
+    .generate:disabled {
+      opacity: .65;
+      cursor: wait;
     }
 
     .qr-card {
-      min-height: 430px;
-      padding-bottom: 23px;
+      min-height: 420px;
     }
 
-    .qr-box {
-      width: min(245px, 75%);
+    .qr-placeholder {
+      width: 245px;
       aspect-ratio: 1;
-      margin: 28px auto 18px;
       display: grid;
       place-items: center;
+      margin: 28px auto 18px;
+      padding: 20px;
       border: 1px dashed #526a91;
       border-radius: 18px;
+      color: #7183a3;
       background: #101a2c;
-      color: #687b9d;
       text-align: center;
-      padding: 20px;
     }
 
-    .qr-box div {
-      font-size: 48px;
+    .qr-placeholder div {
+      margin-bottom: 8px;
+      font-size: 50px;
       opacity: .3;
     }
 
     .qr-card p {
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
       padding: 0 20px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+      line-height: 2;
     }
 
     .config-card {
       grid-column: 1 / -1;
     }
 
-    .config {
-      direction: ltr;
-      text-align: left;
+    pre {
       min-height: 210px;
       padding: 22px;
+      direction: ltr;
       color: #34e99a;
       background: #080d15;
       white-space: pre-wrap;
       font: 13px/2 monospace;
-      overflow-x: auto;
     }
 
     .actions {
@@ -404,35 +396,90 @@
     }
 
     .action {
+      padding: 9px 14px;
       border: 1px solid var(--border);
       border-radius: 9px;
-      padding: 9px 14px;
       color: #dbe6f7;
       background: #172238;
-      cursor: pointer;
       font: inherit;
       font-size: 13px;
+      cursor: pointer;
     }
 
-    .toast {
+    /* پیام در حال آماده‌سازی */
+    .loading-modal {
       position: fixed;
-      bottom: 25px;
+      z-index: 1000;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      padding: 12px 20px;
-      border: 1px solid rgba(0, 240, 232, .35);
-      border-radius: 10px;
+      width: min(430px, 90%);
+      padding: 32px 25px;
+      transform: translate(-50%, -50%);
+      border: 1px solid rgba(0,240,232,.4);
+      border-radius: 23px;
       color: white;
-      background: #16243b;
-      opacity: 0;
-      pointer-events: none;
-      transition: .3s;
-      z-index: 20;
+      background: linear-gradient(145deg, #172640, #0a1325);
+      box-shadow:
+        0 0 0 100vmax rgba(0,0,0,.74),
+        0 0 50px rgba(0,240,232,.2);
+      text-align: center;
+      animation: modalShow .3s ease;
     }
 
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
+    .loading-circle {
+      width: 72px;
+      height: 72px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 18px;
+      border: 1px solid rgba(0,240,232,.4);
+      border-radius: 50%;
+      color: var(--cyan);
+      background: rgba(0,240,232,.1);
+      font-size: 32px;
+      animation: rotate 1.3s linear infinite;
+    }
+
+    .loading-modal h3 {
+      margin-bottom: 12px;
+      color: var(--cyan);
+      font-size: 19px;
+    }
+
+    .loading-modal p {
+      margin-bottom: 23px;
+      color: #a8b5cb;
+      font-size: 13px;
+      line-height: 2;
+    }
+
+    .close-modal {
+      padding: 11px 26px;
+      border: 0;
+      border-radius: 10px;
+      color: #001313;
+      background: linear-gradient(90deg, var(--cyan), var(--green));
+      font-family: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    @keyframes modalShow {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -45%);
+      }
+
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    @keyframes rotate {
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     @media (max-width: 850px) {
@@ -456,10 +503,10 @@
       }
 
       .brand {
-        font-size: 15px;
+        font-size: 14px;
       }
 
-      .screen {
+      .page {
         padding: 42px 18px;
       }
 
@@ -475,10 +522,6 @@
       .app-title {
         font-size: 23px;
       }
-
-      .protocol-grid {
-        gap: 15px;
-      }
     }
   </style>
 </head>
@@ -490,23 +533,26 @@
       <div class="brand-icon">♢</div>
       <div>AMIR XVAISIS <span>PRO</span></div>
     </div>
-    <div class="lang">◎ EN</div>
+
+    <div class="language">◎ EN</div>
   </header>
 
-  <!-- صفحه انتخاب -->
-  <main id="homeScreen" class="screen">
+  <!-- صفحه انتخاب پروتکل -->
+  <main id="homeScreen" class="page">
 
     <section class="hero">
-      <div class="eyebrow">SECURE CONNECTION PLATFORM</div>
+      <div class="badge">SECURE CONNECTION PLATFORM</div>
+
       <h1>یک پروتکل را انتخاب کنید</h1>
+
       <p>
-        پروتکل موردنظر خود را انتخاب کنید و کانفیگ اختصاصی خود را با چند کلیک بسازید.
+        پروتکل موردنظر خود را انتخاب کنید و تنظیمات اتصال خود را انجام دهید.
       </p>
     </section>
 
     <section class="protocol-grid">
 
-      <button class="protocol" id="wireguardButton">
+      <button id="wireguardButton" class="protocol">
         <div class="protocol-icon">⌁</div>
         <h2>WireGuard</h2>
         <small>ساخت کانفیگ سریع و امن</small>
@@ -529,19 +575,19 @@
     </section>
   </main>
 
-  <!-- صفحه WireGuard -->
-  <main id="wireguardScreen" class="screen hidden">
+  <!-- صفحه تنظیمات WireGuard -->
+  <main id="wireguardScreen" class="page hidden">
 
     <div class="app-title">
-      <button class="back" id="backButton">← برگشت</button>
-      <i>⌁</i>
+      <button id="backButton" class="back">← برگشت</button>
+      <span>⌁</span>
       تنظیمات کانفیگ WireGuard
     </div>
 
     <section class="dashboard">
 
       <div class="card">
-        <div class="card-head">
+        <div class="card-title">
           <span>تنظیمات کانفیگ</span>
           <span>⚙</span>
         </div>
@@ -550,17 +596,17 @@
 
           <label>
             نام کانفیگ
-            <input id="configName" value="XVAISIS123" />
+            <input id="configName" value="XVAISIS123">
           </label>
 
           <label>
             شناسه کاربر UUID
-            <input id="userId" value="276457f5-b623-4dc0" />
+            <input id="userId" value="276457f5-b623-4dc0">
           </label>
 
           <label>
             کشور
-            <select id="country">
+            <select>
               <option>🇩🇪 آلمان (Germany)</option>
               <option>🇳🇱 هلند (Netherlands)</option>
               <option>🇫🇮 فنلاند (Finland)</option>
@@ -570,12 +616,12 @@
 
           <label>
             لوکیشن شهر
-            <input id="location" value="Frankfurt" />
+            <input value="Frankfurt">
           </label>
 
           <label>
             حجم سرویس
-            <select id="volume">
+            <select>
               <option>∞ نامحدود (Unlimited)</option>
               <option>100 گیگابایت</option>
               <option>50 گیگابایت</option>
@@ -584,7 +630,7 @@
 
           <label>
             مدت اعتبار
-            <select id="duration">
+            <select>
               <option>30 روز (Days)</option>
               <option>7 روز (Days)</option>
               <option>90 روز (Days)</option>
@@ -608,7 +654,7 @@
             </select>
           </label>
 
-          <button class="generate wide" id="generateButton">
+          <button id="generateButton" class="generate wide">
             ✨ تولید کانفیگ جدید
           </button>
 
@@ -616,38 +662,43 @@
       </div>
 
       <div class="card qr-card">
-        <div class="card-head">
+        <div class="card-title">
           <span>QR PREVIEW</span>
           <span>▣</span>
         </div>
 
-        <div class="qr-box" id="qrBox">
+        <div class="qr-placeholder">
           <div>⌁</div>
           <span>برای تولید کانفیگ، دکمه تولید را بزنید</span>
         </div>
 
-        <p>پس از تولید، می‌توانید QR Code را با اپلیکیشن WireGuard اسکن کنید.</p>
+        <p>
+          پس از آماده شدن کانفیگ، QR Code در این قسمت نمایش داده می‌شود.
+        </p>
       </div>
 
       <div class="card config-card">
-        <div class="card-head">
+        <div class="card-title">
           <span>wireguard-config.conf</span>
           <span>● آماده تولید</span>
         </div>
 
-        <pre class="config" id="configOutput"># کانفیگ هنوز تولید نشده است
-# اطلاعات خود را وارد کنید و روی «تولید کانفیگ جدید» بزنید.</pre>
+        <pre id="configOutput"># کانفیگ هنوز تولید نشده است
+# بعد از آماده شدن سرویس، کانفیگ در این قسمت قرار می‌گیرد.</pre>
 
         <div class="actions">
-          <button class="action" id="copyButton">کپی کانفیگ</button>
-          <button class="action" id="downloadButton">دانلود فایل</button>
+          <button class="action" onclick="showToast('ابتدا باید کانفیگ آماده شود')">
+            کپی کانفیگ
+          </button>
+
+          <button class="action" onclick="showToast('ابتدا باید کانفیگ آماده شود')">
+            دانلود فایل
+          </button>
         </div>
       </div>
 
     </section>
   </main>
-
-  <div class="toast" id="toast"></div>
 
   <script>
     const homeScreen = document.getElementById("homeScreen");
@@ -655,95 +706,105 @@
     const wireguardButton = document.getElementById("wireguardButton");
     const backButton = document.getElementById("backButton");
     const generateButton = document.getElementById("generateButton");
-    const configOutput = document.getElementById("configOutput");
-    const qrBox = document.getElementById("qrBox");
 
-    let currentConfig = "";
-
+    // ورود به صفحه WireGuard
     wireguardButton.addEventListener("click", () => {
       homeScreen.classList.add("hidden");
       wireguardScreen.classList.remove("hidden");
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
+    // برگشت به صفحه اصلی
     backButton.addEventListener("click", () => {
       wireguardScreen.classList.add("hidden");
       homeScreen.classList.remove("hidden");
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
+    // دکمه تولید کانفیگ
     generateButton.addEventListener("click", () => {
-      const name = document.getElementById("configName").value || "My-WireGuard";
-      const location = document.getElementById("location").value || "Frankfurt";
+      generateButton.disabled = true;
+      generateButton.innerHTML = "⏳ در حال بررسی...";
 
-      currentConfig = `[Interface]
-PrivateKey = YOUR_CLIENT_PRIVATE_KEY
-Address = 10.8.0.2/32
-DNS = 1.1.1.1
+      showLoadingModal();
 
-[Peer]
-PublicKey = YOUR_SERVER_PUBLIC_KEY
-Endpoint = ${location.toLowerCase()}.example.com:51820
-AllowedIPs = 0.0.0.0/0, ::/0
-PersistentKeepalive = 25`;
+      // بعد از چند ثانیه دکمه دوباره فعال می‌شود
+      setTimeout(() => {
+        generateButton.disabled = false;
+        generateButton.innerHTML = "✨ تولید کانفیگ جدید";
+      }, 4000);
+    });
 
-      configOutput.textContent = currentConfig;
+    // نمایش پیام اصلی
+    function showLoadingModal() {
+      const oldModal = document.getElementById("loadingModal");
 
-      qrBox.innerHTML = `
-        <div style="
-          width: 150px;
-          height: 150px;
-          display: grid;
-          place-items: center;
-          text-align: center;
-          color: #101827;
-          background:
-            repeating-linear-gradient(45deg, #fff 0 5px, #111 5px 9px),
-            repeating-linear-gradient(-45deg, transparent 0 7px, rgba(0,0,0,.7) 7px 11px);
-          border: 10px solid white;
-          font-size: 13px;
-          font-weight: 900;
-        ">WG<br>QR</div>
+      if (oldModal) {
+        oldModal.remove();
+      }
+
+      const modal = document.createElement("div");
+      modal.id = "loadingModal";
+      modal.className = "loading-modal";
+
+      modal.innerHTML = `
+        <div class="loading-circle">⏳</div>
+
+        <h3>در حال گذاشتن کانفیگ هستیم</h3>
+
+        <p>
+          این کار کمی طول می‌کشد؛<br>
+          لطفاً بعداً امتحان کنید…
+        </p>
+
+        <button class="close-modal" onclick="closeLoadingModal()">
+          متوجه شدم
+        </button>
       `;
 
-      showToast("کانفیگ با موفقیت تولید شد");
-    });
+      document.body.appendChild(modal);
+    }
 
-    document.getElementById("copyButton").addEventListener("click", async () => {
-      if (!currentConfig) {
-        showToast("ابتدا کانفیگ را تولید کنید");
-        return;
+    // بستن پیام
+    function closeLoadingModal() {
+      const modal = document.getElementById("loadingModal");
+
+      if (modal) {
+        modal.remove();
       }
+    }
 
-      await navigator.clipboard.writeText(currentConfig);
-      showToast("کانفیگ کپی شد");
-    });
-
-    document.getElementById("downloadButton").addEventListener("click", () => {
-      if (!currentConfig) {
-        showToast("ابتدا کانفیگ را تولید کنید");
-        return;
-      }
-
-      const blob = new Blob([currentConfig], { type: "text/plain" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-
-      link.href = url;
-      link.download = "wireguard-config.conf";
-      link.click();
-
-      URL.revokeObjectURL(url);
-      showToast("فایل دانلود شد");
-    });
-
+    // پیام‌های کوچک
     function showToast(message) {
-      const toast = document.getElementById("toast");
+      const oldToast = document.getElementById("toast");
+
+      if (oldToast) {
+        oldToast.remove();
+      }
+
+      const toast = document.createElement("div");
+      toast.id = "toast";
       toast.textContent = message;
-      toast.classList.add("show");
+
+      toast.style.cssText = `
+        position: fixed;
+        z-index: 2000;
+        bottom: 25px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 13px 20px;
+        border: 1px solid rgba(0,240,232,.35);
+        border-radius: 10px;
+        color: white;
+        background: #172640;
+        box-shadow: 0 10px 30px rgba(0,0,0,.3);
+        font-family: Vazirmatn, sans-serif;
+      `;
+
+      document.body.appendChild(toast);
 
       setTimeout(() => {
-        toast.classList.remove("show");
+        toast.remove();
       }, 2500);
     }
   </script>
