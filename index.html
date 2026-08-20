@@ -1,82 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa" dir="rtl">
 <head>
-<title>اتصال VPN</title>
-<meta charset="UTF-8">
-<style>
-  body {
-    font-family: 'Arial', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f2f5;
-    flex-direction: column;
-  }
-  .container {
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    text-align: center;
-  }
-  button {
-    background-color: #4CAF50; /* سبز */
-    border: none;
-    color: white;
-    padding: 15px 30px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 18px;
-    margin: 15px 2px;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-  }
-  button:hover {
-    background-color: #45a049;
-  }
-  p {
-    color: #555;
-    font-size: 16px;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اتصال سریع VPN</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            color: white;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 350px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        h1 { margin-bottom: 20px; font-size: 24px; }
+        .btn-connect {
+            background-color: #00d2ff;
+            background-image: linear-gradient(to right, #3a7bd5, #00d2ff);
+            border: none;
+            color: white;
+            padding: 15px 40px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .btn-connect:active { transform: scale(0.95); }
+        .btn-download {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+        .btn-download:hover { background: rgba(255, 255, 255, 0.2); }
+        .status-msg {
+            font-size: 13px;
+            margin-top: 15px;
+            color: #e0e0e0;
+            min-height: 20px;
+        }
+    </style>
 </head>
 <body>
 
-<div class="container">
-  <h2>اتصال به VPN</h2>
-  <p>برای اتصال، روی دکمه زیر کلیک کنید.</p>
-  <p><strong>توجه:</strong> این قابلیت فقط در صورتی کار می‌کند که کلاینت V2Ray یا مشابه آن روی دستگاه شما نصب باشد.</p>
+<div class="card">
+    <h1>اتصال به VPN</h1>
+    <button class="btn-connect" onclick="tryConnect()">Connect</button>
+    
+    <div id="status" class="status-msg"></div>
 
-  <button onclick="connectVPN()">اتصال</button>
-
-  <p>اگر برنامه نصب نیست، باید آن را جداگانه دانلود و نصب کنید.</p>
+    <div id="downloadSection" style="display: none; margin-top: 20px;">
+        <p style="font-size: 14px;">برنامه پیدا نشد!</p>
+        <a href="https://play.google.com/store/search?q=v2ray" class="btn-download">دانلود از گوگل پلی / مایکت</a>
+    </div>
 </div>
 
 <script>
-function connectVPN() {
-  // **مهم:** کانفیگ vmess خود را اینجا جایگزین کنید.
-  // این کانفیگ فقط یک مثال است و باید با کانفیگ واقعی خودتان جایگزین شود.
-  const vmessConfig = 'vmess://ewogICJ2IjogIjIiLAogICJwcyI6ICJkZS5jb25uZnVsbC5vcmctcmFjZXZwbi1pYTN1bHIiLAogICJhZGQiOiAiZGUuY29ubmZ1bGwub3JnIiwKICAicG9ydCI6IDIwNTMsCiAgImlkIjogIjMwOWNkNjMyLWM3YTMtNDJlMi1iMjk5LTRhYzgyNTc2ZWM2YyIsCiAgInNjeSI6ICJhdXRvIiwKICAibmV0IjogInRjcCIsCiAgInRscyI6ICJ0bHMiLAogICJ0eXBlIjogIm5vbmUiLAogICJmcCI6ICJjaHJvbWUiLAogICJhbHBuIjogImgyLGh0dHAvMS4xLGgzIgp9'; // کانفیگ Vmess شما
+    // 1. کانفیگ خود را دقیقاً اینجا قرار دهید
+    const MY_VMESS_CONFIG = "vmess://ewogICJ2IjogIjIiLAogICJwcyI6ICJkZS5jb25uZnVsbC5vcmctcmFjZXZwbi1pYTN1bHIiLAogICJhZGQiOiAiZGUuY29ubmZ1bGwub3JnIiwKICAicG9ydCI6IDIwNTMsCiAgImlkIjogIjMwOWNkNjMyLWM3YTMtNDJlMi1iMjk5LTRhYzgyNTc2ZWM2YyIsCiAgInNjeSI6ICJhdXRvIiwKICAibmV0IjogInRjcCIsCiAgInRscyI6ICJ0bHMiLAogICJ0eXBlIjogIm5vbmUiLAogICJmcCI6ICJjaHJvbWUiLAogICJhbHBuIjogImgyLGh0dHAvMS4xLGgzIgp9";
 
-  // این لینک تلاش می‌کند برنامه مرتبط با پروتکل vmess را باز کند.
-  // برای اندروید، معمولاً برنامه هایی مثل V2rayNG یا Bifrost این پروتکل را پشتیبانی می کنند.
-  // برای ویندوز، کلاینت های دسکتاپ V2RayN یا Qv2ray می توانند این کار را انجام دهند.
-  const url = vmessConfig;
+    function tryConnect() {
+        const statusDiv = document.getElementById('status');
+        const downloadSection = document.getElementById('downloadSection');
+        
+        statusDiv.innerText = "در حال تلاش برای باز کردن برنامه...";
+        downloadSection.style.display = "none";
 
-  // تلاش برای باز کردن URL. این رفتار بسته به مرورگر و سیستم عامل متفاوت است.
-  window.location.href = url;
+        // تلاش برای باز کردن پروتکل vmess
+        // اگر برنامه نصب باشد، سیستم‌عامل آن را باز می‌کند
+        window.location.href = MY_VMESS_CONFIG;
 
-  // یک پیغام برای کاربر نمایش داده می شود تا بداند چه اتفاقی افتاده.
-  // اگر برنامه نصب باشد، ممکن است مرورگر به آن برنامه هدایت شود.
-  // اگر برنامه نصب نباشد، ممکن است خطا دهد یا کاری نکند.
-  // ما نمی توانیم از اینجا تشخیص دهیم که برنامه نصب هست یا نه.
-  setTimeout(() => {
-    alert('اگر برنامه V2Ray به صورت خودکار باز نشد، لطفاً کانفیگ را به صورت دستی کپی کرده و در برنامه خود وارد کنید.');
-  }, 2000); // 2 ثانیه بعد از کلیک، پیغام نمایش داده می شود.
-}
+        // چون مرورگر نمی‌تواند تشخیص دهد برنامه نصب است یا نه، 
+        // ما یک تایمر می‌گذاریم. اگر بعد از 3 ثانیه صفحه تغییر نکرد،
+        // یعنی احتمالاً برنامه نصب نیست.
+        setTimeout(() => {
+            statusDiv.innerText = "اگر برنامه باز نشد، باید آن را نصب کنید.";
+            downloadSection.style.display = "block";
+        }, 3000);
+    }
 </script>
 
 </body>
