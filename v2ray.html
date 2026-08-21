@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>خرید کانفیگ V2Ray | Config Store</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #030a06;
+      --card: #0b1a11;
+      --card2: #112b1b;
+      --green: #27ff91;
+      --green-soft: #baffdc;
+      --text: #f1fff7;
+      --muted: #9ab5a5;
+      --border: rgba(39, 255, 145, .22);
+      --yellow: #ffd166;
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--text);
+      font-family: Tahoma, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(39,255,145,.15), transparent 330px),
+        radial-gradient(circle at 90% 20%, rgba(0,180,100,.1), transparent 300px),
+        linear-gradient(135deg, #030a06, #07170d, #020604);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      opacity: .2;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(39,255,145,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(39,255,145,.06) 1px, transparent 1px);
+      background-size: 45px 45px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      height: 76px;
+      padding: 0 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(3,10,6,.88);
+      backdrop-filter: blur(14px);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .logo span {
+      color: var(--green);
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(39,255,145,.45);
+      border-radius: 13px;
+      color: var(--green);
+      background: rgba(39,255,145,.1);
+      font-size: 23px;
+    }
+
+    .back-button {
+      padding: 10px 15px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      color: var(--green-soft);
+      background: rgba(255,255,255,.04);
+      font-size: 12px;
+      text-decoration: none;
+      transition: .25s;
+    }
+
+    .back-button:hover {
+      color: #00170b;
+      background: var(--green);
+    }
+
+    .page {
+      width: min(1100px, 90%);
+      margin: auto;
+      padding: 52px 0 80px;
+    }
+
+    .breadcrumb {
+      margin-bottom: 23px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .breadcrumb span {
+      color: var(--green);
+    }
+
+    .product-area {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 25px;
+    }
+
+    .product-image {
+      min-height: 390px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background:
+        radial-gradient(circle, rgba(39,255,145,.21), transparent 55%),
+        linear-gradient(145deg, #143522, #061009);
+    }
+
+    .circle-one,
+    .circle-two {
+      position: absolute;
+      border: 1px solid rgba(39,255,145,.23);
+      border-radius: 50%;
+    }
+
+    .circle-one {
+      width: 230px;
+      height: 230px;
+    }
+
+    .circle-two {
+      width: 340px;
+      height: 340px;
+    }
+
+    .v2ray-icon {
+      position: relative;
+      z-index: 2;
+      width: 155px;
+      height: 155px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(39,255,145,.6);
+      border-radius: 35px;
+      color: var(--green);
+      background: rgba(39,255,145,.1);
+      box-shadow: 0 0 60px rgba(39,255,145,.2);
+      font-size: 75px;
+    }
+
+    .product-details {
+      padding: 31px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background:
+        linear-gradient(145deg, rgba(17,43,27,.96), rgba(6,16,9,.96));
+    }
+
+    .available {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 7px 12px;
+      border: 1px solid rgba(39,255,145,.3);
+      border-radius: 20px;
+      color: var(--green);
+      background: rgba(39,255,145,.08);
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    h1 {
+      margin-bottom: 15px;
+      font-size: clamp(30px, 5vw, 52px);
+      line-height: 1.4;
+    }
+
+    .description {
+      margin-bottom: 24px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 2.15;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 11px;
+    }
+
+    .feature {
+      padding: 13px 11px;
+      border: 1px solid rgba(39,255,145,.15);
+      border-radius: 11px;
+      color: #ddffeb;
+      background: rgba(255,255,255,.035);
+      font-size: 12px;
+    }
+
+    .feature b {
+      margin-left: 5px;
+      color: var(--green);
+    }
+
+    .buy-area {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: 25px;
+      padding-top: 21px;
+      border-top: 1px solid var(--border);
+    }
+
+    .price-label {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .price {
+      display: block;
+      margin-top: 5px;
+      color: var(--green);
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .buy-button {
+      min-width: 185px;
+      min-height: 52px;
+      padding: 0 17px;
+      border: 0;
+      border-radius: 11px;
+      color: #00170b;
+      background: linear-gradient(110deg, var(--green), var(--green-soft));
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: .25s;
+    }
+
+    .buy-button:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 13px 28px rgba(39,255,145,.25);
+    }
+
+    .details-section {
+      margin-top: 25px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: rgba(8,24,14,.78);
+    }
+
+    .details-section h2 {
+      margin-bottom: 18px;
+      color: var(--green);
+      font-size: 22px;
+    }
+
+    .details-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      list-style: none;
+    }
+
+    .details-list li {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .details-list li::before {
+      content: "✓";
+      margin-left: 8px;
+      color: var(--green);
+      font-weight: bold;
+    }
+
+    .notice {
+      margin-top: 24px;
+      padding: 15px;
+      border: 1px solid rgba(255,209,102,.28);
+      border-radius: 12px;
+      color: #eadcae;
+      background: rgba(255,209,102,.06);
+      font-size: 12px;
+      line-height: 2;
+    }
+
+    footer {
+      padding: 25px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      text-align: center;
+      font-size: 11px;
+    }
+
+    /* Payment Modal */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(0,0,0,.8);
+      backdrop-filter: blur(8px);
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      width: min(450px, 100%);
+      padding: 29px 23px;
+      border: 1px solid rgba(39,255,145,.45);
+      border-radius: 21px;
+      background: linear-gradient(145deg, #12321f, #061009);
+      text-align: center;
+      box-shadow: 0 20px 70px rgba(0,0,0,.45);
+    }
+
+    .modal-box h2 {
+      margin-bottom: 12px;
+      color: var(--green);
+      font-size: 22px;
+    }
+
+    .modal-box p {
+      margin-bottom: 21px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 2;
+    }
+
+    .continue-button {
+      width: 100%;
+      min-height: 50px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      color: #00170b;
+      background: var(--green);
+      font-size: 13px;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .close-button {
+      width: 100%;
+      min-height: 44px;
+      margin-top: 10px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: white;
+      background: rgba(255,255,255,.04);
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    @media (max-width: 800px) {
+      .product-area {
+        grid-template-columns: 1fr;
+      }
+
+      .product-image {
+        min-height: 280px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      header {
+        padding: 0 4%;
+      }
+
+      .logo {
+        font-size: 12px;
+      }
+
+      .back-button {
+        padding: 8px 10px;
+        font-size: 10px;
+      }
+
+      .product-details,
+      .details-section {
+        padding: 21px 17px;
+      }
+
+      .features,
+      .details-list {
+        grid-template-columns: 1fr;
+      }
+
+      .buy-area {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .buy-button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+      <div class="logo-icon">⌁</div>
+      CONFIG <span>STORE</span>
+    </div>
+
+    <a
+      href="index.html"
+      class="back-button"
+    >
+      بازگشت به صفحه اصلی
+    </a>
+  </header>
+
+  <main class="page">
+
+    <div class="breadcrumb">
+      صفحه اصلی
+      <span> / </span>
+      خرید کانفیگ V2Ray
+    </div>
+
+    <section class="product-area">
+
+      <div class="product-image">
+        <div class="circle-one"></div>
+        <div class="circle-two"></div>
+        <div class="v2ray-icon">✦</div>
+      </div>
+
+      <div class="product-details">
+
+        <span class="available">● موجود و فعال</span>
+
+        <h1>کانفیگ V2Ray</h1>
+
+        <p class="description">
+          کانفیگ پرسرعت و پایدار V2Ray برای استفاده روزمره،
+          بازی آنلاین، استریم، دانلود و وب‌گردی.
+          این سرویس برای دستگاه‌های مختلف قابل استفاده است.
+        </p>
+
+        <div class="features">
+
+          <div class="feature">
+            <b>✓</b>
+            سرعت بالا
+          </div>
+
+          <div class="feature">
+            <b>✓</b>
+            اتصال پایدار
+          </div>
+
+          <div class="feature">
+            <b>✓</b>
+            مناسب گیم و استریم
+          </div>
+
+          <div class="feature">
+            <b>✓</b>
+            قابل استفاده در موبایل
+          </div>
+
+          <div class="feature">
+            <b>✓</b>
+            قابل استفاده در کامپیوتر
+          </div>
+
+          <div class="feature">
+            <b>✓</b>
+            پشتیبانی و راهنمای نصب
+          </div>
+
+        </div>
+
+        <div class="buy-area">
+
+          <div>
+            <span class="price-label">قیمت کانفیگ</span>
+            <strong class="price">تماس برای خرید</strong>
+          </div>
+
+          <button
+            class="buy-button"
+            onclick="openPayment()"
+          >
+            خرید کانفیگ V2Ray
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <section class="details-section">
+
+      <h2>جزئیات کانفیگ</h2>
+
+      <ul class="details-list">
+        <li>پشتیبانی از اندروید و آیفون</li>
+        <li>پشتیبانی از ویندوز و مک</li>
+        <li>مناسب برنامه‌های V2Ray و V2Box</li>
+        <li>فعال‌سازی سریع بعد از خرید</li>
+        <li>سرورهای پرسرعت و پایدار</li>
+        <li>راهنمای استفاده و نصب</li>
+      </ul>
+
+      <div class="notice">
+        بعد از پرداخت، کانفیگ برای شما ارسال می‌شود.
+        بخش Redeem Code در صفحه اصلی قرار دارد و
+        با خرید معمولی کانفیگ جداست.
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    تمامی حقوق برای Config Store محفوظ است.
+  </footer>
+
+  <!-- پنجره خرید -->
+  <div
+    id="paymentModal"
+    class="modal"
+  >
+    <div class="modal-box">
+
+      <h2>خرید کانفیگ V2Ray</h2>
+
+      <p>
+        برای ادامه خرید روی دکمه زیر بزنید.
+        می‌توانی لینک تلگرام، واتساپ یا صفحه پرداخت خودت را قرار بدهی.
+      </p>
+
+      <!-- لینک زیر را با لینک واقعی خودت عوض کن -->
+      <a
+        href="https://t.me/YourTelegramUsername"
+        target="_blank"
+        class="continue-button"
+      >
+        ادامه خرید
+      </a>
+
+      <button
+        class="close-button"
+        onclick="closePayment()"
+      >
+        بستن
+      </button>
+
+    </div>
+  </div>
+
+  <script>
+    const paymentModal =
+      document.getElementById("paymentModal");
+
+    function openPayment() {
+      paymentModal.classList.add("show");
+    }
+
+    function closePayment() {
+      paymentModal.classList.remove("show");
+    }
+
+    paymentModal.addEventListener("click", function(event) {
+      if (event.target === paymentModal) {
+        closePayment();
+      }
+    });
+
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape") {
+        closePayment();
+      }
+    });
+  </script>
+
+</body>
+</html>
