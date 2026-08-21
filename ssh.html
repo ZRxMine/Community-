@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>خرید کانفیگ SSH</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #020805;
+      --bg2: #07170d;
+      --green: #29ff91;
+      --green-light: #a4ffd0;
+      --text: #effff6;
+      --muted: #8eaa99;
+      --line: rgba(41, 255, 145, .2);
+      --line-strong: rgba(41, 255, 145, .55);
+      --shadow: rgba(0,0,0,.35);
+      --red: #ff7183;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--text);
+      font-family: "Vazirmatn", Tahoma, sans-serif;
+      background:
+        radial-gradient(circle at 8% 0%, rgba(41,255,145,.16), transparent 360px),
+        radial-gradient(circle at 95% 12%, rgba(0,180,100,.12), transparent 330px),
+        linear-gradient(135deg, var(--bg), var(--bg2), #010403);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: .2;
+      background-image:
+        linear-gradient(rgba(41,255,145,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(41,255,145,.06) 1px, transparent 1px);
+      background-size: 46px 46px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font-family: inherit; }
+    button { cursor: pointer; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      height: 78px;
+      padding: 0 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+      background: rgba(2, 8, 5, .82);
+      backdrop-filter: blur(18px);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 900;
+    }
+    .logo span { color: var(--green); }
+
+    .logo-icon {
+      width: 43px;
+      height: 43px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line-strong);
+      border-radius: 14px;
+      color: var(--green);
+      background: rgba(41,255,145,.09);
+      box-shadow: 0 0 25px rgba(41,255,145,.18);
+      font-size: 25px;
+    }
+
+    .back-button {
+      padding: 10px 15px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--green-light);
+      background: rgba(255,255,255,.035);
+      font-size: 12px;
+      transition: .25s;
+    }
+    .back-button:hover { color:#00170b; background: var(--green); transform: translateY(-3px); }
+
+    .page { width: min(1160px, 90%); margin: auto; padding: 50px 0 85px; }
+
+    .breadcrumb {
+      margin-bottom: 24px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .breadcrumb span { color: var(--green); }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 27px;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 17px;
+      padding: 8px 13px;
+      border: 1px solid rgba(41,255,145,.33);
+      border-radius: 30px;
+      color: var(--green);
+      background: rgba(41,255,145,.07);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .status-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 13px var(--green);
+    }
+
+    h1 {
+      margin-bottom: 15px;
+      font-size: clamp(35px, 5vw, 62px);
+      line-height: 1.35;
+    }
+    h1 span { color: var(--green); text-shadow: 0 0 28px rgba(41,255,145,.3); }
+
+    .hero-text {
+      max-width: 620px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 2.2;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background:
+        radial-gradient(circle, rgba(41,255,145,.17), transparent 48%),
+        linear-gradient(145deg, rgba(17,52,30,.9), rgba(3,12,7,.94));
+      box-shadow: inset 0 0 55px rgba(41,255,145,.05);
+      min-height: 355px;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+
+    .panel::before {
+      content:"";
+      position:absolute;
+      width: 310px;
+      height: 140px;
+      border: 1px solid rgba(41,255,145,.28);
+      border-radius: 50%;
+      transform: rotate(-25deg);
+      top: 10%;
+      right: -60px;
+      opacity: .85;
+    }
+
+    .panel-icon {
+      width: 165px;
+      height: 165px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(41,255,145,.7);
+      border-radius: 38px;
+      color: var(--green);
+      background: rgba(41,255,145,.08);
+      box-shadow: 0 0 36px rgba(41,255,145,.25), inset 0 0 35px rgba(41,255,145,.12);
+      font-size: 82px;
+      position: relative;
+      z-index: 2;
+      animation: floaty 2.5s ease-in-out infinite;
+    }
+
+    @keyframes floaty {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .card {
+      margin-top: 18px;
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: 25px;
+      background: linear-gradient(145deg, rgba(15,42,25,.94), rgba(5,15,8,.97));
+      box-shadow: 0 22px 65px rgba(0,0,0,.22);
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(41,255,145,.12), transparent 45%),
+        radial-gradient(circle at 80% 10%, rgba(0,180,100,.10), transparent 45%);
+      pointer-events:none;
+    }
+
+    .card h2 { font-size: 22px; margin-bottom: 10px; position: relative; z-index: 1; }
+    .card p { color: var(--muted); font-size: 13px; line-height: 2.1; position: relative; z-index: 1; }
+
+    .buy-row {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      position: relative; z-index: 1;
+    }
+
+    .primary-btn {
+      width: 100%;
+      height: 56px;
+      border: 0;
+      border-radius: 13px;
+      color: #00170a;
+      background: linear-gradient(110deg, var(--green), var(--green-light));
+      box-shadow: 0 10px 28px rgba(41,255,145,.15);
+      font-size: 14px;
+      font-weight: 1000;
+      transition: .28s;
+    }
+    .primary-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 34px rgba(41,255,145,.28);
+    }
+
+    .secondary-btn {
+      width: 100%;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      color: var(--green-light);
+      background: rgba(255,255,255,.035);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    footer {
+      padding: 26px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
+      font-size: 11px;
+      margin-top: 40px;
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(0,0,0,.84);
+      backdrop-filter: blur(12px);
+    }
+    .modal.show { display: flex; animation: fadeIn .25s ease; }
+
+    .modal-box {
+      width: min(520px, 100%);
+      padding: 28px 22px;
+      border: 1px solid var(--line-strong);
+      border-radius: 22px;
+      background: linear-gradient(145deg, #113720, #061009);
+      box-shadow: 0 20px 80px rgba(0,0,0,.5);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .modal-box::before {
+      content:"";
+      position:absolute;
+      top:0;
+      right: 10%;
+      left: 10%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      box-shadow: 0 0 18px var(--green);
+      opacity: .9;
+    }
+
+    .modal-icon {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      border: 2px solid var(--green);
+      background: rgba(41,255,145,.08);
+      color: var(--green);
+      display: grid;
+      place-items: center;
+      font-size: 42px;
+      margin: 0 auto 14px;
+      box-shadow: 0 0 35px rgba(41,255,145,.35);
+    }
+
+    .modal-box h2 {
+      color: var(--green);
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .modal-box p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 2.1;
+      margin-bottom: 18px;
+    }
+
+    .modal-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .modal-close {
+      height: 44px;
+      border-radius: 11px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 900;
+      transition: .25s;
+    }
+    .modal-close:hover { border-color: var(--green); color: var(--green); }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    @media (max-width: 850px) {
+      .hero { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      header { padding: 0 4%; }
+      .logo { font-size: 11px; }
+      .logo-icon { width: 37px; height: 37px; }
+      .back-button { padding: 8px 10px; font-size: 10px; }
+      .page { width: 92%; padding-top: 34px; }
+      .panel { min-height: 280px; }
+      .panel-icon { width: 135px; height: 135px; font-size: 62px; }
+      .card { padding: 21px 16px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="index.html" class="logo">
+      <div class="logo-icon">⌁</div>
+      CONFIG <span>STORE</span>
+    </a>
+
+    <a href="index.html" class="back-button">
+      ← بازگشت به صفحه اصلی
+    </a>
+  </header>
+
+  <main class="page">
+    <div class="breadcrumb">
+      صفحه اصلی <span>/</span> کانفیگ SSH
+    </div>
+
+    <section class="hero">
+      <div>
+        <div class="status">
+          <span class="status-dot"></span>
+          به‌زودی فعال می‌شود
+        </div>
+
+        <h1>
+          کانفیگ <span>SSH</span>
+          حرفه‌ای
+        </h1>
+
+        <p class="hero-text">
+          این بخش در حال ساخت است.
+          به محض آماده شدن، صفحه خرید فعال می‌شود و کانفیگ‌ها با راهنمای نصب و پشتیبانی منتشر خواهند شد.
+        </p>
+
+        <div class="buy-row">
+          <button class="primary-btn" type="button" onclick="openBuildModal()">
+            خرید کانفیگ SSH
+          </button>
+
+          <button
+            class="secondary-btn"
+            type="button"
+            onclick="openBuildModal()"
+            title="همین الان هم بزن؛ فقط پیام میاد 🙂"
+          >
+            اطلاع از انتشار در آینده
+          </button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-icon">🔧</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>چرا فعلاً نمایش داده نمی‌شود؟</h2>
+      <p>
+        چون داریم صفحه خرید و سیستم انتخاب مدت/حجم/پرداخت رو حرفه‌ای و تمیز می‌کنیم.
+        در اپدیت‌های بعدی منتشر می‌شود—همین‌قدر بزن، پیامش خفن میاد 😎
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    تمامی حقوق برای Config Store محفوظ است.
+  </footer>
+
+  <!-- Modal -->
+  <div id="buildModal" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <div class="modal-icon">⏳</div>
+      <h2>در حال ساخت...</h2>
+      <p id="buildText">
+        صفحه خرید کانفیگ SSH در اپدیت‌های بعدی منتشر خواهد شد.
+        به محض آماده شدن، خبرش رو به‌صورت کامل همینجا می‌بینی.
+      </p>
+
+      <div class="modal-actions">
+        <button class="modal-close" type="button" onclick="closeBuildModal()">
+          فهمیدم
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const buildModal = document.getElementById("buildModal");
+
+    function openBuildModal() {
+      buildModal.classList.add("show");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeBuildModal() {
+      buildModal.classList.remove("show");
+      document.body.style.overflow = "";
+    }
+
+    // کلیک روی پس‌زمینه
+    buildModal.addEventListener("click", (e) => {
+      if (e.target === buildModal) closeBuildModal();
+    });
+
+    // ESC
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeBuildModal();
+    });
+  </script>
+</body>
+</html>
