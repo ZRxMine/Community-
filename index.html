@@ -20,17 +20,12 @@
     :root {
       --bg: #040b07;
       --card: #0d1d14;
-      --card2: #13291d;
       --green: #27ff91;
-      --green2: #00bd62;
+      --green-dark: #00bd62;
       --text: #f2fff7;
       --muted: #9bb5a5;
-      --border: rgba(39, 255, 145, .2);
-      --danger: #ff6374;
-    }
-
-    html {
-      scroll-behavior: smooth;
+      --border: rgba(39, 255, 145, .22);
+      --red: #ff6374;
     }
 
     body {
@@ -39,8 +34,8 @@
       color: var(--text);
       font-family: "Vazirmatn", sans-serif;
       background:
-        radial-gradient(circle at 10% 5%, rgba(39, 255, 145, .16), transparent 350px),
-        radial-gradient(circle at 90% 15%, rgba(0, 189, 98, .1), transparent 350px),
+        radial-gradient(circle at 10% 5%, rgba(39,255,145,.15), transparent 350px),
+        radial-gradient(circle at 90% 15%, rgba(0,189,98,.1), transparent 350px),
         linear-gradient(135deg, #040b07, #08170e, #020604);
     }
 
@@ -52,10 +47,9 @@
       opacity: .25;
       pointer-events: none;
       background-image:
-        linear-gradient(rgba(39, 255, 145, .05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(39, 255, 145, .05) 1px, transparent 1px);
+        linear-gradient(rgba(39,255,145,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(39,255,145,.05) 1px, transparent 1px);
       background-size: 45px 45px;
-      mask-image: linear-gradient(to bottom, black, transparent);
     }
 
     header {
@@ -68,8 +62,8 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--border);
-      background: rgba(3, 12, 7, .86);
-      backdrop-filter: blur(18px);
+      background: rgba(3,12,7,.88);
+      backdrop-filter: blur(16px);
     }
 
     .logo {
@@ -89,19 +83,11 @@
       height: 43px;
       display: grid;
       place-items: center;
-      border: 1px solid rgba(39, 255, 145, .5);
+      border: 1px solid rgba(39,255,145,.5);
       border-radius: 14px;
       color: var(--green);
-      background: rgba(39, 255, 145, .1);
-      box-shadow: 0 0 25px rgba(39, 255, 145, .15);
-      font-size: 26px;
-      animation: pulse 2.5s infinite;
-    }
-
-    @keyframes pulse {
-      50% {
-        box-shadow: 0 0 35px rgba(39, 255, 145, .4);
-      }
+      background: rgba(39,255,145,.1);
+      font-size: 25px;
     }
 
     nav {
@@ -115,12 +101,11 @@
       color: var(--muted);
       text-decoration: none;
       font-size: 13px;
-      transition: .25s;
     }
 
     nav a:hover {
       color: var(--green);
-      background: rgba(39, 255, 145, .08);
+      background: rgba(39,255,145,.08);
     }
 
     .online {
@@ -128,7 +113,7 @@
       align-items: center;
       gap: 7px;
       padding: 8px 13px;
-      border: 1px solid rgba(39, 255, 145, .25);
+      border: 1px solid var(--border);
       border-radius: 30px;
       color: var(--green);
       font-size: 12px;
@@ -141,13 +126,6 @@
       border-radius: 50%;
       background: var(--green);
       box-shadow: 0 0 12px var(--green);
-      animation: blink 1.4s infinite;
-    }
-
-    @keyframes blink {
-      50% {
-        opacity: .25;
-      }
     }
 
     .container {
@@ -156,7 +134,7 @@
     }
 
     .hero {
-      min-height: 560px;
+      min-height: 570px;
       display: grid;
       grid-template-columns: 1.1fr .9fr;
       align-items: center;
@@ -168,13 +146,12 @@
       display: inline-block;
       margin-bottom: 17px;
       padding: 8px 15px;
-      border: 1px solid rgba(39, 255, 145, .35);
+      border: 1px solid rgba(39,255,145,.35);
       border-radius: 30px;
       color: var(--green);
-      background: rgba(39, 255, 145, .08);
+      background: rgba(39,255,145,.08);
       font-size: 12px;
       font-weight: bold;
-      animation: up .7s both;
     }
 
     h1 {
@@ -183,12 +160,11 @@
       font-size: clamp(38px, 5vw, 70px);
       line-height: 1.35;
       font-weight: 900;
-      animation: up .8s .1s both;
     }
 
     h1 span {
       color: var(--green);
-      text-shadow: 0 0 25px rgba(39, 255, 145, .35);
+      text-shadow: 0 0 25px rgba(39,255,145,.35);
     }
 
     .hero p {
@@ -196,19 +172,6 @@
       color: var(--muted);
       line-height: 2.1;
       font-size: 15px;
-      animation: up .9s .2s both;
-    }
-
-    @keyframes up {
-      from {
-        opacity: 0;
-        transform: translateY(22px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     .buttons {
@@ -237,13 +200,13 @@
 
     .btn:hover {
       transform: translateY(-4px);
-      box-shadow: 0 15px 30px rgba(39, 255, 145, .25);
+      box-shadow: 0 15px 30px rgba(39,255,145,.25);
     }
 
     .btn.dark {
       color: white;
       border: 1px solid var(--border);
-      background: rgba(255, 255, 255, .05);
+      background: rgba(255,255,255,.05);
     }
 
     .visual {
@@ -257,9 +220,8 @@
     .visual::after {
       content: "";
       position: absolute;
-      border: 1px solid rgba(39, 255, 145, .2);
+      border: 1px solid rgba(39,255,145,.2);
       border-radius: 50%;
-      animation: rotate 10s linear infinite;
     }
 
     .visual::before {
@@ -270,14 +232,6 @@
     .visual::after {
       width: 410px;
       height: 410px;
-      animation-duration: 16s;
-      animation-direction: reverse;
-    }
-
-    @keyframes rotate {
-      to {
-        transform: rotate(360deg);
-      }
     }
 
     .server-card {
@@ -285,22 +239,11 @@
       z-index: 2;
       width: min(350px, 90%);
       padding: 26px;
-      border: 1px solid rgba(39, 255, 145, .35);
+      border: 1px solid rgba(39,255,145,.35);
       border-radius: 27px;
       background: linear-gradient(145deg, #163522, #08130c);
-      box-shadow: 0 25px 75px rgba(0, 0, 0, .5);
+      box-shadow: 0 25px 75px rgba(0,0,0,.5);
       transform: rotate(3deg);
-      animation: float 4s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% {
-        transform: rotate(3deg) translateY(0);
-      }
-
-      50% {
-        transform: rotate(1deg) translateY(-13px);
-      }
     }
 
     .server-top {
@@ -367,14 +310,7 @@
       height: 100%;
       display: block;
       border-radius: inherit;
-      background: linear-gradient(90deg, var(--green2), var(--green));
-      animation: progress 2s ease-out;
-    }
-
-    @keyframes progress {
-      from {
-        width: 0;
-      }
+      background: linear-gradient(90deg, var(--green-dark), var(--green));
     }
 
     .section {
@@ -406,7 +342,7 @@
     .product {
       border: 1px solid var(--border);
       border-radius: 20px;
-      background: linear-gradient(145deg, rgba(18, 39, 26, .93), rgba(7, 17, 10, .93));
+      background: linear-gradient(145deg, rgba(18,39,26,.93), rgba(7,17,10,.93));
       transition: .3s;
     }
 
@@ -418,8 +354,8 @@
     .feature:hover,
     .product:hover {
       transform: translateY(-8px);
-      border-color: rgba(39, 255, 145, .6);
-      box-shadow: 0 18px 40px rgba(39, 255, 145, .12);
+      border-color: rgba(39,255,145,.6);
+      box-shadow: 0 18px 40px rgba(39,255,145,.12);
     }
 
     .icon {
@@ -430,7 +366,7 @@
       margin-bottom: 15px;
       border-radius: 16px;
       color: var(--green);
-      background: rgba(39, 255, 145, .1);
+      background: rgba(39,255,145,.1);
       font-size: 25px;
     }
 
@@ -448,44 +384,10 @@
     }
 
     .green-border {
-      position: relative;
-      isolation: isolate;
-      overflow: hidden;
       padding: 2px;
       margin: 10px 0 70px;
       border-radius: 25px;
-    }
-
-    .green-border::before {
-      content: "";
-      position: absolute;
-      z-index: -2;
-      inset: -180%;
-      background: conic-gradient(
-        from 0deg,
-        transparent,
-        var(--green2),
-        var(--green),
-        #c0ffdc,
-        var(--green2),
-        transparent
-      );
-      animation: rotateGreen 5s linear infinite;
-    }
-
-    .green-border::after {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      inset: 0;
-      border-radius: 25px;
-      background: #0a1710;
-    }
-
-    @keyframes rotateGreen {
-      to {
-        transform: rotate(360deg);
-      }
+      background: linear-gradient(120deg, var(--green), transparent, var(--green-dark));
     }
 
     .stats {
@@ -512,7 +414,6 @@
       margin-bottom: 6px;
       color: var(--green);
       font-size: 25px;
-      text-shadow: 0 0 18px rgba(39, 255, 145, .45);
     }
 
     .stat span {
@@ -521,23 +422,9 @@
     }
 
     .product {
-      position: relative;
       min-height: 275px;
       padding: 22px;
       overflow: hidden;
-    }
-
-    .product::before {
-      content: "";
-      position: absolute;
-      width: 150px;
-      height: 150px;
-      top: -80px;
-      left: -70px;
-      border-radius: 50%;
-      background: var(--green);
-      opacity: .08;
-      filter: blur(10px);
     }
 
     .product p {
@@ -570,12 +457,6 @@
       font-size: 11px;
       font-weight: 900;
       cursor: pointer;
-      transition: .2s;
-    }
-
-    .product-btn:hover {
-      transform: scale(1.06);
-      box-shadow: 0 0 19px rgba(39, 255, 145, .4);
     }
 
     footer {
@@ -586,284 +467,166 @@
       font-size: 12px;
     }
 
-    .modal-bg {
+    /* دکمه ریدیم پایین سمت راست */
+    .redeem-floating {
       position: fixed;
-      z-index: 100;
+      right: 22px;
+      bottom: 22px;
+      z-index: 50;
+      padding: 13px 18px;
+      border: 1px solid rgba(39,255,145,.6);
+      border-radius: 13px;
+      color: #00170b;
+      background: linear-gradient(120deg, #27ff91, #b5ffda);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(39,255,145,.25);
+      transition: .25s;
+    }
+
+    .redeem-floating:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 35px rgba(39,255,145,.4);
+    }
+
+    /* پنجره ریدیم */
+    .redeem-modal {
+      position: fixed;
       inset: 0;
+      z-index: 100;
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 18px;
-      background: rgba(0, 0, 0, .8);
-      backdrop-filter: blur(10px);
+      padding: 20px;
+      background: rgba(0,0,0,.8);
+      backdrop-filter: blur(9px);
     }
 
-    .modal-bg.show {
+    .redeem-modal.show {
       display: flex;
-      animation: fade .25s ease;
     }
 
-    @keyframes fade {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
-    }
-
-    .modal {
+    .redeem-box {
       position: relative;
-      width: min(720px, 100%);
-      max-height: 92vh;
+      width: min(650px, 100%);
+      max-height: 90vh;
       overflow-y: auto;
-      padding: 29px;
-      border: 1px solid rgba(39, 255, 145, .48);
-      border-radius: 27px;
+      padding: 30px 25px;
+      border: 1px solid rgba(39,255,145,.5);
+      border-radius: 22px;
       background: linear-gradient(145deg, #153522, #061009);
-      box-shadow: 0 30px 90px rgba(0, 0, 0, .7);
-      animation: modalUp .35s ease;
+      box-shadow: 0 25px 80px rgba(0,0,0,.7);
+      text-align: center;
     }
 
-    @keyframes modalUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px) scale(.96);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+    .redeem-box h2 {
+      margin-bottom: 8px;
+      color: var(--green);
+      font-size: 23px;
     }
 
-    .close {
+    .redeem-box p {
+      margin-bottom: 20px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .redeem-close {
       position: absolute;
-      top: 13px;
-      left: 15px;
-      width: 34px;
-      height: 34px;
+      top: 12px;
+      left: 13px;
+      width: 32px;
+      height: 32px;
       border: 0;
       border-radius: 50%;
       color: white;
-      background: rgba(255, 255, 255, .1);
+      background: rgba(255,255,255,.1);
       font-size: 21px;
       cursor: pointer;
     }
 
-    .modal-header {
-      margin-bottom: 25px;
-      text-align: center;
-    }
-
-    .mini-icon {
-      width: 66px;
-      height: 66px;
-      display: grid;
-      place-items: center;
-      margin: auto auto 14px;
-      border-radius: 20px;
-      color: #00170b;
-      background: var(--green);
-      box-shadow: 0 0 28px rgba(39, 255, 145, .3);
-      font-size: 31px;
-    }
-
-    .modal-header h2 {
-      margin-bottom: 8px;
-      color: var(--green);
-      font-size: 24px;
-    }
-
-    .modal-header p {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .buy-layout {
-      display: grid;
-      grid-template-columns: 1fr 260px;
-      gap: 22px;
-      align-items: start;
-    }
-
-    .form-group {
-      margin-bottom: 18px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 8px;
-      color: #e5fff0;
-      font-size: 13px;
-      font-weight: bold;
-    }
-
-    select,
-    input {
+    #redeemInput {
       width: 100%;
-      height: 52px;
-      outline: none;
+      height: 50px;
       padding: 0 14px;
-      border: 1px solid rgba(120, 180, 145, .3);
-      border-radius: 11px;
+      border: 1px solid rgba(120,180,145,.35);
+      border-radius: 10px;
+      outline: none;
       color: white;
       background: #09180f;
-      font: inherit;
-      transition: .2s;
-    }
-
-    select:focus,
-    input:focus {
-      border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(39, 255, 145, .1);
-    }
-
-    option {
-      color: white;
-      background: #09180f;
-    }
-
-    .coupon-row {
-      display: flex;
-      gap: 8px;
-    }
-
-    .coupon-row input {
-      direction: ltr;
-      text-align: center;
       font-family: monospace;
-      font-weight: bold;
-      letter-spacing: 1px;
+      font-size: 15px;
+      text-align: center;
+      direction: ltr;
     }
 
-    .coupon-row button {
-      width: 110px;
+    #redeemInput:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(39,255,145,.1);
+    }
+
+    .redeem-submit,
+    .download-config {
+      width: 100%;
+      min-height: 49px;
+      margin-top: 13px;
+      padding: 10px;
       border: 0;
-      border-radius: 11px;
+      border-radius: 10px;
       color: #00170b;
       background: var(--green);
-      font: inherit;
-      font-size: 12px;
+      font-family: inherit;
       font-weight: 900;
       cursor: pointer;
     }
 
-    .coupon-message {
-      min-height: 22px;
-      margin-top: 8px;
-      font-size: 12px;
-    }
-
-    .success {
-      color: var(--green);
-    }
-
-    .error {
-      color: var(--danger);
-    }
-
-    .summary {
-      position: sticky;
-      top: 5px;
-      padding: 20px;
-      border: 1px solid rgba(39, 255, 145, .25);
-      border-radius: 18px;
-      background: rgba(5, 19, 10, .85);
-    }
-
-    .summary h3 {
-      margin-bottom: 15px;
-      color: var(--green);
-      font-size: 17px;
-    }
-
-    .summary-line {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 11px 0;
-      border-bottom: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .summary-line strong {
-      color: #e6ffef;
-    }
-
-    .summary-line.total {
-      margin-top: 8px;
-      border: 0;
-      color: white;
-      font-size: 14px;
-      font-weight: bold;
-    }
-
-    .summary-line.total strong {
-      color: var(--green);
-      font-size: 20px;
-    }
-
-    .buy-button {
-      width: 100%;
-      height: 53px;
-      margin-top: 16px;
-      border: 0;
-      border-radius: 12px;
+    .download-config {
+      display: none;
       color: #00170b;
-      background: linear-gradient(105deg, var(--green), #b5ffda);
-      font: inherit;
-      font-weight: 900;
-      cursor: pointer;
-      transition: .25s;
+      background: #b5ffda;
     }
 
-    .buy-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 28px rgba(39, 255, 145, .3);
+    .download-config.show {
+      display: block;
     }
 
-    .notice {
+    #redeemResult {
+      min-height: 25px;
       margin-top: 13px;
       color: var(--muted);
-      text-align: center;
-      font-size: 11px;
+      font-size: 12px;
       line-height: 1.8;
     }
 
-    .toast {
-      position: fixed;
-      z-index: 200;
-      right: 22px;
-      bottom: 22px;
+    .redeem-success {
+      color: var(--green) !important;
+    }
+
+    .redeem-error {
+      color: var(--red) !important;
+    }
+
+    .config-preview {
       display: none;
-      max-width: 350px;
-      padding: 15px 18px;
-      border: 1px solid rgba(39, 255, 145, .4);
-      border-radius: 13px;
-      color: white;
-      background: #102a1b;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, .45);
-      font-size: 13px;
+      margin-top: 18px;
+      padding: 13px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: #b5ffda;
+      background: #020a05;
+      direction: ltr;
+      font-family: monospace;
+      font-size: 10px;
+      line-height: 1.7;
+      text-align: left;
+      white-space: pre-wrap;
+      word-break: break-all;
     }
 
-    .toast.show {
+    .config-preview.show {
       display: block;
-      animation: toastIn .3s ease;
-    }
-
-    @keyframes toastIn {
-      from {
-        opacity: 0;
-        transform: translateY(15px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     @media (max-width: 1000px) {
@@ -890,36 +653,11 @@
       .stats {
         grid-template-columns: repeat(2, 1fr);
       }
-
-      .stat:nth-child(2) {
-        border-left: 0;
-      }
-
-      .buy-layout {
-        grid-template-columns: 1fr;
-      }
-
-      .summary {
-        position: static;
-      }
     }
 
     @media (max-width: 560px) {
-      header {
-        padding: 0 17px;
-      }
-
       nav {
         display: none;
-      }
-
-      .logo {
-        font-size: 13px;
-      }
-
-      .online {
-        padding: 7px 9px;
-        font-size: 10px;
       }
 
       .features,
@@ -927,17 +665,11 @@
         grid-template-columns: 1fr;
       }
 
-      .stats {
-        grid-template-columns: 1fr 1fr;
-        padding: 18px 9px;
-      }
-
-      .modal {
-        padding: 25px 17px;
-      }
-
-      .coupon-row button {
-        width: 95px;
+      .redeem-floating {
+        right: 14px;
+        bottom: 14px;
+        padding: 11px 14px;
+        font-size: 11px;
       }
     }
   </style>
@@ -984,8 +716,8 @@
             مشاهده کانفیگ‌ها
           </a>
 
-          <button class="btn dark" onclick="openBuyModal()">
-            خرید کانفیگ V2Ray
+          <button class="btn dark" onclick="openRedeem()">
+            دریافت با Redeem Code
           </button>
         </div>
       </div>
@@ -1095,36 +827,29 @@
       </div>
 
       <div class="products">
-
         <article class="product">
           <div class="icon">✦</div>
-
           <h3>کانفیگ V2Ray</h3>
-
           <p>
             کانفیگ پرسرعت و پایدار V2Ray برای استفاده روی موبایل و کامپیوتر.
           </p>
 
           <div class="product-bottom">
-            <span class="price">شروع از ۱۱۰ هزار تومان</span>
-
-            <button class="product-btn" onclick="openBuyModal()">
-              خرید کانفیگ
+            <span class="price">ویژه کاربران</span>
+            <button class="product-btn" onclick="openRedeem()">
+              Redeem Code
             </button>
           </div>
         </article>
 
         <article class="product">
           <div class="icon">🎮</div>
-
           <h3>کانفیگ گیمینگ</h3>
-
           <p>مناسب بازی آنلاین با پینگ پایین و اتصال پایدار.</p>
 
           <div class="product-bottom">
             <span class="price">به‌زودی</span>
-
-            <button class="product-btn" onclick="showToast('این محصول به‌زودی فعال می‌شود.')">
+            <button class="product-btn" onclick="showMessage('این محصول به‌زودی فعال می‌شود.')">
               به‌زودی
             </button>
           </div>
@@ -1132,15 +857,12 @@
 
         <article class="product">
           <div class="icon">◈</div>
-
           <h3>کانفیگ WireGuard</h3>
-
           <p>اتصال سبک، سریع و مناسب برای دستگاه‌های مختلف.</p>
 
           <div class="product-bottom">
             <span class="price">به‌زودی</span>
-
-            <button class="product-btn" onclick="showToast('این محصول به‌زودی فعال می‌شود.')">
+            <button class="product-btn" onclick="showMessage('این محصول به‌زودی فعال می‌شود.')">
               به‌زودی
             </button>
           </div>
@@ -1148,20 +870,16 @@
 
         <article class="product">
           <div class="icon">⌘</div>
-
           <h3>کانفیگ SSH</h3>
-
           <p>سرویس پایدار برای اتصال امن و استفاده روزمره.</p>
 
           <div class="product-bottom">
             <span class="price">به‌زودی</span>
-
-            <button class="product-btn" onclick="showToast('این محصول به‌زودی فعال می‌شود.')">
+            <button class="product-btn" onclick="showMessage('این محصول به‌زودی فعال می‌شود.')">
               به‌زودی
             </button>
           </div>
         </article>
-
       </div>
     </section>
 
@@ -1171,349 +889,355 @@
     تمامی حقوق برای Config Store محفوظ است.
   </footer>
 
-  <!-- پنجره خرید -->
-  <div id="buyModal" class="modal-bg" onclick="closeOutside(event)">
-    <div class="modal">
+  <!-- دکمه پایین سمت راست -->
+  <button id="openRedeemBtn" class="redeem-floating">
+    🎁 Redeem Code
+  </button>
 
-      <button class="close" onclick="closeBuyModal()">×</button>
+  <!-- پنجره Redeem Code -->
+  <div id="redeemModal" class="redeem-modal">
+    <div class="redeem-box">
 
-      <div class="modal-header">
-        <div class="mini-icon">✦</div>
-        <h2>خرید کانفیگ V2Ray</h2>
-        <p>مدت، حجم و تعداد کانفیگ خود را انتخاب کنید</p>
-      </div>
+      <button id="closeRedeemBtn" class="redeem-close">×</button>
 
-      <div class="buy-layout">
+      <h2>دریافت کانفیگ</h2>
+      <p>کد ریدیم خود را وارد کنید</p>
 
-        <div>
+      <input
+        id="redeemInput"
+        type="text"
+        placeholder="کد ریدیم را وارد کنید"
+        autocomplete="off"
+      >
 
-          <div class="form-group">
-            <label for="duration">مدت زمان اشتراک</label>
+      <button id="checkRedeemBtn" class="redeem-submit">
+        فعال‌سازی کد
+      </button>
 
-            <select id="duration" onchange="calculatePrice()">
-              <option value="7">۷ روزه - ۱۱۰,۰۰۰ تومان</option>
-              <option value="30">۱ ماهه - ۲۲۰,۰۰۰ تومان</option>
-              <option value="90">۳ ماهه - ۳۸۰,۰۰۰ تومان</option>
-              <option value="180">۶ ماهه - ۵۰۰,۰۰۰ تومان</option>
-            </select>
-          </div>
+      <div id="redeemResult"></div>
 
-          <div class="form-group">
-            <label for="volume">حجم کانفیگ</label>
+      <pre id="configPreview" class="config-preview"></pre>
 
-            <select id="volume" onchange="calculatePrice()">
-              <option value="0">حجم پایه - بدون افزایش قیمت</option>
-              <option value="30">۲۰ گیگ - افزایش ۳۰,۰۰۰ تومان</option>
-              <option value="70">۵۰ گیگ - افزایش ۷۰,۰۰۰ تومان</option>
-              <option value="110">۱۰۰ گیگ - افزایش ۱۱۰,۰۰۰ تومان</option>
-            </select>
-          </div>
+      <button id="downloadConfigBtn" class="download-config">
+        دانلود کانفیگ
+      </button>
 
-          <div class="form-group">
-            <label for="coupon">کد تخفیف</label>
-
-            <div class="coupon-row">
-              <input
-                id="coupon"
-                type="text"
-                placeholder="کد تخفیف"
-                maxlength="10"
-                autocomplete="off"
-              >
-
-              <button onclick="applyCoupon()">
-                اعمال کد
-              </button>
-            </div>
-
-            <div id="couponMessage" class="coupon-message"></div>
-          </div>
-
-        </div>
-
-        <div class="summary">
-          <h3>خلاصه سفارش</h3>
-
-          <div class="summary-line">
-            <span>مدت زمان</span>
-            <strong id="summaryDuration">۷ روزه</strong>
-          </div>
-
-          <div class="summary-line">
-            <span>حجم</span>
-            <strong id="summaryVolume">پایه</strong>
-          </div>
-
-          <div class="summary-line">
-            <span>تعداد کانفیگ</span>
-            <strong id="summaryCount">۱ عدد</strong>
-          </div>
-
-          <div class="summary-line">
-            <span>قیمت اولیه</span>
-            <strong id="summaryBase">۱۱۰,۰۰۰ تومان</strong>
-          </div>
-
-          <div class="summary-line">
-            <span>تخفیف</span>
-            <strong id="summaryDiscount">۰ تومان</strong>
-          </div>
-
-          <div class="summary-line total">
-            <span>مبلغ نهایی</span>
-            <strong id="finalPrice">۱۱۰,۰۰۰ تومان</strong>
-          </div>
-
-          <button class="buy-button" onclick="submitOrder()">
-            ادامه و ثبت سفارش
-          </button>
-
-          <div class="notice">
-            پس از ثبت سفارش، اطلاعات پرداخت و دریافت کانفیگ نمایش داده می‌شود.
-          </div>
-        </div>
-
-      </div>
     </div>
   </div>
 
-  <div id="toast" class="toast"></div>
-
   <script>
-    const prices = {
-      duration: {
-        "7": 110000,
-        "30": 220000,
-        "90": 380000,
-        "180": 500000
-      },
+    const VALID_CODE = "Qr678";
 
-      volume: {
-        "0": 0,
-        "30": 30000,
-        "70": 70000,
-        "110": 110000
+    const configData = {
+      "remarks": "config ( config store ZRX )",
+      "log": {
+        "loglevel": "warning"
       },
-
-      couponCode: "QrEsU",
-      couponPercent: 10
+      "inbounds": [
+        {
+          "tag": "socks",
+          "port": 10808,
+          "protocol": "socks",
+          "settings": {
+            "auth": "noauth",
+            "udp": true,
+            "userLevel": 8
+          },
+          "sniffing": {
+            "enabled": true,
+            "destOverride": [
+              "http",
+              "tls"
+            ],
+            "routeOnly": false
+          }
+        }
+      ],
+      "outbounds": [
+        {
+          "tag": "proxy",
+          "protocol": "vmess",
+          "settings": {
+            "vnext": [
+              {
+                "address": "fr.connfull.org",
+                "port": 2053,
+                "users": [
+                  {
+                    "id": "008c1098-78b0-40a4-8935-147d43c9e024",
+                    "security": "auto",
+                    "level": 8
+                  }
+                ]
+              }
+            ]
+          },
+          "streamSettings": {
+            "network": "tcp",
+            "security": "tls",
+            "tcpSettings": {
+              "header": {
+                "type": "none"
+              }
+            },
+            "tlsSettings": {
+              "allowInsecure": true,
+              "alpn": [
+                "h2",
+                "http/1.1",
+                "h3"
+              ],
+              "fingerprint": "chrome",
+              "show": false
+            }
+          },
+          "mux": {
+            "enabled": false,
+            "concurrency": -1,
+            "xudpConcurrency": 8,
+            "xudpProxyUDP443": ""
+          }
+        },
+        {
+          "tag": "direct",
+          "protocol": "freedom",
+          "settings": {
+            "domainStrategy": "UseIP"
+          },
+          "mux": {
+            "enabled": false,
+            "concurrency": 8,
+            "xudpConcurrency": 8,
+            "xudpProxyUDP443": ""
+          }
+        },
+        {
+          "tag": "block",
+          "protocol": "blackhole",
+          "settings": {
+            "response": {
+              "type": "http"
+            }
+          },
+          "mux": {
+            "enabled": false,
+            "concurrency": 8,
+            "xudpConcurrency": 8,
+            "xudpProxyUDP443": ""
+          }
+        }
+      ],
+      "dns": {
+        "servers": [
+          "1.1.1.1"
+        ],
+        "hosts": {
+          "domain:googleapis.cn": "googleapis.com",
+          "dns.alidns.com": [
+            "223.5.5.5",
+            "223.6.6.6",
+            "2400:3200::1",
+            "2400:3200:baba::1"
+          ],
+          "one.one.one.one": [
+            "1.1.1.1",
+            "1.0.0.1",
+            "2606:4700:4700::1111",
+            "2606:4700:4700::1001"
+          ],
+          "dot.pub": [
+            "1.12.12.12",
+            "120.53.53.53"
+          ],
+          "dns.google": [
+            "8.8.8.8",
+            "8.8.4.4",
+            "2001:4860:4860::8888",
+            "2001:4860:4860::8844"
+          ],
+          "dns.quad9.net": [
+            "9.9.9.9",
+            "149.112.112.112",
+            "2620:fe::fe",
+            "2620:fe::9"
+          ],
+          "common.dot.dns.yandex.net": [
+            "77.88.8.8",
+            "77.88.8.1",
+            "2a02:6b8::feed:0ff",
+            "2a02:6b8:0:1::feed:0ff"
+          ]
+        }
+      },
+      "routing": {
+        "domainStrategy": "IPIfNonMatch",
+        "rules": [
+          {
+            "type": "field",
+            "ip": [
+              "1.1.1.1"
+            ],
+            "outboundTag": "proxy",
+            "port": "53"
+          },
+          {
+            "type": "field",
+            "ip": [
+              "223.5.5.5"
+            ],
+            "outboundTag": "direct",
+            "port": "53"
+          },
+          {
+            "type": "field",
+            "ip": [
+              "1.1.1.1"
+            ],
+            "outboundTag": "proxy",
+            "port": "53"
+          },
+          {
+            "type": "field",
+            "ip": [
+              "223.5.5.5"
+            ],
+            "outboundTag": "direct",
+            "port": "53"
+          },
+          {
+            "type": "field",
+            "ip": [
+              "1.1.1.1"
+            ],
+            "outboundTag": "proxy",
+            "port": "53"
+          },
+          {
+            "type": "field",
+            "ip": [
+              "223.5.5.5"
+            ],
+            "outboundTag": "direct",
+            "port": "53"
+          }
+        ]
+      }
     };
 
-    let couponApplied = false;
+    const redeemModal =
+      document.getElementById("redeemModal");
 
-    const usedCouponKey = "config_store_QrEsU_used";
+    const redeemInput =
+      document.getElementById("redeemInput");
 
-    const buyModal = document.getElementById("buyModal");
-    const duration = document.getElementById("duration");
-    const volume = document.getElementById("volume");
-    const coupon = document.getElementById("coupon");
-    const couponMessage = document.getElementById("couponMessage");
+    const redeemResult =
+      document.getElementById("redeemResult");
 
-    const summaryDuration = document.getElementById("summaryDuration");
-    const summaryVolume = document.getElementById("summaryVolume");
-    const summaryCount = document.getElementById("summaryCount");
-    const summaryBase = document.getElementById("summaryBase");
-    const summaryDiscount = document.getElementById("summaryDiscount");
-    const finalPrice = document.getElementById("finalPrice");
+    const configPreview =
+      document.getElementById("configPreview");
 
-    function persianNumber(value) {
-      return String(value).replace(/\d/g, number => {
-        return "۰۱۲۳۴۵۶۷۸۹"[number];
-      });
-    }
+    const downloadButton =
+      document.getElementById("downloadConfigBtn");
 
-    function money(value) {
-      return persianNumber(
-        Math.round(value).toLocaleString("en-US")
-      ) + " تومان";
-    }
+    document
+      .getElementById("openRedeemBtn")
+      .addEventListener("click", openRedeem);
 
-    function durationText(value) {
-      const data = {
-        "7": "۷ روزه",
-        "30": "۱ ماهه",
-        "90": "۳ ماهه",
-        "180": "۶ ماهه"
-      };
+    document
+      .getElementById("closeRedeemBtn")
+      .addEventListener("click", closeRedeem);
 
-      return data[value];
-    }
+    document
+      .getElementById("checkRedeemBtn")
+      .addEventListener("click", checkCode);
 
-    function volumeText(value) {
-      const data = {
-        "0": "پایه",
-        "30": "۲۰ گیگ",
-        "70": "۵۰ گیگ",
-        "110": "۱۰۰ گیگ"
-      };
+    downloadButton
+      .addEventListener("click", downloadConfig);
 
-      return data[value];
-    }
-
-    function openBuyModal() {
-      buyModal.classList.add("show");
-      calculatePrice();
-    }
-
-    function closeBuyModal() {
-      buyModal.classList.remove("show");
-    }
-
-    function closeOutside(event) {
-      if (event.target === buyModal) {
-        closeBuyModal();
+    redeemModal.addEventListener("click", function(event) {
+      if (event.target === redeemModal) {
+        closeRedeem();
       }
+    });
+
+    redeemInput.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        checkCode();
+      }
+    });
+
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape") {
+        closeRedeem();
+      }
+    });
+
+    function openRedeem() {
+      redeemModal.classList.add("show");
+      redeemInput.focus();
     }
 
-    function calculatePrice() {
-      const selectedDurationPrice =
-        prices.duration[duration.value];
-
-      const selectedVolumePrice =
-        prices.volume[volume.value];
-
-      const oneConfigPrice =
-        selectedDurationPrice + selectedVolumePrice;
-
-      const configCount = couponApplied ? 2 : 1;
-
-      const beforeDiscount =
-        oneConfigPrice * configCount;
-
-      const discount = couponApplied
-        ? beforeDiscount * prices.couponPercent / 100
-        : 0;
-
-      const final = beforeDiscount - discount;
-
-      summaryDuration.textContent =
-        durationText(duration.value);
-
-      summaryVolume.textContent =
-        volumeText(volume.value);
-
-      summaryCount.textContent =
-        persianNumber(configCount) + " عدد";
-
-      summaryBase.textContent =
-        money(beforeDiscount);
-
-      summaryDiscount.textContent =
-        discount > 0 ? money(discount) : "۰ تومان";
-
-      finalPrice.textContent =
-        money(final);
+    function closeRedeem() {
+      redeemModal.classList.remove("show");
     }
 
-    function applyCoupon() {
-      const enteredCode = coupon.value.trim();
+    function checkCode() {
+      const enteredCode =
+        redeemInput.value.trim();
 
-      if (!enteredCode) {
-        couponMessage.textContent =
-          "لطفاً کد تخفیف را وارد کنید.";
+      if (enteredCode !== VALID_CODE) {
+        redeemResult.textContent =
+          "کد ریدیم اشتباه است.";
 
-        couponMessage.className =
-          "coupon-message error";
+        redeemResult.className =
+          "redeem-error";
+
+        configPreview.classList.remove("show");
+        downloadButton.classList.remove("show");
 
         return;
       }
 
-      if (enteredCode !== prices.couponCode) {
-        couponMessage.textContent =
-          "کد تخفیف صحیح نیست.";
+      redeemResult.textContent =
+        "کد صحیح است؛ کانفیگ با موفقیت دریافت شد.";
 
-        couponMessage.className =
-          "coupon-message error";
+      redeemResult.className =
+        "redeem-success";
 
-        return;
-      }
+      configPreview.textContent =
+        JSON.stringify(configData, null, 2);
 
-      if (localStorage.getItem(usedCouponKey) === "true") {
-        couponMessage.textContent =
-          "این کد قبلاً استفاده شده و یک‌بارمصرف است.";
-
-        couponMessage.className =
-          "coupon-message error";
-
-        return;
-      }
-
-      localStorage.setItem(usedCouponKey, "true");
-
-      couponApplied = true;
-      coupon.disabled = true;
-
-      couponMessage.textContent =
-        "کد با موفقیت اعمال شد؛ تعداد کانفیگ‌ها ۲ عدد شد.";
-
-      couponMessage.className =
-        "coupon-message success";
-
-      calculatePrice();
+      configPreview.classList.add("show");
+      downloadButton.classList.add("show");
     }
 
-    function submitOrder() {
-      const oneConfigPrice =
-        prices.duration[duration.value] +
-        prices.volume[volume.value];
-
-      const configCount =
-        couponApplied ? 2 : 1;
-
-      const beforeDiscount =
-        oneConfigPrice * configCount;
-
-      const discount = couponApplied
-        ? beforeDiscount * prices.couponPercent / 100
-        : 0;
-
-      const total =
-        beforeDiscount - discount;
-
-      showToast(
-        "سفارش آماده ثبت است: " +
-        durationText(duration.value) +
-        "، " +
-        volumeText(volume.value) +
-        "، " +
-        persianNumber(configCount) +
-        " کانفیگ، مبلغ " +
-        money(total)
+    function downloadConfig() {
+      const jsonFile = new Blob(
+        [JSON.stringify(configData, null, 2)],
+        {
+          type: "application/json"
+        }
       );
 
-      /*
-        برای اتصال به درگاه پرداخت، می‌توانید
-        کد زیر را جایگزین کنید:
+      const downloadUrl =
+        URL.createObjectURL(jsonFile);
 
-        window.location.href =
-          "payment.php?amount=" + total;
-      */
+      const link =
+        document.createElement("a");
+
+      link.href = downloadUrl;
+      link.download = "config-store-ZRX.json";
+
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      URL.revokeObjectURL(downloadUrl);
     }
 
-    function showToast(message) {
-      const toast = document.getElementById("toast");
-
-      toast.textContent = message;
-      toast.classList.add("show");
-
-      setTimeout(() => {
-        toast.classList.remove("show");
-      }, 5000);
+    function showMessage(message) {
+      alert(message);
     }
-
-    coupon.addEventListener("keydown", event => {
-      if (event.key === "Enter") {
-        applyCoupon();
-      }
-    });
-
-    document.addEventListener("keydown", event => {
-      if (event.key === "Escape") {
-        closeBuyModal();
-      }
-    });
-
-    calculatePrice();
   </script>
 
 </body>
