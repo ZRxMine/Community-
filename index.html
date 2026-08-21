@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Config Store | فروشگاه کانفیگ</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,18 +12,17 @@
   <style>
     :root {
       --bg: #060813;
-      --bg2: #0c1020;
-      --card: rgba(17, 23, 45, .82);
-      --card-light: #17203d;
-      --line: rgba(145, 165, 220, .18);
-      --text: #f5f7ff;
-      --muted: #9aa7c4;
+      --card: rgba(18, 25, 49, .82);
+      --card2: #121a34;
+      --text: #f7f9ff;
+      --muted: #99a5c3;
+      --line: rgba(150, 170, 225, .18);
       --cyan: #00f5df;
-      --blue: #5877ff;
+      --green: #42f2a2;
+      --blue: #5c7cff;
       --purple: #a855f7;
       --pink: #f43f8c;
-      --green: #41f2a1;
-      --danger: #ff657c;
+      --red: #ff6078;
     }
 
     * {
@@ -42,9 +41,9 @@
       color: var(--text);
       font-family: "Vazirmatn", sans-serif;
       background:
-        radial-gradient(circle at 8% 8%, rgba(0,245,223,.12), transparent 350px),
-        radial-gradient(circle at 92% 14%, rgba(168,85,247,.14), transparent 350px),
-        radial-gradient(circle at 50% 100%, rgba(88,119,255,.12), transparent 500px),
+        radial-gradient(circle at 10% 5%, rgba(0,245,223,.13), transparent 330px),
+        radial-gradient(circle at 90% 15%, rgba(168,85,247,.15), transparent 350px),
+        radial-gradient(circle at 50% 100%, rgba(92,124,255,.13), transparent 500px),
         var(--bg);
     }
 
@@ -53,8 +52,8 @@
       position: fixed;
       inset: 0;
       z-index: -1;
+      opacity: .27;
       pointer-events: none;
-      opacity: .3;
       background-image:
         linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
@@ -67,34 +66,34 @@
       top: 0;
       z-index: 50;
       height: 76px;
+      padding: 0 6%;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 6%;
       border-bottom: 1px solid var(--line);
       background: rgba(6, 8, 19, .78);
-      backdrop-filter: blur(20px);
+      backdrop-filter: blur(18px);
     }
 
     .logo {
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-size: 19px;
+      gap: 11px;
+      font-size: 18px;
       font-weight: 900;
     }
 
     .logo-icon {
-      width: 42px;
-      height: 42px;
+      width: 43px;
+      height: 43px;
       display: grid;
       place-items: center;
-      border: 1px solid rgba(0,245,223,.5);
+      border: 1px solid rgba(0,245,223,.4);
       border-radius: 14px;
       color: var(--cyan);
-      background: linear-gradient(145deg, rgba(0,245,223,.18), rgba(88,119,255,.16));
-      box-shadow: 0 0 25px rgba(0,245,223,.15);
-      font-size: 24px;
+      background: linear-gradient(145deg, rgba(0,245,223,.18), rgba(92,124,255,.18));
+      box-shadow: 0 0 25px rgba(0,245,223,.16);
+      font-size: 25px;
     }
 
     .logo span {
@@ -103,8 +102,7 @@
 
     nav {
       display: flex;
-      align-items: center;
-      gap: 9px;
+      gap: 8px;
     }
 
     nav a {
@@ -121,26 +119,26 @@
       background: rgba(255,255,255,.07);
     }
 
-    .status {
+    .online {
       display: flex;
       align-items: center;
       gap: 7px;
       padding: 8px 13px;
-      border: 1px solid rgba(65,242,161,.2);
+      border: 1px solid rgba(66,242,162,.22);
       border-radius: 30px;
       color: var(--green);
-      background: rgba(65,242,161,.07);
+      background: rgba(66,242,162,.07);
       font-size: 12px;
       font-weight: 700;
     }
 
-    .status i {
+    .online i {
       width: 8px;
       height: 8px;
       display: block;
       border-radius: 50%;
       background: var(--green);
-      box-shadow: 0 0 12px var(--green);
+      box-shadow: 0 0 13px var(--green);
     }
 
     .container {
@@ -153,15 +151,15 @@
       display: grid;
       grid-template-columns: 1.1fr .9fr;
       align-items: center;
-      gap: 50px;
-      padding: 70px 0 55px;
+      gap: 55px;
+      padding: 75px 0 60px;
     }
 
-    .tag {
+    .badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
       padding: 8px 15px;
       border: 1px solid rgba(0,245,223,.3);
       border-radius: 30px;
@@ -171,39 +169,35 @@
       font-weight: 800;
     }
 
-    .tag::before {
-      content: "✦";
-    }
-
     h1 {
       max-width: 650px;
       margin-bottom: 20px;
-      font-size: clamp(34px, 5vw, 68px);
-      line-height: 1.25;
+      font-size: clamp(35px, 5vw, 68px);
+      line-height: 1.28;
       font-weight: 900;
-      background: linear-gradient(110deg, #fff 20%, #c9d4ff 48%, var(--cyan));
+      background: linear-gradient(110deg, #fff 20%, #cbd6ff 48%, var(--cyan));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
 
-    .hero-text {
+    .hero p {
       max-width: 590px;
       color: var(--muted);
       font-size: 16px;
       line-height: 2.1;
     }
 
-    .hero-buttons {
+    .buttons {
       display: flex;
       gap: 12px;
-      margin-top: 29px;
       flex-wrap: wrap;
+      margin-top: 29px;
     }
 
     .btn {
-      min-height: 48px;
-      padding: 0 23px;
+      min-height: 49px;
+      padding: 0 22px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -221,10 +215,10 @@
 
     .btn:hover {
       transform: translateY(-3px);
-      box-shadow: 0 12px 28px rgba(0,245,223,.22);
+      box-shadow: 0 12px 28px rgba(0,245,223,.23);
     }
 
-    .btn.outline {
+    .btn.secondary {
       color: white;
       border-color: var(--line);
       background: rgba(255,255,255,.05);
@@ -237,83 +231,82 @@
       place-items: center;
     }
 
-    .glow {
+    .visual-glow {
       position: absolute;
       width: 250px;
       height: 250px;
       border-radius: 50%;
       background: var(--cyan);
       filter: blur(95px);
-      opacity: .16;
+      opacity: .17;
     }
 
     .server-card {
+      width: min(365px, 100%);
       position: relative;
-      width: min(360px, 100%);
-      padding: 25px;
-      border: 1px solid rgba(151,168,230,.23);
+      padding: 26px;
+      border: 1px solid rgba(150,170,225,.25);
       border-radius: 27px;
-      background: linear-gradient(145deg, rgba(29,40,77,.92), rgba(12,17,36,.94));
-      box-shadow: 0 30px 80px rgba(0,0,0,.35), inset 0 1px rgba(255,255,255,.08);
+      background: linear-gradient(145deg, rgba(29,41,79,.94), rgba(11,16,35,.96));
+      box-shadow: 0 30px 80px rgba(0,0,0,.4), inset 0 1px rgba(255,255,255,.08);
       transform: rotate(4deg);
-      animation: float 4s ease-in-out infinite;
+      animation: floating 4s ease-in-out infinite;
     }
 
-    .server-top {
+    .server-head {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       padding-bottom: 19px;
       border-bottom: 1px solid var(--line);
-    }
-
-    .server-top strong {
       color: var(--cyan);
+      font-size: 13px;
+      font-weight: 900;
     }
 
-    .dots {
+    .lights {
       display: flex;
       gap: 5px;
     }
 
-    .dots i {
+    .lights i {
       width: 8px;
       height: 8px;
       display: block;
       border-radius: 50%;
       background: var(--green);
+      box-shadow: 0 0 8px var(--green);
     }
 
-    .server-content {
-      padding: 24px 0 5px;
+    .server-body {
+      padding-top: 24px;
     }
 
-    .server-content h2 {
+    .server-body h2 {
       margin-bottom: 8px;
       font-size: 28px;
     }
 
-    .server-content p {
+    .server-body p {
       color: var(--muted);
       font-size: 13px;
     }
 
-    .speed {
+    .server-info {
       display: flex;
       justify-content: space-between;
       margin-top: 28px;
-      color: #dbe4ff;
+      color: #dae3ff;
       font-size: 13px;
     }
 
-    .speed b {
+    .server-info b {
       color: var(--cyan);
     }
 
     .progress {
       height: 8px;
-      margin-top: 10px;
       overflow: hidden;
+      margin-top: 10px;
       border-radius: 20px;
       background: #263354;
     }
@@ -326,23 +319,27 @@
       background: linear-gradient(90deg, var(--blue), var(--cyan));
     }
 
-    @keyframes float {
-      0%, 100% { transform: rotate(4deg) translateY(0); }
-      50% { transform: rotate(2deg) translateY(-14px); }
+    @keyframes floating {
+      0%, 100% {
+        transform: rotate(4deg) translateY(0);
+      }
+      50% {
+        transform: rotate(2deg) translateY(-14px);
+      }
     }
 
-    .section-heading {
+    .section-title {
       display: flex;
       align-items: end;
       justify-content: space-between;
-      margin: 15px 0 24px;
+      margin-bottom: 24px;
     }
 
-    .section-heading h2 {
+    .section-title h2 {
       font-size: 27px;
     }
 
-    .section-heading p {
+    .section-title p {
       color: var(--muted);
       font-size: 13px;
     }
@@ -364,35 +361,22 @@
       transition: .3s;
     }
 
-    .product::before {
-      content: "";
-      position: absolute;
-      top: -70px;
-      left: -70px;
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      background: var(--cyan);
-      filter: blur(65px);
-      opacity: .1;
-    }
-
     .product:hover {
       transform: translateY(-8px);
-      border-color: rgba(0,245,223,.5);
-      box-shadow: 0 18px 40px rgba(0,0,0,.25);
+      border-color: rgba(0,245,223,.48);
+      box-shadow: 0 18px 40px rgba(0,0,0,.28);
     }
 
     .product-icon {
-      width: 53px;
-      height: 53px;
+      width: 54px;
+      height: 54px;
       display: grid;
       place-items: center;
       margin-bottom: 18px;
       border-radius: 16px;
       color: var(--cyan);
       background: rgba(0,245,223,.1);
-      font-size: 25px;
+      font-size: 26px;
     }
 
     .product h3 {
@@ -419,18 +403,12 @@
 
     .price {
       color: var(--cyan);
-      font-size: 18px;
+      font-size: 15px;
       font-weight: 900;
     }
 
-    .price small {
-      color: var(--muted);
-      font-size: 10px;
-      font-weight: 400;
-    }
-
-    .buy {
-      padding: 9px 14px;
+    .coming {
+      padding: 9px 13px;
       border: 0;
       border-radius: 9px;
       color: #001512;
@@ -467,21 +445,22 @@
     }
 
     footer {
-      padding: 24px 6%;
+      padding: 25px 6%;
       border-top: 1px solid var(--line);
       color: var(--muted);
       text-align: center;
       font-size: 12px;
+      line-height: 2;
     }
 
-    /* دکمه شناور ردیم کد */
+    /* دکمه شناور */
     .redeem-float {
       position: fixed;
       right: 25px;
       bottom: 25px;
       z-index: 80;
-      width: 78px;
-      height: 78px;
+      width: 80px;
+      height: 80px;
       display: grid;
       place-items: center;
       border: 2px solid rgba(255,255,255,.6);
@@ -499,21 +478,21 @@
     .redeem-float::before {
       content: "🎟️";
       position: absolute;
-      top: -26px;
+      top: -27px;
       font-size: 25px;
       transform: rotate(-12deg);
     }
 
-    .redeem-float:hover {
-      transform: scale(1.08);
-    }
-
     @keyframes redeemFloat {
-      0%, 100% { transform: translateY(0) rotate(0); }
-      50% { transform: translateY(-10px) rotate(3deg); }
+      0%, 100% {
+        transform: translateY(0) rotate(0);
+      }
+      50% {
+        transform: translateY(-10px) rotate(3deg);
+      }
     }
 
-    /* پنجره ردیم کد */
+    /* مودال */
     .modal-bg {
       position: fixed;
       inset: 0;
@@ -521,7 +500,7 @@
       display: none;
       place-items: center;
       padding: 20px;
-      background: rgba(0,0,0,.76);
+      background: rgba(0,0,0,.77);
       backdrop-filter: blur(8px);
     }
 
@@ -530,7 +509,7 @@
     }
 
     .modal {
-      width: min(430px, 100%);
+      width: min(445px, 100%);
       position: relative;
       padding: 30px 25px;
       border: 1px solid rgba(0,245,223,.35);
@@ -556,8 +535,8 @@
       position: absolute;
       top: 13px;
       left: 15px;
-      width: 30px;
-      height: 30px;
+      width: 31px;
+      height: 31px;
       border: 0;
       border-radius: 50%;
       color: white;
@@ -566,9 +545,9 @@
       cursor: pointer;
     }
 
-    .modal-sticker {
-      width: 78px;
-      height: 78px;
+    .sticker {
+      width: 80px;
+      height: 80px;
       display: grid;
       place-items: center;
       margin: 0 auto 17px;
@@ -576,7 +555,7 @@
       border-radius: 24px;
       background: linear-gradient(145deg, var(--purple), var(--pink));
       box-shadow: 0 0 30px rgba(244,63,140,.3);
-      font-size: 36px;
+      font-size: 37px;
     }
 
     .modal h2 {
@@ -600,8 +579,8 @@
       border-radius: 12px;
       color: white;
       background: #0b1328;
-      text-align: center;
       direction: ltr;
+      text-align: center;
       font: 700 17px monospace;
       letter-spacing: 2px;
     }
@@ -611,7 +590,8 @@
       box-shadow: 0 0 0 3px rgba(0,245,223,.1);
     }
 
-    .redeem-btn {
+    .redeem-button,
+    .download-button {
       width: 100%;
       height: 52px;
       margin-top: 13px;
@@ -622,19 +602,24 @@
       font: inherit;
       font-weight: 900;
       cursor: pointer;
+      transition: .25s;
+    }
+
+    .redeem-button:hover,
+    .download-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0,245,223,.2);
     }
 
     .message {
-      min-height: 24px;
-      margin-top: 14px;
-      color: var(--danger);
+      min-height: 25px;
+      margin-top: 13px;
+      color: var(--red);
       font-size: 13px;
-      line-height: 1.8;
     }
 
     .success {
       display: none;
-      padding-top: 5px;
     }
 
     .success.show {
@@ -643,7 +628,7 @@
 
     .success-icon {
       margin-bottom: 12px;
-      font-size: 53px;
+      font-size: 54px;
     }
 
     .success h2 {
@@ -651,8 +636,7 @@
     }
 
     .success p {
-      margin-bottom: 0;
-      color: #d6def0;
+      color: #d8e1f5;
     }
 
     .hidden {
@@ -665,11 +649,11 @@
         text-align: center;
       }
 
-      .hero-text {
+      .hero p {
         margin: auto;
       }
 
-      .hero-buttons {
+      .buttons {
         justify-content: center;
       }
 
@@ -693,17 +677,17 @@
         display: none;
       }
 
-      .status {
-        font-size: 10px;
-      }
-
       .logo {
         font-size: 14px;
       }
 
       .logo-icon {
-        width: 35px;
-        height: 35px;
+        width: 36px;
+        height: 36px;
+      }
+
+      .online {
+        font-size: 10px;
       }
 
       .hero {
@@ -715,11 +699,11 @@
         grid-template-columns: 1fr;
       }
 
-      .section-heading {
+      .section-title {
         display: block;
       }
 
-      .section-heading p {
+      .section-title p {
         margin-top: 7px;
       }
 
@@ -747,7 +731,7 @@
       <a href="#features">امکانات</a>
     </nav>
 
-    <div class="status">
+    <div class="online">
       <i></i>
       سرویس آنلاین
     </div>
@@ -757,44 +741,46 @@
 
     <section class="hero container">
       <div>
-        <div class="tag">فروشگاه حرفه‌ای کانفیگ</div>
+        <div class="badge">✦ فروشگاه حرفه‌ای کانفیگ</div>
 
         <h1>
           اتصال سریع‌تر،
           امن‌تر و بدون محدودیت
         </h1>
 
-        <p class="hero-text">
-          کانفیگ‌های قدرتمند و پایدار برای استفاده روزمره، گیم،
-          استریم و تمام دستگاه‌های شما. انتخاب کن، فعال کن و از اتصال
-          باکیفیت لذت ببر.
+        <p>
+          کانفیگ‌های قدرتمند و پایدار برای استفاده روزمره،
+          گیم، استریم و تمام دستگاه‌های شما.
+          انتخاب کن، فعال کن و از اتصال باکیفیت لذت ببر.
         </p>
 
-        <div class="hero-buttons">
+        <div class="buttons">
           <a class="btn" href="#configs">مشاهده کانفیگ‌ها ⌁</a>
-          <button class="btn outline" onclick="openRedeem()">🎟️ ردیم کد</button>
+          <button class="btn secondary" onclick="openRedeem()">
+            🎟️ ردیم کد
+          </button>
         </div>
       </div>
 
       <div class="visual">
-        <div class="glow"></div>
+        <div class="visual-glow"></div>
 
         <div class="server-card">
-          <div class="server-top">
-            <strong>CONFIG SERVER</strong>
+          <div class="server-head">
+            <span>CONFIG SERVER</span>
 
-            <div class="dots">
+            <div class="lights">
               <i></i>
               <i></i>
               <i></i>
             </div>
           </div>
 
-          <div class="server-content">
+          <div class="server-body">
             <h2>PREMIUM NODE</h2>
             <p>اتصال پایدار و پرسرعت برای همه دستگاه‌ها</p>
 
-            <div class="speed">
+            <div class="server-info">
               <span>وضعیت سرور</span>
               <b>86% Stable</b>
             </div>
@@ -803,9 +789,9 @@
               <span></span>
             </div>
 
-            <div class="speed">
+            <div class="server-info">
               <span>پینگ تقریبی</span>
-              <b>低 32ms</b>
+              <b>32ms</b>
             </div>
           </div>
         </div>
@@ -813,7 +799,7 @@
     </section>
 
     <section id="configs" class="container">
-      <div class="section-heading">
+      <div class="section-title">
         <div>
           <h2>کانفیگ‌های ویژه</h2>
           <p>بهترین انتخاب برای اتصال سریع و مطمئن</p>
@@ -825,39 +811,33 @@
         <article class="product">
           <div class="product-icon">⚡</div>
           <h3>کانفیگ گیمینگ</h3>
-          <p>
-            مناسب بازی آنلاین با پینگ پایین و اتصال پایدار.
-          </p>
+          <p>مناسب بازی آنلاین با پینگ پایین و اتصال پایدار.</p>
 
           <div class="product-bottom">
-            <div class="price">تکمیل می‌شود <small>به‌زودی</small></div>
-            <button class="buy" onclick="comingSoon()">به‌زودی</button>
+            <div class="price">به‌زودی</div>
+            <button class="coming" onclick="comingSoon()">به‌زودی</button>
           </div>
         </article>
 
         <article class="product">
           <div class="product-icon">♢</div>
           <h3>کانفیگ پریمیوم</h3>
-          <p>
-            سرویس قدرتمند برای استفاده روزمره، دانلود و استریم.
-          </p>
+          <p>سرویس قدرتمند برای استفاده روزمره، دانلود و استریم.</p>
 
           <div class="product-bottom">
-            <div class="price">تکمیل می‌شود <small>به‌زودی</small></div>
-            <button class="buy" onclick="comingSoon()">به‌زودی</button>
+            <div class="price">به‌زودی</div>
+            <button class="coming" onclick="comingSoon()">به‌زودی</button>
           </div>
         </article>
 
         <article class="product">
           <div class="product-icon">✦</div>
           <h3>کانفیگ نامحدود</h3>
-          <p>
-            انتخابی عالی برای استفاده طولانی‌مدت روی چند دستگاه.
-          </p>
+          <p>انتخابی عالی برای استفاده طولانی‌مدت روی چند دستگاه.</p>
 
           <div class="product-bottom">
-            <div class="price">تکمیل می‌شود <small>به‌زودی</small></div>
-            <button class="buy" onclick="comingSoon()">به‌زودی</button>
+            <div class="price">به‌زودی</div>
+            <button class="coming" onclick="comingSoon()">به‌زودی</button>
           </div>
         </article>
 
@@ -877,14 +857,15 @@
 
       <div class="feature">
         <b>📱 پشتیبانی دستگاه‌ها</b>
-        <span>کانفیگ برای انواع دستگاه‌ها و آداپتورها</span>
+        <span>مناسب برای انواع دستگاه‌ها و آداپتورها</span>
       </div>
     </section>
 
   </main>
 
   <footer>
-    کانفیگ همه آداپتورها را ساپورت می‌کند — فعلاً تا همین‌جا، کانفیگ به‌زودی در دسترس شما قرار می‌گیرد.
+    کانفیگ همه آداپتورها را ساپورت می‌کند — فعلاً تا همین‌جا،
+    کانفیگ به‌زودی در دسترس شما قرار می‌گیرد.
   </footer>
 
   <!-- دکمه شناور ردیم کد -->
@@ -899,12 +880,12 @@
       <button class="close" onclick="closeRedeem()">×</button>
 
       <div id="redeemForm">
-        <div class="modal-sticker">🎟️</div>
+        <div class="sticker">🎟️</div>
 
         <h2>ردیم کد</h2>
 
         <p>
-          کد هدیه خود را وارد کنید تا وضعیت آن بررسی شود.
+          کد هدیه خود را وارد کنید تا کانفیگ اختصاصی شما فعال شود.
         </p>
 
         <input
@@ -914,9 +895,9 @@
           placeholder="کد را وارد کنید"
           autocomplete="off"
           maxlength="20"
-        />
+        >
 
-        <button class="redeem-btn" onclick="redeemCode()">
+        <button class="redeem-button" onclick="redeemCode()">
           فعال‌سازی کد
         </button>
 
@@ -929,30 +910,235 @@
         <h2>کانفیگ جدید شما مبارک!</h2>
 
         <p>
-          کد شما با موفقیت ثبت شد.<br>
-          فعلاً تا اینجا؛ بعداً کانفیگ را به شما می‌دهم.
+          کد شما با موفقیت فعال شد.<br>
+          کانفیگ آماده دانلود است.
         </p>
+
+        <button class="download-button" onclick="downloadConfig()">
+          ⬇️ دانلود کانفیگ
+        </button>
       </div>
 
     </div>
   </div>
 
   <script>
-    const redeemModal = document.getElementById("redeemModal");
+    /*
+      کانفیگ دانلودی
+      این اطلاعات داخل فایل HTML قرار دارد و برای بازدیدکنندگان قابل مشاهده است.
+    */
+    const configData = {
+      "remarks": "config ( config store ZRX )",
+      "log": {
+        "loglevel": "warning"
+      },
+      "inbounds": [
+        {
+          "tag": "socks",
+          "port": 10808,
+          "protocol": "socks",
+          "settings": {
+            "auth": "noauth",
+            "udp": true,
+            "userLevel": 8
+          },
+          "sniffing": {
+            "enabled": true,
+            "destOverride": [
+              "http",
+              "tls"
+            ],
+            "routeOnly": false
+          }
+        }
+      ],
+      "outbounds": [
+        {
+          "tag": "proxy",
+          "protocol": "vmess",
+          "settings": {
+            "vnext": [
+              {
+                "address": "fr.connfull.org",
+                "port": 2053,
+                "users": [
+                  {
+                    "id": "008c1098-78b0-40a4-8935-147d43c9e024",
+                    "security": "auto",
+                    "level": 8
+                  }
+                ]
+              }
+            ]
+          },
+          "streamSettings": {
+            "network": "tcp",
+            "security": "tls",
+            "tcpSettings": {
+              "header": {
+                "type": "none"
+              }
+            },
+            "tlsSettings": {
+              "allowInsecure": true,
+              "alpn": [
+                "h2",
+                "http/1.1",
+                "h3"
+              ],
+              "fingerprint": "chrome",
+              "show": false
+            }
+          },
+          "mux": {
+            "enabled": false,
+            "concurrency": -1,
+            "xudpConcurrency": 8,
+            "xudpProxyUDP443": ""
+          }
+        },
+        {
+          "tag": "direct",
+          "protocol": "freedom",
+          "settings": {
+            "domainStrategy": "UseIP"
+          },
+          "mux": {
+            "enabled": false,
+            "concurrency": 8,
+            "xudpConcurrency": 8,
+            "xudpProxyUDP443": ""
+          }
+        },
+        {
+          "tag": "block",
+          "protocol": "blackhole",
+          "settings": {
+            "response": {
+              "type": "http"
+            }
+          },
+          "mux": {
+            "enabled": false,
+            "concurrency": 8,
+            "xudpConcurrency": 8,
+            "xudpProxyUDP443": ""
+          }
+        }
+      ],
+      "dns": {
+        "servers": [
+          "1.1.1.1"
+        ],
+        "hosts": {
+          "domain:googleapis.cn": "googleapis.com",
+          "dns.alidns.com": [
+            "223.5.5.5",
+            "223.6.6.6",
+            "2400:3200::1",
+            "2400:3200:baba::1"
+          ],
+          "one.one.one.one": [
+            "1.1.1.1",
+            "1.0.0.1",
+            "2606:4700:4700::1111",
+            "2606:4700:4700::1001"
+          ],
+          "dot.pub": [
+            "1.12.12.12",
+            "120.53.53.53"
+          ],
+          "dns.google": [
+            "8.8.8.8",
+            "8.8.4.4",
+            "2001:4860:4860::8888",
+            "2001:4860:4860::8844"
+          ],
+          "dns.quad9.net": [
+            "9.9.9.9",
+            "149.112.112.112",
+            "2620:fe::fe",
+            "2620:fe::9"
+          ],
+          "common.dot.dns.yandex.net": [
+            "77.88.8.8",
+            "77.88.8.1",
+            "2a02:6b8::feed:0ff",
+            "2a02:6b8:0:1::feed:0ff"
+          ]
+        }
+      },
+      "routing": {
+        "domainStrategy": "IPIfNonMatch",
+        "rules": [
+          {
+            "type": "field",
+            "ip": [
+              "1.1.1.1"
+            ],
+            "outboundTag": "proxy",
+            "port": "53"
+          },
+          {
+            "type": "field",
+            "ip": [
+              "223.5.5.5"
+            ],
+            "outboundTag": "direct",
+            "port": "53"
+          },
+          {
+            "type": "field",
+            "ip": [
+              "1.1.1.1"
+            ],
+            "outboundTag": "proxy",
+            "port": "53"
+          },
+          {
+            "type": "field",
+            "ip": [
+              "223.5.5.5"
+            ],
+            "outboundTag": "direct",
+            "port": "53"
+          },
+          {
+            "type": "field",
+            "ip": [
+              "1.1.1.1"
+            ],
+            "outboundTag": "proxy",
+            "port": "53"
+          },
+          {
+            "type": "field",
+            "ip": [
+              "223.5.5.5"
+            ],
+            "outboundTag": "direct",
+            "port": "53"
+          }
+        ]
+      }
+    };
+
+    const modal = document.getElementById("redeemModal");
     const codeInput = document.getElementById("codeInput");
     const codeMessage = document.getElementById("codeMessage");
     const redeemForm = document.getElementById("redeemForm");
     const successBox = document.getElementById("successBox");
 
-    // باز کردن پنجره ردیم کد
     function openRedeem() {
-      redeemModal.classList.add("show");
-      codeInput.focus();
+      modal.classList.add("show");
+
+      setTimeout(() => {
+        codeInput.focus();
+      }, 150);
     }
 
-    // بستن پنجره
     function closeRedeem() {
-      redeemModal.classList.remove("show");
+      modal.classList.remove("show");
 
       setTimeout(() => {
         redeemForm.classList.remove("hidden");
@@ -962,14 +1148,12 @@
       }, 250);
     }
 
-    // بستن با کلیک بیرون پنجره
     function closeOutside(event) {
-      if (event.target === redeemModal) {
+      if (event.target === modal) {
         closeRedeem();
       }
     }
 
-    // بررسی کد
     function redeemCode() {
       const enteredCode = codeInput.value.trim();
 
@@ -979,21 +1163,47 @@
       } else if (enteredCode === "") {
         codeMessage.textContent = "لطفاً کد ردیم را وارد کنید.";
       } else {
-        codeMessage.textContent = "این کد صحیح نیست یا قبلاً استفاده شده است.";
+        codeMessage.textContent =
+          "این کد صحیح نیست یا قبلاً استفاده شده است.";
       }
     }
 
-    // فعال‌سازی با کلید Enter
+    function downloadConfig() {
+      const jsonText = JSON.stringify(configData, null, 2);
+
+      const file = new Blob(
+        [jsonText],
+        { type: "application/json;charset=utf-8" }
+      );
+
+      const url = URL.createObjectURL(file);
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = "config-store-ZRX.json";
+
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      URL.revokeObjectURL(url);
+    }
+
+    function comingSoon() {
+      alert("فروش کانفیگ به‌زودی فعال می‌شود.");
+    }
+
     codeInput.addEventListener("keydown", function(event) {
       if (event.key === "Enter") {
         redeemCode();
       }
     });
 
-    // پیام کانفیگ‌های در حال آماده‌سازی
-    function comingSoon() {
-      alert("فروش کانفیگ به‌زودی فعال می‌شود.");
-    }
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape") {
+        closeRedeem();
+      }
+    });
   </script>
 
 </body>
