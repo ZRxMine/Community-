@@ -18,17 +18,19 @@
     }
 
     :root {
-      --bg: #060813;
-      --card: #121a34;
-      --card2: #0d142b;
-      --text: #f7f9ff;
-      --muted: #9ba7c4;
-      --line: rgba(150, 170, 225, .18);
+      --bg: #050713;
+      --card: #111a35;
+      --card-dark: #0b1229;
+      --text: #ffffff;
+      --muted: #9ba8c7;
+      --line: rgba(159, 180, 240, .18);
       --cyan: #00f5df;
-      --green: #42f2a2;
-      --purple: #a855f7;
-      --pink: #f43f8c;
-      --red: #ff6378;
+      --green: #3cff9d;
+      --purple: #9b5cff;
+      --pink: #ff3f98;
+      --blue: #4387ff;
+      --orange: #ff9b42;
+      --red: #ff5b70;
     }
 
     html {
@@ -41,8 +43,8 @@
       color: var(--text);
       font-family: "Vazirmatn", sans-serif;
       background:
-        radial-gradient(circle at 10% 5%, rgba(0,245,223,.13), transparent 330px),
-        radial-gradient(circle at 90% 15%, rgba(168,85,247,.15), transparent 350px),
+        radial-gradient(circle at 8% 5%, rgba(0, 245, 223, .14), transparent 320px),
+        radial-gradient(circle at 90% 12%, rgba(155, 92, 255, .16), transparent 340px),
         var(--bg);
     }
 
@@ -56,7 +58,7 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--line);
-      background: rgba(6, 8, 19, .85);
+      background: rgba(5, 7, 19, .86);
       backdrop-filter: blur(15px);
     }
 
@@ -73,10 +75,10 @@
       height: 42px;
       display: grid;
       place-items: center;
-      border: 1px solid rgba(0,245,223,.4);
+      border: 1px solid rgba(0, 245, 223, .4);
       border-radius: 13px;
       color: var(--cyan);
-      background: rgba(0,245,223,.1);
+      background: rgba(0, 245, 223, .1);
       font-size: 25px;
     }
 
@@ -100,7 +102,7 @@
 
     nav a:hover {
       color: white;
-      background: rgba(255,255,255,.07);
+      background: rgba(255, 255, 255, .07);
     }
 
     .online {
@@ -108,7 +110,7 @@
       align-items: center;
       gap: 7px;
       padding: 8px 13px;
-      border: 1px solid rgba(66,242,162,.25);
+      border: 1px solid rgba(60, 255, 157, .28);
       border-radius: 30px;
       color: var(--green);
       font-size: 12px;
@@ -120,7 +122,7 @@
       height: 8px;
       border-radius: 50%;
       background: var(--green);
-      box-shadow: 0 0 12px var(--green);
+      box-shadow: 0 0 13px var(--green);
     }
 
     .container {
@@ -129,7 +131,7 @@
     }
 
     .hero {
-      min-height: 480px;
+      min-height: 475px;
       display: grid;
       grid-template-columns: 1.1fr .9fr;
       align-items: center;
@@ -141,10 +143,10 @@
       display: inline-block;
       margin-bottom: 18px;
       padding: 8px 15px;
-      border: 1px solid rgba(0,245,223,.3);
+      border: 1px solid rgba(0, 245, 223, .3);
       border-radius: 30px;
       color: var(--cyan);
-      background: rgba(0,245,223,.07);
+      background: rgba(0, 245, 223, .07);
       font-size: 12px;
       font-weight: bold;
     }
@@ -193,23 +195,23 @@
 
     .btn:hover {
       transform: translateY(-3px);
-      box-shadow: 0 12px 28px rgba(0,245,223,.25);
+      box-shadow: 0 12px 28px rgba(0, 245, 223, .25);
     }
 
     .btn.secondary {
       color: white;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.05);
+      background: rgba(255, 255, 255, .05);
     }
 
     .server-card {
       max-width: 360px;
       margin: auto;
       padding: 26px;
-      border: 1px solid rgba(150,170,225,.25);
+      border: 1px solid rgba(150, 170, 225, .25);
       border-radius: 25px;
       background: linear-gradient(145deg, #1d294f, #0b1023);
-      box-shadow: 0 30px 80px rgba(0,0,0,.4);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, .4);
       transform: rotate(3deg);
       animation: floating 4s ease-in-out infinite;
     }
@@ -290,11 +292,6 @@
       background: linear-gradient(90deg, #5c7cff, var(--cyan));
     }
 
-    /* بخش ویژگی‌ها */
-    .features-section {
-      padding: 10px 0 75px;
-    }
-
     .section-title {
       margin-bottom: 22px;
     }
@@ -309,6 +306,10 @@
       font-size: 13px;
     }
 
+    .features-section {
+      padding: 10px 0 65px;
+    }
+
     .features {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -320,17 +321,19 @@
       padding: 22px 18px;
       border: 1px solid var(--line);
       border-radius: 19px;
-      background: linear-gradient(145deg, rgba(25,38,71,.9), rgba(10,16,35,.9));
+      background: linear-gradient(145deg, rgba(25, 38, 71, .9), rgba(10, 16, 35, .9));
       transition: .3s;
     }
 
-    .feature:hover {
+    .feature:hover,
+    .product:hover {
       transform: translateY(-7px);
-      border-color: rgba(0,245,223,.5);
-      box-shadow: 0 15px 35px rgba(0,245,223,.08);
+      border-color: rgba(0, 245, 223, .55);
+      box-shadow: 0 15px 35px rgba(0, 245, 223, .09);
     }
 
-    .feature-icon {
+    .feature-icon,
+    .product-icon {
       width: 52px;
       height: 52px;
       display: grid;
@@ -338,46 +341,95 @@
       margin-bottom: 15px;
       border-radius: 15px;
       color: var(--cyan);
-      background: rgba(0,245,223,.1);
+      background: rgba(0, 245, 223, .1);
       font-size: 25px;
     }
 
     .feature:nth-child(2) .feature-icon {
-      color: #a98bff;
-      background: rgba(168,85,247,.12);
+      color: #ad8aff;
+      background: rgba(155, 92, 255, .12);
     }
 
     .feature:nth-child(3) .feature-icon {
       color: var(--green);
-      background: rgba(66,242,162,.1);
+      background: rgba(60, 255, 157, .1);
     }
 
     .feature:nth-child(4) .feature-icon {
       color: #ff83b4;
-      background: rgba(244,63,140,.1);
+      background: rgba(255, 63, 152, .1);
     }
 
-    .feature h3 {
+    .feature h3,
+    .product h3 {
       margin-bottom: 8px;
       font-size: 16px;
     }
 
-    .feature p {
+    .feature p,
+    .product p {
       color: var(--muted);
       font-size: 12px;
       line-height: 1.9;
     }
 
-    /* نوار آمار */
+    /*
+      مستطیل آماری با حاشیه گرادینت متحرک
+    */
+
+    .stats-border {
+      position: relative;
+      overflow: hidden;
+      margin: 0 auto 70px;
+      padding: 2px;
+      border-radius: 22px;
+      isolation: isolate;
+    }
+
+    .stats-border::before {
+      content: "";
+      position: absolute;
+      z-index: -2;
+      inset: -170%;
+      background: conic-gradient(
+        from 0deg,
+        var(--cyan),
+        var(--blue),
+        var(--purple),
+        var(--pink),
+        var(--orange),
+        var(--green),
+        var(--cyan)
+      );
+      animation: rotateGradient 5s linear infinite;
+    }
+
+    .stats-border::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 2px;
+      border-radius: 20px;
+      background: #101a35;
+    }
+
+    @keyframes rotateGradient {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
     .stats {
+      position: relative;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 12px;
-      margin-bottom: 70px;
       padding: 20px;
-      border: 1px solid var(--line);
       border-radius: 20px;
-      background: rgba(18,25,49,.75);
+      background: rgba(13, 20, 43, .94);
+      box-shadow:
+        inset 0 0 25px rgba(0, 245, 223, .05),
+        0 20px 55px rgba(0, 0, 0, .25);
     }
 
     .stat {
@@ -402,62 +454,103 @@
       font-size: 12px;
     }
 
-    .products {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+    .products-section {
       padding-bottom: 70px;
     }
 
+    /*
+      چهار کارت کنار هم:
+      گیمینگ، V2ray، WireGuard و SSH
+    */
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
     .product {
-      padding: 23px;
+      position: relative;
+      overflow: hidden;
+      min-height: 270px;
+      padding: 22px;
       border: 1px solid var(--line);
       border-radius: 20px;
-      background: rgba(18,25,49,.82);
+      background: linear-gradient(145deg, rgba(18, 29, 58, .95), rgba(8, 14, 32, .95));
       transition: .3s;
     }
 
-    .product:hover {
-      transform: translateY(-7px);
-      border-color: rgba(0,245,223,.45);
+    .product::before {
+      content: "";
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      top: -70px;
+      left: -65px;
+      border-radius: 50%;
+      background: var(--cyan);
+      opacity: .08;
+      filter: blur(2px);
+    }
+
+    .product:nth-child(2)::before {
+      background: var(--purple);
+    }
+
+    .product:nth-child(3)::before {
+      background: var(--green);
+    }
+
+    .product:nth-child(4)::before {
+      background: var(--orange);
     }
 
     .product-icon {
-      width: 54px;
-      height: 54px;
-      display: grid;
-      place-items: center;
-      margin-bottom: 17px;
-      border-radius: 16px;
-      color: var(--cyan);
-      background: rgba(0,245,223,.1);
-      font-size: 25px;
+      position: relative;
+      z-index: 1;
     }
 
-    .product h3 {
-      margin-bottom: 8px;
-      font-size: 18px;
+    .product:nth-child(2) .product-icon {
+      color: #b28bff;
+      background: rgba(155, 92, 255, .13);
+    }
+
+    .product:nth-child(3) .product-icon {
+      color: var(--green);
+      background: rgba(60, 255, 157, .12);
+    }
+
+    .product:nth-child(4) .product-icon {
+      color: var(--orange);
+      background: rgba(255, 155, 66, .12);
+    }
+
+    .product h3,
+    .product p {
+      position: relative;
+      z-index: 1;
     }
 
     .product p {
-      min-height: 45px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.9;
+      min-height: 66px;
+      font-size: 12px;
     }
 
     .product-bottom {
+      position: absolute;
+      right: 22px;
+      bottom: 22px;
+      left: 22px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-top: 20px;
-      padding-top: 16px;
+      padding-top: 15px;
       border-top: 1px solid var(--line);
     }
 
     .price {
       color: var(--cyan);
-      font-size: 14px;
+      font-size: 13px;
       font-weight: bold;
     }
 
@@ -468,9 +561,15 @@
       color: #001512;
       background: var(--cyan);
       font: inherit;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: bold;
       cursor: pointer;
+      transition: .2s;
+    }
+
+    .coming:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 18px rgba(0, 245, 223, .35);
     }
 
     footer {
@@ -488,15 +587,20 @@
       z-index: 30;
       width: 78px;
       height: 78px;
-      border: 2px solid rgba(255,255,255,.55);
+      border: 2px solid rgba(255, 255, 255, .55);
       border-radius: 23px;
       color: white;
       background: linear-gradient(145deg, var(--purple), var(--pink));
-      box-shadow: 0 12px 35px rgba(244,63,140,.4);
+      box-shadow: 0 12px 35px rgba(244, 63, 140, .4);
       font-family: inherit;
       font-size: 12px;
       font-weight: bold;
       cursor: pointer;
+      transition: .25s;
+    }
+
+    .redeem-float:hover {
+      transform: translateY(-5px) rotate(-4deg);
     }
 
     .modal-bg {
@@ -506,7 +610,7 @@
       display: none;
       place-items: center;
       padding: 20px;
-      background: rgba(0,0,0,.78);
+      background: rgba(0, 0, 0, .78);
       backdrop-filter: blur(8px);
     }
 
@@ -518,10 +622,10 @@
       width: min(440px, 100%);
       position: relative;
       padding: 30px 25px;
-      border: 1px solid rgba(0,245,223,.35);
+      border: 1px solid rgba(0, 245, 223, .35);
       border-radius: 24px;
       background: linear-gradient(145deg, #192647, #0b1126);
-      box-shadow: 0 25px 70px rgba(0,0,0,.5);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, .5);
       text-align: center;
     }
 
@@ -534,7 +638,7 @@
       border: 0;
       border-radius: 50%;
       color: white;
-      background: rgba(255,255,255,.1);
+      background: rgba(255, 255, 255, .1);
       font-size: 20px;
       cursor: pointer;
     }
@@ -579,6 +683,7 @@
 
     .code-input:focus {
       border-color: var(--cyan);
+      box-shadow: 0 0 18px rgba(0, 245, 223, .12);
     }
 
     .redeem-button,
@@ -627,7 +732,11 @@
       display: none !important;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1000px) {
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
       .features {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -645,10 +754,6 @@
 
       .buttons {
         justify-content: center;
-      }
-
-      .products {
-        grid-template-columns: 1fr 1fr;
       }
 
       .stats {
@@ -680,6 +785,17 @@
 
       .stats {
         grid-template-columns: 1fr 1fr;
+        padding: 14px;
+      }
+
+      .stat {
+        border-left: 0;
+        border-bottom: 1px solid var(--line);
+        padding: 13px 5px;
+      }
+
+      .stat:nth-last-child(-n + 2) {
+        border-bottom: 0;
       }
 
       .redeem-float {
@@ -720,16 +836,18 @@
 
         <h1>
           اتصال سریع‌تر،
-          امن‌تر و بدون محدودیت
+          امن‌تر و پایدارتر
         </h1>
 
         <p>
-          کانفیگ‌های قدرتمند و پایدار برای استفاده روزمره،
-          گیم، استریم و تمام دستگاه‌های شما.
+          کانفیگ‌های قدرتمند برای گیم، استریم، استفاده روزمره
+          و دستگاه‌های مختلف شما.
         </p>
 
         <div class="buttons">
-          <a class="btn" href="#configs">مشاهده کانفیگ‌ها</a>
+          <a class="btn" href="#configs">
+            مشاهده کانفیگ‌ها
+          </a>
 
           <button class="btn secondary" onclick="openRedeem()">
             🎟️ ردیم کد
@@ -769,7 +887,6 @@
       </div>
     </section>
 
-    <!-- بخش سرعت سریع و امکانات -->
     <section id="features" class="features-section container">
       <div class="section-title">
         <h2>چرا Config Store؟</h2>
@@ -777,7 +894,6 @@
       </div>
 
       <div class="features">
-
         <div class="feature">
           <div class="feature-icon">⚡</div>
           <h3>سرعت بالا</h3>
@@ -790,7 +906,7 @@
           <div class="feature-icon">🔒</div>
           <h3>امنیت بالا</h3>
           <p>
-            حفظ امنیت اطلاعات و اتصال مطمئن در زمان استفاده از اینترنت.
+            اتصال مطمئن و امن برای استفاده راحت‌تر از اینترنت.
           </p>
         </div>
 
@@ -809,73 +925,111 @@
             قابل استفاده روی موبایل، کامپیوتر، تبلت و دستگاه‌های مختلف.
           </p>
         </div>
-
       </div>
     </section>
 
-    <!-- آمار سرویس -->
+    <!-- مستطیل آمار با حاشیه Gradient متحرک -->
     <section class="container">
-      <div class="stats">
-        <div class="stat">
-          <strong>99%</strong>
-          <span>پایداری سرور</span>
-        </div>
+      <div class="stats-border">
+        <div class="stats">
 
-        <div class="stat">
-          <strong>32ms</strong>
-          <span>پینگ تقریبی</span>
-        </div>
+          <div class="stat">
+            <strong>99%</strong>
+            <span>پایداری سرور</span>
+          </div>
 
-        <div class="stat">
-          <strong>24/7</strong>
-          <span>فعالیت سرویس</span>
-        </div>
+          <div class="stat">
+            <strong>32ms</strong>
+            <span>پینگ تقریبی</span>
+          </div>
 
-        <div class="stat">
-          <strong>4+</strong>
-          <span>دستگاه قابل پشتیبانی</span>
+          <div class="stat">
+            <strong>24/7</strong>
+            <span>فعالیت سرویس</span>
+          </div>
+
+          <div class="stat">
+            <strong>4+</strong>
+            <span>دستگاه قابل پشتیبانی</span>
+          </div>
+
         </div>
       </div>
     </section>
 
-    <section id="configs" class="container">
+    <section id="configs" class="products-section container">
       <div class="section-title">
         <h2>کانفیگ‌های ویژه</h2>
-        <p>بهترین انتخاب برای اتصال سریع و مطمئن</p>
+        <p>کانفیگ موردنظر خود را انتخاب کنید</p>
       </div>
 
       <div class="products">
 
         <article class="product">
           <div class="product-icon">⚡</div>
+
           <h3>کانفیگ گیمینگ</h3>
-          <p>مناسب بازی آنلاین با پینگ پایین و اتصال پایدار.</p>
+
+          <p>
+            مناسب بازی آنلاین با پینگ پایین و اتصال پایدار.
+          </p>
 
           <div class="product-bottom">
             <span class="price">به‌زودی</span>
-            <button class="coming" onclick="comingSoon()">به‌زودی</button>
+            <button class="coming" onclick="comingSoon()">
+              به‌زودی
+            </button>
           </div>
         </article>
 
         <article class="product">
-          <div class="product-icon">♢</div>
-          <h3>کانفیگ پریمیوم</h3>
-          <p>سرویس قدرتمند برای استفاده روزمره، دانلود و استریم.</p>
+          <div class="product-icon">◈</div>
+
+          <h3>کانفیگ V2Ray</h3>
+
+          <p>
+            مناسب استفاده روزمره، استریم، دانلود و اتصال پایدار.
+          </p>
 
           <div class="product-bottom">
             <span class="price">به‌زودی</span>
-            <button class="coming" onclick="comingSoon()">به‌زودی</button>
+            <button class="coming" onclick="comingSoon()">
+              به‌زودی
+            </button>
           </div>
         </article>
 
         <article class="product">
-          <div class="product-icon">✦</div>
-          <h3>کانفیگ نامحدود</h3>
-          <p>انتخابی عالی برای استفاده طولانی‌مدت روی چند دستگاه.</p>
+          <div class="product-icon">🔗</div>
+
+          <h3>کانفیگ WireGuard</h3>
+
+          <p>
+            اتصال سریع و سبک با عملکرد مناسب روی موبایل و کامپیوتر.
+          </p>
 
           <div class="product-bottom">
             <span class="price">به‌زودی</span>
-            <button class="coming" onclick="comingSoon()">به‌زودی</button>
+            <button class="coming" onclick="comingSoon()">
+              به‌زودی
+            </button>
+          </div>
+        </article>
+
+        <article class="product">
+          <div class="product-icon">⌘</div>
+
+          <h3>کانفیگ SSH</h3>
+
+          <p>
+            کانفیگ ساده و کاربردی برای اتصال سریع و مطمئن.
+          </p>
+
+          <div class="product-bottom">
+            <span class="price">به‌زودی</span>
+            <button class="coming" onclick="comingSoon()">
+              به‌زودی
+            </button>
           </div>
         </article>
 
@@ -885,7 +1039,7 @@
   </main>
 
   <footer>
-    کانفیگ برای استفاده روی انواع دستگاه‌ها آماده شده است.
+    Config Store — سرویس سریع، امن و پایدار
   </footer>
 
   <button class="redeem-float" onclick="openRedeem()">
@@ -942,21 +1096,15 @@
 
   <script>
     const VALID_CODE = "RfHBQo";
-
-    /*
-      این مقدار مشخص می‌کند کد قبلاً در این مرورگر استفاده شده یا نه.
-    */
     const USED_CODE_KEY = "config_store_RfHBQo_used";
 
-    /*
-      اطلاعات فایل دانلودی کانفیگ
-      در صورت نیاز اطلاعات کانفیگ خودت را اینجا قرار بده.
-    */
     const configData = {
       remarks: "config ( config store ZRX )",
+
       log: {
         loglevel: "warning"
       },
+
       inbounds: [
         {
           tag: "socks",
@@ -969,6 +1117,7 @@
           }
         }
       ],
+
       outbounds: [
         {
           tag: "proxy",
@@ -988,9 +1137,11 @@
               }
             ]
           },
+
           streamSettings: {
             network: "tcp",
             security: "tls",
+
             tlsSettings: {
               allowInsecure: true,
               fingerprint: "chrome"
@@ -998,9 +1149,14 @@
           }
         }
       ],
+
       dns: {
-        servers: ["1.1.1.1"]
+        servers: [
+          "1.1.1.1",
+          "8.8.8.8"
+        ]
       },
+
       routing: {
         domainStrategy: "IPIfNonMatch",
         rules: []
@@ -1060,9 +1216,6 @@
         return;
       }
 
-      /*
-        کد قبل از نمایش دانلود مصرف‌شده ثبت می‌شود.
-      */
       localStorage.setItem(USED_CODE_KEY, "true");
 
       redeemForm.classList.add("hidden");
@@ -1074,7 +1227,9 @@
 
       const file = new Blob(
         [json],
-        { type: "application/json;charset=utf-8" }
+        {
+          type: "application/json;charset=utf-8"
+        }
       );
 
       const url = URL.createObjectURL(file);
@@ -1091,7 +1246,7 @@
     }
 
     function comingSoon() {
-      alert("فروش کانفیگ به‌زودی فعال می‌شود.");
+      alert("فروش این کانفیگ به‌زودی فعال می‌شود.");
     }
 
     codeInput.addEventListener("keydown", function(event) {
