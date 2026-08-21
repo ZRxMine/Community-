@@ -3,36 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Config Store | فروشگاه کانفیگ</title>
+  <title>Config Store</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --bg: #060813;
-      --card: rgba(18, 25, 49, .82);
-      --card2: #121a34;
-      --text: #f7f9ff;
-      --muted: #99a5c3;
-      --line: rgba(150, 170, 225, .18);
-      --cyan: #00f5df;
-      --green: #42f2a2;
-      --blue: #5c7cff;
-      --purple: #a855f7;
-      --pink: #f43f8c;
-      --red: #ff6078;
-    }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    html {
-      scroll-behavior: smooth;
+    :root {
+      --bg: #060813;
+      --card: #121a34;
+      --text: #f7f9ff;
+      --muted: #9ba7c4;
+      --line: rgba(150, 170, 225, .18);
+      --cyan: #00f5df;
+      --green: #42f2a2;
+      --purple: #a855f7;
+      --pink: #f43f8c;
+      --red: #ff6378;
     }
 
     body {
@@ -43,56 +37,40 @@
       background:
         radial-gradient(circle at 10% 5%, rgba(0,245,223,.13), transparent 330px),
         radial-gradient(circle at 90% 15%, rgba(168,85,247,.15), transparent 350px),
-        radial-gradient(circle at 50% 100%, rgba(92,124,255,.13), transparent 500px),
         var(--bg);
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      opacity: .27;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
-      background-size: 45px 45px;
-      mask-image: linear-gradient(to bottom, black, transparent);
     }
 
     header {
       position: sticky;
       top: 0;
-      z-index: 50;
-      height: 76px;
+      z-index: 10;
+      height: 75px;
       padding: 0 6%;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--line);
-      background: rgba(6, 8, 19, .78);
-      backdrop-filter: blur(18px);
+      background: rgba(6, 8, 19, .8);
+      backdrop-filter: blur(15px);
     }
 
     .logo {
       display: flex;
       align-items: center;
-      gap: 11px;
+      gap: 10px;
       font-size: 18px;
       font-weight: 900;
     }
 
     .logo-icon {
-      width: 43px;
-      height: 43px;
+      width: 42px;
+      height: 42px;
       display: grid;
       place-items: center;
       border: 1px solid rgba(0,245,223,.4);
-      border-radius: 14px;
+      border-radius: 13px;
       color: var(--cyan);
-      background: linear-gradient(145deg, rgba(0,245,223,.18), rgba(92,124,255,.18));
-      box-shadow: 0 0 25px rgba(0,245,223,.16);
+      background: rgba(0,245,223,.1);
       font-size: 25px;
     }
 
@@ -107,11 +85,10 @@
 
     nav a {
       padding: 9px 14px;
-      border-radius: 9px;
+      border-radius: 8px;
       color: var(--muted);
       text-decoration: none;
       font-size: 13px;
-      transition: .25s;
     }
 
     nav a:hover {
@@ -124,86 +101,80 @@
       align-items: center;
       gap: 7px;
       padding: 8px 13px;
-      border: 1px solid rgba(66,242,162,.22);
+      border: 1px solid rgba(66,242,162,.25);
       border-radius: 30px;
       color: var(--green);
-      background: rgba(66,242,162,.07);
       font-size: 12px;
-      font-weight: 700;
+      font-weight: bold;
     }
 
     .online i {
       width: 8px;
       height: 8px;
-      display: block;
       border-radius: 50%;
       background: var(--green);
-      box-shadow: 0 0 13px var(--green);
+      box-shadow: 0 0 12px var(--green);
     }
 
     .container {
-      width: min(1180px, 90%);
+      width: min(1120px, 90%);
       margin: auto;
     }
 
     .hero {
-      min-height: 510px;
+      min-height: 480px;
       display: grid;
       grid-template-columns: 1.1fr .9fr;
       align-items: center;
-      gap: 55px;
-      padding: 75px 0 60px;
+      gap: 50px;
+      padding: 70px 0;
     }
 
     .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 20px;
+      display: inline-block;
+      margin-bottom: 18px;
       padding: 8px 15px;
       border: 1px solid rgba(0,245,223,.3);
       border-radius: 30px;
       color: var(--cyan);
       background: rgba(0,245,223,.07);
       font-size: 12px;
-      font-weight: 800;
+      font-weight: bold;
     }
 
     h1 {
-      max-width: 650px;
-      margin-bottom: 20px;
-      font-size: clamp(35px, 5vw, 68px);
-      line-height: 1.28;
+      margin-bottom: 18px;
+      font-size: clamp(36px, 5vw, 65px);
+      line-height: 1.35;
       font-weight: 900;
-      background: linear-gradient(110deg, #fff 20%, #cbd6ff 48%, var(--cyan));
+      background: linear-gradient(110deg, white, #cbd6ff, var(--cyan));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
     }
 
     .hero p {
-      max-width: 590px;
+      max-width: 570px;
       color: var(--muted);
-      font-size: 16px;
-      line-height: 2.1;
+      line-height: 2;
+      font-size: 15px;
     }
 
     .buttons {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
-      margin-top: 29px;
+      margin-top: 28px;
     }
 
     .btn {
       min-height: 49px;
-      padding: 0 22px;
+      padding: 0 21px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      border: 1px solid transparent;
-      border-radius: 12px;
+      border: 0;
+      border-radius: 11px;
       color: #001512;
       background: linear-gradient(100deg, var(--cyan), var(--green));
       font: inherit;
@@ -215,52 +186,44 @@
 
     .btn:hover {
       transform: translateY(-3px);
-      box-shadow: 0 12px 28px rgba(0,245,223,.23);
+      box-shadow: 0 12px 28px rgba(0,245,223,.25);
     }
 
     .btn.secondary {
       color: white;
-      border-color: var(--line);
+      border: 1px solid var(--line);
       background: rgba(255,255,255,.05);
     }
 
-    .visual {
-      min-height: 370px;
-      position: relative;
-      display: grid;
-      place-items: center;
-    }
-
-    .visual-glow {
-      position: absolute;
-      width: 250px;
-      height: 250px;
-      border-radius: 50%;
-      background: var(--cyan);
-      filter: blur(95px);
-      opacity: .17;
-    }
-
     .server-card {
-      width: min(365px, 100%);
-      position: relative;
+      max-width: 360px;
+      margin: auto;
       padding: 26px;
       border: 1px solid rgba(150,170,225,.25);
-      border-radius: 27px;
-      background: linear-gradient(145deg, rgba(29,41,79,.94), rgba(11,16,35,.96));
-      box-shadow: 0 30px 80px rgba(0,0,0,.4), inset 0 1px rgba(255,255,255,.08);
-      transform: rotate(4deg);
+      border-radius: 25px;
+      background: linear-gradient(145deg, #1d294f, #0b1023);
+      box-shadow: 0 30px 80px rgba(0,0,0,.4);
+      transform: rotate(3deg);
       animation: floating 4s ease-in-out infinite;
+    }
+
+    @keyframes floating {
+      0%, 100% {
+        transform: rotate(3deg) translateY(0);
+      }
+      50% {
+        transform: rotate(1deg) translateY(-13px);
+      }
     }
 
     .server-head {
       display: flex;
       justify-content: space-between;
-      padding-bottom: 19px;
+      padding-bottom: 18px;
       border-bottom: 1px solid var(--line);
       color: var(--cyan);
       font-size: 13px;
-      font-weight: 900;
+      font-weight: bold;
     }
 
     .lights {
@@ -274,16 +237,16 @@
       display: block;
       border-radius: 50%;
       background: var(--green);
-      box-shadow: 0 0 8px var(--green);
+      box-shadow: 0 0 9px var(--green);
     }
 
     .server-body {
-      padding-top: 24px;
+      padding-top: 23px;
     }
 
     .server-body h2 {
       margin-bottom: 8px;
-      font-size: 28px;
+      font-size: 27px;
     }
 
     .server-body p {
@@ -294,8 +257,8 @@
     .server-info {
       display: flex;
       justify-content: space-between;
-      margin-top: 28px;
-      color: #dae3ff;
+      margin-top: 27px;
+      color: #dbe3ff;
       font-size: 13px;
     }
 
@@ -316,23 +279,11 @@
       height: 100%;
       display: block;
       border-radius: inherit;
-      background: linear-gradient(90deg, var(--blue), var(--cyan));
-    }
-
-    @keyframes floating {
-      0%, 100% {
-        transform: rotate(4deg) translateY(0);
-      }
-      50% {
-        transform: rotate(2deg) translateY(-14px);
-      }
+      background: linear-gradient(90deg, #5c7cff, var(--cyan));
     }
 
     .section-title {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
     }
 
     .section-title h2 {
@@ -340,6 +291,7 @@
     }
 
     .section-title p {
+      margin-top: 5px;
       color: var(--muted);
       font-size: 13px;
     }
@@ -347,24 +299,21 @@
     .products {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 19px;
-      padding-bottom: 55px;
+      gap: 18px;
+      padding-bottom: 70px;
     }
 
     .product {
-      position: relative;
       padding: 23px;
-      overflow: hidden;
       border: 1px solid var(--line);
       border-radius: 20px;
-      background: var(--card);
+      background: rgba(18,25,49,.82);
       transition: .3s;
     }
 
     .product:hover {
-      transform: translateY(-8px);
-      border-color: rgba(0,245,223,.48);
-      box-shadow: 0 18px 40px rgba(0,0,0,.28);
+      transform: translateY(-7px);
+      border-color: rgba(0,245,223,.45);
     }
 
     .product-icon {
@@ -372,20 +321,20 @@
       height: 54px;
       display: grid;
       place-items: center;
-      margin-bottom: 18px;
+      margin-bottom: 17px;
       border-radius: 16px;
       color: var(--cyan);
       background: rgba(0,245,223,.1);
-      font-size: 26px;
+      font-size: 25px;
     }
 
     .product h3 {
       margin-bottom: 8px;
-      font-size: 19px;
+      font-size: 18px;
     }
 
     .product p {
-      min-height: 48px;
+      min-height: 45px;
       color: var(--muted);
       font-size: 13px;
       line-height: 1.9;
@@ -395,104 +344,55 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      margin-top: 21px;
-      padding-top: 17px;
+      margin-top: 20px;
+      padding-top: 16px;
       border-top: 1px solid var(--line);
     }
 
     .price {
       color: var(--cyan);
-      font-size: 15px;
-      font-weight: 900;
+      font-size: 14px;
+      font-weight: bold;
     }
 
     .coming {
       padding: 9px 13px;
       border: 0;
-      border-radius: 9px;
+      border-radius: 8px;
       color: #001512;
       background: var(--cyan);
       font: inherit;
       font-size: 12px;
-      font-weight: 900;
+      font-weight: bold;
       cursor: pointer;
     }
 
-    .features {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      padding-bottom: 80px;
-    }
-
-    .feature {
-      padding: 18px;
-      border: 1px solid var(--line);
-      border-radius: 15px;
-      background: rgba(255,255,255,.035);
-    }
-
-    .feature b {
-      display: block;
-      margin-bottom: 6px;
-      color: var(--cyan);
-    }
-
-    .feature span {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
     footer {
-      padding: 25px 6%;
+      padding: 25px;
       border-top: 1px solid var(--line);
       color: var(--muted);
       text-align: center;
       font-size: 12px;
-      line-height: 2;
     }
 
-    /* دکمه شناور */
     .redeem-float {
       position: fixed;
       right: 25px;
       bottom: 25px;
-      z-index: 80;
-      width: 80px;
-      height: 80px;
-      display: grid;
-      place-items: center;
-      border: 2px solid rgba(255,255,255,.6);
-      border-radius: 24px;
+      z-index: 20;
+      width: 78px;
+      height: 78px;
+      border: 2px solid rgba(255,255,255,.55);
+      border-radius: 23px;
       color: white;
       background: linear-gradient(145deg, var(--purple), var(--pink));
       box-shadow: 0 12px 35px rgba(244,63,140,.4);
       font-family: inherit;
       font-size: 12px;
-      font-weight: 900;
+      font-weight: bold;
       cursor: pointer;
-      animation: redeemFloat 3s ease-in-out infinite;
     }
 
-    .redeem-float::before {
-      content: "🎟️";
-      position: absolute;
-      top: -27px;
-      font-size: 25px;
-      transform: rotate(-12deg);
-    }
-
-    @keyframes redeemFloat {
-      0%, 100% {
-        transform: translateY(0) rotate(0);
-      }
-      50% {
-        transform: translateY(-10px) rotate(3deg);
-      }
-    }
-
-    /* مودال */
     .modal-bg {
       position: fixed;
       inset: 0;
@@ -500,7 +400,7 @@
       display: none;
       place-items: center;
       padding: 20px;
-      background: rgba(0,0,0,.77);
+      background: rgba(0,0,0,.78);
       backdrop-filter: blur(8px);
     }
 
@@ -509,32 +409,20 @@
     }
 
     .modal {
-      width: min(445px, 100%);
+      width: min(440px, 100%);
       position: relative;
       padding: 30px 25px;
       border: 1px solid rgba(0,245,223,.35);
-      border-radius: 25px;
+      border-radius: 24px;
       background: linear-gradient(145deg, #192647, #0b1126);
-      box-shadow: 0 25px 70px rgba(0,0,0,.5), 0 0 40px rgba(0,245,223,.12);
+      box-shadow: 0 25px 70px rgba(0,0,0,.5);
       text-align: center;
-      animation: modalIn .3s ease;
-    }
-
-    @keyframes modalIn {
-      from {
-        opacity: 0;
-        transform: translateY(25px) scale(.94);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
     }
 
     .close {
       position: absolute;
-      top: 13px;
-      left: 15px;
+      top: 12px;
+      left: 14px;
       width: 31px;
       height: 31px;
       border: 0;
@@ -546,16 +434,14 @@
     }
 
     .sticker {
-      width: 80px;
-      height: 80px;
+      width: 76px;
+      height: 76px;
       display: grid;
       place-items: center;
-      margin: 0 auto 17px;
-      border: 1px solid rgba(255,255,255,.3);
-      border-radius: 24px;
+      margin: auto auto 16px;
+      border-radius: 22px;
       background: linear-gradient(145deg, var(--purple), var(--pink));
-      box-shadow: 0 0 30px rgba(244,63,140,.3);
-      font-size: 37px;
+      font-size: 35px;
     }
 
     .modal h2 {
@@ -564,7 +450,7 @@
     }
 
     .modal p {
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       color: var(--muted);
       font-size: 13px;
       line-height: 2;
@@ -574,20 +460,19 @@
       width: 100%;
       height: 55px;
       outline: none;
-      padding: 0 16px;
+      padding: 0 15px;
       border: 1px solid #40547e;
-      border-radius: 12px;
+      border-radius: 11px;
       color: white;
       background: #0b1328;
       direction: ltr;
       text-align: center;
-      font: 700 17px monospace;
+      font: bold 17px monospace;
       letter-spacing: 2px;
     }
 
     .code-input:focus {
       border-color: var(--cyan);
-      box-shadow: 0 0 0 3px rgba(0,245,223,.1);
     }
 
     .redeem-button,
@@ -596,24 +481,17 @@
       height: 52px;
       margin-top: 13px;
       border: 0;
-      border-radius: 12px;
+      border-radius: 11px;
       color: #001512;
       background: linear-gradient(100deg, var(--cyan), var(--green));
       font: inherit;
       font-weight: 900;
       cursor: pointer;
-      transition: .25s;
-    }
-
-    .redeem-button:hover,
-    .download-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(0,245,223,.2);
     }
 
     .message {
-      min-height: 25px;
-      margin-top: 13px;
+      min-height: 24px;
+      margin-top: 12px;
       color: var(--red);
       font-size: 13px;
     }
@@ -627,8 +505,8 @@
     }
 
     .success-icon {
-      margin-bottom: 12px;
-      font-size: 54px;
+      margin-bottom: 10px;
+      font-size: 52px;
     }
 
     .success h2 {
@@ -636,14 +514,14 @@
     }
 
     .success p {
-      color: #d8e1f5;
+      color: #dce5f8;
     }
 
     .hidden {
       display: none !important;
     }
 
-    @media (max-width: 850px) {
+    @media (max-width: 800px) {
       .hero {
         grid-template-columns: 1fr;
         text-align: center;
@@ -657,19 +535,13 @@
         justify-content: center;
       }
 
-      .visual {
-        min-height: 300px;
-      }
-
-      .products,
-      .features {
+      .products {
         grid-template-columns: 1fr 1fr;
       }
     }
 
     @media (max-width: 560px) {
       header {
-        height: 68px;
         padding: 0 18px;
       }
 
@@ -681,30 +553,8 @@
         font-size: 14px;
       }
 
-      .logo-icon {
-        width: 36px;
-        height: 36px;
-      }
-
-      .online {
-        font-size: 10px;
-      }
-
-      .hero {
-        padding-top: 48px;
-      }
-
-      .products,
-      .features {
+      .products {
         grid-template-columns: 1fr;
-      }
-
-      .section-title {
-        display: block;
-      }
-
-      .section-title p {
-        margin-top: 7px;
       }
 
       .redeem-float {
@@ -728,7 +578,6 @@
     <nav>
       <a href="#home">خانه</a>
       <a href="#configs">کانفیگ‌ها</a>
-      <a href="#features">امکانات</a>
     </nav>
 
     <div class="online">
@@ -751,48 +600,44 @@
         <p>
           کانفیگ‌های قدرتمند و پایدار برای استفاده روزمره،
           گیم، استریم و تمام دستگاه‌های شما.
-          انتخاب کن، فعال کن و از اتصال باکیفیت لذت ببر.
         </p>
 
         <div class="buttons">
-          <a class="btn" href="#configs">مشاهده کانفیگ‌ها ⌁</a>
+          <a class="btn" href="#configs">مشاهده کانفیگ‌ها</a>
+
           <button class="btn secondary" onclick="openRedeem()">
             🎟️ ردیم کد
           </button>
         </div>
       </div>
 
-      <div class="visual">
-        <div class="visual-glow"></div>
+      <div class="server-card">
+        <div class="server-head">
+          <span>CONFIG SERVER</span>
 
-        <div class="server-card">
-          <div class="server-head">
-            <span>CONFIG SERVER</span>
+          <div class="lights">
+            <i></i>
+            <i></i>
+            <i></i>
+          </div>
+        </div>
 
-            <div class="lights">
-              <i></i>
-              <i></i>
-              <i></i>
-            </div>
+        <div class="server-body">
+          <h2>PREMIUM NODE</h2>
+          <p>اتصال پایدار و پرسرعت برای همه دستگاه‌ها</p>
+
+          <div class="server-info">
+            <span>وضعیت سرور</span>
+            <b>86% Stable</b>
           </div>
 
-          <div class="server-body">
-            <h2>PREMIUM NODE</h2>
-            <p>اتصال پایدار و پرسرعت برای همه دستگاه‌ها</p>
+          <div class="progress">
+            <span></span>
+          </div>
 
-            <div class="server-info">
-              <span>وضعیت سرور</span>
-              <b>86% Stable</b>
-            </div>
-
-            <div class="progress">
-              <span></span>
-            </div>
-
-            <div class="server-info">
-              <span>پینگ تقریبی</span>
-              <b>32ms</b>
-            </div>
+          <div class="server-info">
+            <span>پینگ تقریبی</span>
+            <b>32ms</b>
           </div>
         </div>
       </div>
@@ -800,10 +645,8 @@
 
     <section id="configs" class="container">
       <div class="section-title">
-        <div>
-          <h2>کانفیگ‌های ویژه</h2>
-          <p>بهترین انتخاب برای اتصال سریع و مطمئن</p>
-        </div>
+        <h2>کانفیگ‌های ویژه</h2>
+        <p>بهترین انتخاب برای اتصال سریع و مطمئن</p>
       </div>
 
       <div class="products">
@@ -814,7 +657,7 @@
           <p>مناسب بازی آنلاین با پینگ پایین و اتصال پایدار.</p>
 
           <div class="product-bottom">
-            <div class="price">به‌زودی</div>
+            <span class="price">به‌زودی</span>
             <button class="coming" onclick="comingSoon()">به‌زودی</button>
           </div>
         </article>
@@ -825,7 +668,7 @@
           <p>سرویس قدرتمند برای استفاده روزمره، دانلود و استریم.</p>
 
           <div class="product-bottom">
-            <div class="price">به‌زودی</div>
+            <span class="price">به‌زودی</span>
             <button class="coming" onclick="comingSoon()">به‌زودی</button>
           </div>
         </article>
@@ -836,7 +679,7 @@
           <p>انتخابی عالی برای استفاده طولانی‌مدت روی چند دستگاه.</p>
 
           <div class="product-bottom">
-            <div class="price">به‌زودی</div>
+            <span class="price">به‌زودی</span>
             <button class="coming" onclick="comingSoon()">به‌زودی</button>
           </div>
         </article>
@@ -844,36 +687,16 @@
       </div>
     </section>
 
-    <section id="features" class="container features">
-      <div class="feature">
-        <b>🛡️ امنیت بالا</b>
-        <span>اتصال امن و محافظت‌شده برای استفاده روزمره</span>
-      </div>
-
-      <div class="feature">
-        <b>🚀 سرعت عالی</b>
-        <span>بهینه‌شده برای سرعت، بازی و استریم</span>
-      </div>
-
-      <div class="feature">
-        <b>📱 پشتیبانی دستگاه‌ها</b>
-        <span>مناسب برای انواع دستگاه‌ها و آداپتورها</span>
-      </div>
-    </section>
-
   </main>
 
   <footer>
-    کانفیگ همه آداپتورها را ساپورت می‌کند — فعلاً تا همین‌جا،
-    کانفیگ به‌زودی در دسترس شما قرار می‌گیرد.
+    کانفیگ برای استفاده روی انواع دستگاه‌ها آماده شده است.
   </footer>
 
-  <!-- دکمه شناور ردیم کد -->
   <button class="redeem-float" onclick="openRedeem()">
     ردیم کد
   </button>
 
-  <!-- پنجره ردیم کد -->
   <div id="redeemModal" class="modal-bg" onclick="closeOutside(event)">
     <div class="modal">
 
@@ -907,11 +730,11 @@
       <div id="successBox" class="success">
         <div class="success-icon">🎉</div>
 
-        <h2>کانفیگ جدید شما مبارک!</h2>
+        <h2>کانفیگ شما آماده است!</h2>
 
         <p>
-          کد شما با موفقیت فعال شد.<br>
-          کانفیگ آماده دانلود است.
+          کد با موفقیت فعال شد.<br>
+          کانفیگ را دانلود کنید.
         </p>
 
         <button class="download-button" onclick="downloadConfig()">
@@ -924,8 +747,18 @@
 
   <script>
     /*
-      کانفیگ دانلودی
-      این اطلاعات داخل فایل HTML قرار دارد و برای بازدیدکنندگان قابل مشاهده است.
+      کد معتبر ردیم
+    */
+    const VALID_CODE = "RfHBQo";
+
+    /*
+      کلید ذخیره‌شده در مرورگر
+      با این کلید، کد فقط یک بار در همان مرورگر قابل استفاده است.
+    */
+    const USED_CODE_KEY = "config_store_RfHBQo_used";
+
+    /*
+      اطلاعات کانفیگ دانلودی
     */
     const configData = {
       "remarks": "config ( config store ZRX )",
@@ -944,10 +777,7 @@
           },
           "sniffing": {
             "enabled": true,
-            "destOverride": [
-              "http",
-              "tls"
-            ],
+            "destOverride": ["http", "tls"],
             "routeOnly": false
           }
         }
@@ -981,11 +811,7 @@
             },
             "tlsSettings": {
               "allowInsecure": true,
-              "alpn": [
-                "h2",
-                "http/1.1",
-                "h3"
-              ],
+              "alpn": ["h2", "http/1.1", "h3"],
               "fingerprint": "chrome",
               "show": false
             }
@@ -1002,12 +828,6 @@
           "protocol": "freedom",
           "settings": {
             "domainStrategy": "UseIP"
-          },
-          "mux": {
-            "enabled": false,
-            "concurrency": 8,
-            "xudpConcurrency": 8,
-            "xudpProxyUDP443": ""
           }
         },
         {
@@ -1017,109 +837,15 @@
             "response": {
               "type": "http"
             }
-          },
-          "mux": {
-            "enabled": false,
-            "concurrency": 8,
-            "xudpConcurrency": 8,
-            "xudpProxyUDP443": ""
           }
         }
       ],
       "dns": {
-        "servers": [
-          "1.1.1.1"
-        ],
-        "hosts": {
-          "domain:googleapis.cn": "googleapis.com",
-          "dns.alidns.com": [
-            "223.5.5.5",
-            "223.6.6.6",
-            "2400:3200::1",
-            "2400:3200:baba::1"
-          ],
-          "one.one.one.one": [
-            "1.1.1.1",
-            "1.0.0.1",
-            "2606:4700:4700::1111",
-            "2606:4700:4700::1001"
-          ],
-          "dot.pub": [
-            "1.12.12.12",
-            "120.53.53.53"
-          ],
-          "dns.google": [
-            "8.8.8.8",
-            "8.8.4.4",
-            "2001:4860:4860::8888",
-            "2001:4860:4860::8844"
-          ],
-          "dns.quad9.net": [
-            "9.9.9.9",
-            "149.112.112.112",
-            "2620:fe::fe",
-            "2620:fe::9"
-          ],
-          "common.dot.dns.yandex.net": [
-            "77.88.8.8",
-            "77.88.8.1",
-            "2a02:6b8::feed:0ff",
-            "2a02:6b8:0:1::feed:0ff"
-          ]
-        }
+        "servers": ["1.1.1.1"]
       },
       "routing": {
         "domainStrategy": "IPIfNonMatch",
-        "rules": [
-          {
-            "type": "field",
-            "ip": [
-              "1.1.1.1"
-            ],
-            "outboundTag": "proxy",
-            "port": "53"
-          },
-          {
-            "type": "field",
-            "ip": [
-              "223.5.5.5"
-            ],
-            "outboundTag": "direct",
-            "port": "53"
-          },
-          {
-            "type": "field",
-            "ip": [
-              "1.1.1.1"
-            ],
-            "outboundTag": "proxy",
-            "port": "53"
-          },
-          {
-            "type": "field",
-            "ip": [
-              "223.5.5.5"
-            ],
-            "outboundTag": "direct",
-            "port": "53"
-          },
-          {
-            "type": "field",
-            "ip": [
-              "1.1.1.1"
-            ],
-            "outboundTag": "proxy",
-            "port": "53"
-          },
-          {
-            "type": "field",
-            "ip": [
-              "223.5.5.5"
-            ],
-            "outboundTag": "direct",
-            "port": "53"
-          }
-        ]
+        "rules": []
       }
     };
 
@@ -1134,7 +860,7 @@
 
       setTimeout(() => {
         codeInput.focus();
-      }, 150);
+      }, 100);
     }
 
     function closeRedeem() {
@@ -1157,22 +883,43 @@
     function redeemCode() {
       const enteredCode = codeInput.value.trim();
 
-      if (enteredCode === "RfHBQo") {
-        redeemForm.classList.add("hidden");
-        successBox.classList.add("show");
-      } else if (enteredCode === "") {
+      if (enteredCode === "") {
         codeMessage.textContent = "لطفاً کد ردیم را وارد کنید.";
-      } else {
-        codeMessage.textContent =
-          "این کد صحیح نیست یا قبلاً استفاده شده است.";
+        return;
       }
+
+      if (enteredCode !== VALID_CODE) {
+        codeMessage.textContent = "کد واردشده صحیح نیست.";
+        return;
+      }
+
+      /*
+        اگر کد قبلاً استفاده شده باشد،
+        دیگر اجازه فعال‌سازی داده نمی‌شود.
+      */
+      const isAlreadyUsed =
+        localStorage.getItem(USED_CODE_KEY) === "true";
+
+      if (isAlreadyUsed) {
+        codeMessage.textContent =
+          "این کد تکراری می‌باشد و قبلاً استفاده شده است.";
+        return;
+      }
+
+      /*
+        ثبت استفاده از کد قبل از نمایش دانلود
+      */
+      localStorage.setItem(USED_CODE_KEY, "true");
+
+      redeemForm.classList.add("hidden");
+      successBox.classList.add("show");
     }
 
     function downloadConfig() {
-      const jsonText = JSON.stringify(configData, null, 2);
+      const json = JSON.stringify(configData, null, 2);
 
       const file = new Blob(
-        [jsonText],
+        [json],
         { type: "application/json;charset=utf-8" }
       );
 
