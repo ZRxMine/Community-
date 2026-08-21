@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>خرید کانفیگ V2Ray | Config Store</title>
+
+  <title>خرید کانفیگ V2Ray</title>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
@@ -16,14 +17,14 @@
 
     :root {
       --bg: #020805;
-      --bg2: #06140b;
-      --card: rgba(10, 30, 18, .86);
+      --bg2: #07170d;
+      --card: rgba(10, 30, 18, .9);
       --green: #29ff91;
-      --green2: #a4ffd0;
+      --green-light: #a4ffd0;
       --text: #effff6;
       --muted: #8eaa99;
       --line: rgba(41, 255, 145, .2);
-      --line2: rgba(41, 255, 145, .55);
+      --line-strong: rgba(41, 255, 145, .55);
       --red: #ff7183;
     }
 
@@ -42,23 +43,13 @@
       content: "";
       position: fixed;
       inset: 0;
-      z-index: -2;
+      z-index: -1;
       pointer-events: none;
       opacity: .2;
       background-image:
         linear-gradient(rgba(41,255,145,.06) 1px, transparent 1px),
         linear-gradient(90deg, rgba(41,255,145,.06) 1px, transparent 1px);
       background-size: 46px 46px;
-      mask-image: linear-gradient(to bottom, black, transparent 85%);
-    }
-
-    body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background: radial-gradient(ellipse, transparent 35%, rgba(0,0,0,.5));
     }
 
     a {
@@ -67,8 +58,8 @@
     }
 
     button,
-    select,
-    input {
+    input,
+    select {
       font-family: inherit;
     }
 
@@ -86,7 +77,7 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--line);
-      background: rgba(2, 8, 5, .78);
+      background: rgba(2, 8, 5, .8);
       backdrop-filter: blur(18px);
     }
 
@@ -94,7 +85,6 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      color: var(--text);
       font-size: 15px;
       font-weight: 900;
     }
@@ -108,36 +98,19 @@
       height: 43px;
       display: grid;
       place-items: center;
-      border: 1px solid var(--line2);
+      border: 1px solid var(--line-strong);
       border-radius: 14px;
       color: var(--green);
       background: rgba(41,255,145,.09);
-      box-shadow:
-        0 0 25px rgba(41,255,145,.18),
-        inset 0 0 20px rgba(41,255,145,.1);
+      box-shadow: 0 0 25px rgba(41,255,145,.18);
       font-size: 25px;
-      animation: pulse 2.5s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% {
-        box-shadow:
-          0 0 18px rgba(41,255,145,.14),
-          inset 0 0 16px rgba(41,255,145,.08);
-      }
-
-      50% {
-        box-shadow:
-          0 0 34px rgba(41,255,145,.35),
-          inset 0 0 24px rgba(41,255,145,.16);
-      }
     }
 
     .back-button {
       padding: 10px 15px;
       border: 1px solid var(--line);
       border-radius: 10px;
-      color: var(--green2);
+      color: var(--green-light);
       background: rgba(255,255,255,.035);
       font-size: 12px;
       transition: .25s;
@@ -173,22 +146,6 @@
       margin-bottom: 28px;
     }
 
-    .hero-content {
-      animation: appear .8s ease both;
-    }
-
-    @keyframes appear {
-      from {
-        opacity: 0;
-        transform: translateY(25px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
     .status {
       display: inline-flex;
       align-items: center;
@@ -209,19 +166,6 @@
       border-radius: 50%;
       background: var(--green);
       box-shadow: 0 0 13px var(--green);
-      animation: dot 1.6s infinite;
-    }
-
-    @keyframes dot {
-      0%, 100% {
-        transform: scale(1);
-        opacity: 1;
-      }
-
-      50% {
-        transform: scale(.65);
-        opacity: .5;
-      }
     }
 
     h1 {
@@ -270,10 +214,7 @@
       background:
         radial-gradient(circle, rgba(41,255,145,.17), transparent 48%),
         linear-gradient(145deg, rgba(17,52,30,.9), rgba(3,12,7,.94));
-      box-shadow:
-        inset 0 0 55px rgba(41,255,145,.05),
-        0 20px 60px rgba(0,0,0,.22);
-      animation: appear 1s .12s ease both;
+      box-shadow: inset 0 0 55px rgba(41,255,145,.05);
     }
 
     .visual::before {
@@ -284,7 +225,6 @@
       border: 1px solid rgba(41,255,145,.28);
       border-radius: 50%;
       transform: rotate(-25deg);
-      animation: orbit 8s linear infinite;
     }
 
     .visual::after {
@@ -294,31 +234,6 @@
       height: 310px;
       border: 1px dashed rgba(41,255,145,.24);
       border-radius: 50%;
-      animation: orbit-reverse 10s linear infinite;
-    }
-
-    @keyframes orbit {
-      from {
-        transform: rotate(0deg) scale(1);
-      }
-
-      50% {
-        transform: rotate(180deg) scale(1.08);
-      }
-
-      to {
-        transform: rotate(360deg) scale(1);
-      }
-    }
-
-    @keyframes orbit-reverse {
-      from {
-        transform: rotate(360deg);
-      }
-
-      to {
-        transform: rotate(0deg);
-      }
     }
 
     .visual-icon {
@@ -336,62 +251,6 @@
         0 0 36px rgba(41,255,145,.25),
         inset 0 0 35px rgba(41,255,145,.12);
       font-size: 82px;
-      animation: floating 4s ease-in-out infinite;
-    }
-
-    @keyframes floating {
-      0%, 100% {
-        transform: translateY(0) rotate(0deg);
-      }
-
-      50% {
-        transform: translateY(-13px) rotate(3deg);
-      }
-    }
-
-    .particle {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 13px var(--green);
-      animation: particle 4s ease-in-out infinite;
-    }
-
-    .particle:nth-child(1) {
-      top: 20%;
-      right: 20%;
-    }
-
-    .particle:nth-child(2) {
-      bottom: 20%;
-      left: 20%;
-      animation-delay: 1s;
-    }
-
-    .particle:nth-child(3) {
-      top: 33%;
-      left: 16%;
-      animation-delay: 1.7s;
-    }
-
-    .particle:nth-child(4) {
-      bottom: 29%;
-      right: 15%;
-      animation-delay: 2.4s;
-    }
-
-    @keyframes particle {
-      0%, 100% {
-        opacity: .3;
-        transform: translateY(0) scale(1);
-      }
-
-      50% {
-        opacity: 1;
-        transform: translateY(-16px) scale(1.7);
-      }
     }
 
     .shop-card {
@@ -399,10 +258,8 @@
       padding: 30px;
       border: 1px solid var(--line);
       border-radius: 25px;
-      background:
-        linear-gradient(145deg, rgba(15,42,25,.94), rgba(5,15,8,.97));
+      background: linear-gradient(145deg, rgba(15,42,25,.94), rgba(5,15,8,.97));
       box-shadow: 0 22px 65px rgba(0,0,0,.22);
-      animation: appear .8s .25s ease both;
     }
 
     .shop-card::before {
@@ -449,12 +306,8 @@
       gap: 9px;
     }
 
-    .full {
-      grid-column: 1 / -1;
-    }
-
     label {
-      color: var(--green2);
+      color: var(--green-light);
       font-size: 12px;
       font-weight: 600;
     }
@@ -496,18 +349,12 @@
 
     .coupon-button {
       min-width: 115px;
-      border: 1px solid var(--line2);
+      border: 1px solid var(--line-strong);
       border-radius: 11px;
       color: #00170a;
       background: var(--green);
       font-size: 12px;
       font-weight: 800;
-      transition: .25s;
-    }
-
-    .coupon-button:hover {
-      background: var(--green2);
-      box-shadow: 0 8px 22px rgba(41,255,145,.2);
     }
 
     .coupon-button:disabled {
@@ -550,6 +397,7 @@
 
     .summary-row strong {
       color: var(--text);
+      direction: ltr;
     }
 
     .summary-row.discount strong {
@@ -560,7 +408,7 @@
       margin-top: 9px;
       padding-top: 16px;
       border-top: 1px solid var(--line);
-      color: var(--green2);
+      color: var(--green-light);
       font-size: 14px;
       font-weight: 700;
     }
@@ -568,7 +416,6 @@
     .summary-row.total strong {
       color: var(--green);
       font-size: 24px;
-      text-shadow: 0 0 18px rgba(41,255,145,.25);
     }
 
     .add-button {
@@ -578,7 +425,7 @@
       border: 0;
       border-radius: 13px;
       color: #00170a;
-      background: linear-gradient(110deg, var(--green), var(--green2));
+      background: linear-gradient(110deg, var(--green), var(--green-light));
       box-shadow: 0 10px 28px rgba(41,255,145,.15);
       font-size: 14px;
       font-weight: 900;
@@ -610,13 +457,6 @@
       border: 1px solid var(--line);
       border-radius: 17px;
       background: rgba(8,26,15,.65);
-      transition: .25s;
-    }
-
-    .benefit:hover {
-      transform: translateY(-5px);
-      border-color: var(--line2);
-      background: rgba(12,39,22,.8);
     }
 
     .benefit-icon {
@@ -663,12 +503,11 @@
     .modal-box {
       width: min(460px, 100%);
       padding: 28px 23px;
-      border: 1px solid var(--line2);
+      border: 1px solid var(--line-strong);
       border-radius: 22px;
       background: linear-gradient(145deg, #113720, #061009);
       box-shadow: 0 20px 80px rgba(0,0,0,.5);
       text-align: center;
-      animation: appear .3s ease both;
     }
 
     .modal-box h2 {
@@ -689,7 +528,7 @@
       padding: 15px;
       border: 1px solid rgba(41,255,145,.15);
       border-radius: 12px;
-      color: var(--green2);
+      color: var(--green-light);
       background: rgba(0,0,0,.16);
       font-size: 12px;
       line-height: 2.2;
@@ -705,11 +544,6 @@
       background: var(--green);
       font-size: 13px;
       font-weight: 900;
-      transition: .25s;
-    }
-
-    .telegram-button:hover {
-      background: var(--green2);
     }
 
     .close-button {
@@ -726,10 +560,6 @@
     @media (max-width: 850px) {
       .hero {
         grid-template-columns: 1fr;
-      }
-
-      .visual {
-        min-height: 280px;
       }
 
       .benefits {
@@ -770,10 +600,6 @@
         grid-template-columns: 1fr;
       }
 
-      .full {
-        grid-column: auto;
-      }
-
       .coupon-line {
         flex-direction: column;
       }
@@ -785,6 +611,10 @@
       .card-heading {
         align-items: flex-start;
         flex-direction: column;
+      }
+
+      .visual {
+        min-height: 280px;
       }
 
       .visual-icon {
@@ -819,7 +649,7 @@
 
     <section class="hero">
 
-      <div class="hero-content">
+      <div>
         <div class="status">
           <span class="status-dot"></span>
           سرویس فعال و آماده خرید
@@ -839,16 +669,11 @@
 
         <div class="hero-price">
           <small>شروع قیمت از</small>
-          <strong>15 هزارتومن تومان</strong>
+          <strong>15 هزارتومن</strong>
         </div>
       </div>
 
       <div class="visual">
-        <span class="particle"></span>
-        <span class="particle"></span>
-        <span class="particle"></span>
-        <span class="particle"></span>
-
         <div class="visual-icon">✦</div>
       </div>
 
@@ -867,12 +692,12 @@
           <label for="duration">مدت زمان</label>
 
           <select id="duration">
-            <option value="7" data-price="110000">
-              ۷ روز — 20 هزارتومن تومان
+            <option value="7" data-price="20">
+              7 روزه — 20 هزارتومن
             </option>
 
-            <option value="30" data-price="220000">
-              ۱ ماه — 50 هزارتومن تومان
+            <option value="30" data-price="50">
+              1 ماهه — 50 هزارتومن
             </option>
           </select>
         </div>
@@ -881,16 +706,16 @@
           <label for="volume">حجم مصرفی</label>
 
           <select id="volume">
-            <option value="20" data-price="30000">
-              ۲۰ گیگ — 60 هزارتومن تومان
+            <option value="20" data-price="60">
+              20 گیگ — 60 هزارتومن
             </option>
 
-            <option value="50" data-price="70000">
-              ۵۰ گیگ — 70 هزارتومن تومان
+            <option value="50" data-price="70">
+              50 گیگ — 70 هزارتومن
             </option>
 
-            <option value="100" data-price="110000">
-              ۱۰۰ گیگ — 80 هزارتومن تومان
+            <option value="100" data-price="100">
+              100 گیگ — 100 هزارتومن
             </option>
           </select>
         </div>
@@ -899,8 +724,8 @@
           <label for="quantity">تعداد کانفیگ</label>
 
           <select id="quantity">
-            <option value="1">۱ عدد</option>
-            <option value="2">۲ عدد</option>
+            <option value="1">1 عدد</option>
+            <option value="2">2 عدد</option>
           </select>
         </div>
 
@@ -926,10 +751,7 @@
             </button>
           </div>
 
-          <div
-            id="couponMessage"
-            class="coupon-message"
-          ></div>
+          <div id="couponMessage" class="coupon-message"></div>
         </div>
 
       </div>
@@ -938,27 +760,27 @@
 
         <div class="summary-row">
           <span>قیمت مدت زمان</span>
-          <strong id="durationPrice">۱۱۰٬۰۰۰ تومان</strong>
+          <strong id="durationPrice">20 هزارتومن</strong>
         </div>
 
         <div class="summary-row">
           <span>قیمت حجم</span>
-          <strong id="volumePrice">۳۰٬۰۰۰ تومان</strong>
+          <strong id="volumePrice">60 هزارتومن</strong>
         </div>
 
         <div class="summary-row">
           <span>تعداد کانفیگ</span>
-          <strong id="quantityText">۱ عدد</strong>
+          <strong id="quantityText">1 عدد</strong>
         </div>
 
         <div class="summary-row discount">
           <span>تخفیف</span>
-          <strong id="discountText">۰ تومان</strong>
+          <strong id="discountText">0 هزارتومن</strong>
         </div>
 
         <div class="summary-row total">
           <span>مبلغ نهایی</span>
-          <strong id="totalPrice">۱۴۰٬۰۰۰ تومان</strong>
+          <strong id="totalPrice">80 هزارتومن</strong>
         </div>
 
       </div>
@@ -1022,12 +844,9 @@
         برای ادامه و دریافت کانفیگ روی دکمه زیر بزنید.
       </p>
 
-      <div
-        id="modalSummary"
-        class="modal-summary"
-      ></div>
+      <div id="modalSummary" class="modal-summary"></div>
 
-      <!-- آیدی تلگرام خودت را جایگزین کن -->
+      <!-- آیدی تلگرام خودت را اینجا قرار بده -->
       <a
         class="telegram-button"
         href="https://t.me/YourTelegramUsername"
@@ -1049,7 +868,7 @@
 
   <script>
     const DISCOUNT_CODE = "QrEsU";
-    const DISCOUNT_AMOUNT = 40000;
+    const DISCOUNT_AMOUNT = 40;
 
     let couponApplied = false;
 
@@ -1094,13 +913,9 @@
 
 
     function formatPrice(number) {
-      return new Intl.NumberFormat("fa-IR").format(number)
-        + " تومان";
+      return number + " هزارتومن";
     }
 
-    function formatNumber(number) {
-      return new Intl.NumberFormat("fa-IR").format(number);
-    }
 
     function getSelectedPrice(selectElement) {
       const option =
@@ -1111,11 +926,13 @@
       return Number(option.dataset.price);
     }
 
+
     function getSelectedText(selectElement) {
       return selectElement.options[
         selectElement.selectedIndex
       ].textContent.trim();
     }
+
 
     function calculatePrice() {
       const durationPrice =
@@ -1148,12 +965,12 @@
         formatPrice(volumePrice);
 
       quantityTextElement.textContent =
-        formatNumber(quantity) + " عدد";
+        quantity + " عدد";
 
       discountTextElement.textContent =
         discount > 0
           ? "-" + formatPrice(discount)
-          : "۰ تومان";
+          : "0 هزارتومن";
 
       totalPriceElement.textContent =
         formatPrice(total);
@@ -1167,13 +984,14 @@
       };
     }
 
+
     function applyCoupon() {
       const enteredCode =
         couponInput.value.trim();
 
       if (couponApplied) {
         couponMessage.textContent =
-          "این کد قبلاً روی سفارش اعمال شده است.";
+          "این کد قبلاً اعمال شده است.";
 
         couponMessage.className =
           "coupon-message success";
@@ -1183,20 +1001,7 @@
 
       if (enteredCode !== DISCOUNT_CODE) {
         couponMessage.textContent =
-          "کد تخفیف واردشده اشتباه است.";
-
-        couponMessage.className =
-          "coupon-message error";
-
-        return;
-      }
-
-      const alreadyUsed =
-        localStorage.getItem("QrEsU_used");
-
-      if (alreadyUsed === "true") {
-        couponMessage.textContent =
-          "این کد تخفیف قبلاً استفاده شده است.";
+          "کد تخفیف اشتباه است.";
 
         couponMessage.className =
           "coupon-message error";
@@ -1206,20 +1011,56 @@
 
       couponApplied = true;
 
-      localStorage.setItem("QrEsU_used", "true");
-
       couponInput.disabled = true;
       couponButton.disabled = true;
       couponButton.textContent = "اعمال شد";
 
       couponMessage.textContent =
-        "کد صحیح است؛ تعداد کانفیگ‌ها ۲ عدد شد و ۴۰٬۰۰۰ تومان تخفیف اعمال شد.";
+        "کد صحیح است؛ تعداد کانفیگ‌ها 2 عدد شد و 40 هزارتومن تخفیف اعمال شد.";
 
       couponMessage.className =
         "coupon-message success";
 
       calculatePrice();
     }
+
+
+    function addToCart() {
+      const order =
+        calculatePrice();
+
+      const durationText =
+        getSelectedText(durationSelect);
+
+      const volumeText =
+        getSelectedText(volumeSelect);
+
+      const discountText =
+        order.discount > 0
+          ? "40 هزارتومن"
+          : "بدون تخفیف";
+
+      modalSummary.innerHTML = `
+        <div>مدت: ${durationText}</div>
+        <div>حجم: ${volumeText}</div>
+        <div>تعداد کانفیگ: ${order.quantity} عدد</div>
+        <div>تخفیف: ${discountText}</div>
+        <div>
+          مبلغ نهایی:
+          <strong style="color:#29ff91">
+            ${formatPrice(order.total)}
+          </strong>
+        </div>
+      `;
+
+      orderModal.classList.add("show");
+    }
+
+
+    function closeOrderModal() {
+      orderModal.classList.remove("show");
+    }
+
 
     durationSelect.addEventListener(
       "change",
@@ -1250,44 +1091,6 @@
         }
       }
     );
-
-    function addToCart() {
-      const order =
-        calculatePrice();
-
-      const durationText =
-        getSelectedText(durationSelect);
-
-      const volumeText =
-        getSelectedText(volumeSelect);
-
-      const discountText =
-        order.discount > 0
-          ? "۴۰٬۰۰۰ تومان"
-          : "بدون تخفیف";
-
-      modalSummary.innerHTML = `
-        <div>مدت: ${durationText}</div>
-        <div>حجم: ${volumeText}</div>
-        <div>
-          تعداد کانفیگ:
-          ${formatNumber(order.quantity)} عدد
-        </div>
-        <div>تخفیف: ${discountText}</div>
-        <div>
-          مبلغ نهایی:
-          <strong style="color:#29ff91">
-            ${formatPrice(order.total)}
-          </strong>
-        </div>
-      `;
-
-      orderModal.classList.add("show");
-    }
-
-    function closeOrderModal() {
-      orderModal.classList.remove("show");
-    }
 
     orderModal.addEventListener(
       "click",
