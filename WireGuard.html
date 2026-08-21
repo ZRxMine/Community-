@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>خرید کانفیگ WireGuard</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #020805;
+      --bg2: #07170d;
+      --green: #29ff91;
+      --green-light: #a4ffd0;
+      --text: #effff6;
+      --muted: #8eaa99;
+      --line: rgba(41, 255, 145, .2);
+      --line-strong: rgba(41, 255, 145, .55);
+      --red: #ff7183;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--text);
+      font-family: "Vazirmatn", Tahoma, sans-serif;
+      background:
+        radial-gradient(circle at 8% 0%, rgba(41,255,145,.16), transparent 360px),
+        radial-gradient(circle at 95% 12%, rgba(0,180,100,.12), transparent 330px),
+        linear-gradient(135deg, var(--bg), var(--bg2), #010403);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: .2;
+      background-image:
+        linear-gradient(rgba(41,255,145,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(41,255,145,.06) 1px, transparent 1px);
+      background-size: 46px 46px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font-family: inherit; }
+    button { cursor: pointer; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      height: 78px;
+      padding: 0 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+      background: rgba(2, 8, 5, .82);
+      backdrop-filter: blur(18px);
+    }
+
+    .logo { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 900; }
+    .logo span { color: var(--green); }
+
+    .logo-icon {
+      width: 43px; height: 43px;
+      display: grid; place-items: center;
+      border: 1px solid var(--line-strong);
+      border-radius: 14px;
+      color: var(--green);
+      background: rgba(41,255,145,.09);
+      box-shadow: 0 0 25px rgba(41,255,145,.18);
+      font-size: 25px;
+    }
+
+    .back-button {
+      padding: 10px 15px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--green-light);
+      background: rgba(255,255,255,.035);
+      font-size: 12px;
+      transition: .25s;
+    }
+    .back-button:hover { color:#00170b; background:var(--green); transform: translateY(-3px); }
+
+    .page { width: min(1160px, 90%); margin: auto; padding: 50px 0 85px; }
+    .breadcrumb { margin-bottom: 24px; color: var(--muted); font-size: 12px; }
+    .breadcrumb span { color: var(--green); }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 27px;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 17px;
+      padding: 8px 13px;
+      border: 1px solid rgba(41,255,145,.33);
+      border-radius: 30px;
+      color: var(--green);
+      background: rgba(41,255,145,.07);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .status-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 13px var(--green);
+    }
+
+    h1 {
+      margin-bottom: 15px;
+      font-size: clamp(35px, 5vw, 62px);
+      line-height: 1.35;
+    }
+    h1 span { color: var(--green); text-shadow: 0 0 28px rgba(41,255,145,.3); }
+
+    .hero-text { max-width: 620px; color: var(--muted); font-size: 14px; line-height: 2.2; }
+
+    .hero-price { display: flex; align-items: center; gap: 14px; margin-top: 22px; }
+    .hero-price small { color: var(--muted); font-size: 12px; }
+    .hero-price strong { color: var(--green); font-size: 23px; }
+
+    .visual {
+      min-height: 355px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background:
+        radial-gradient(circle, rgba(41,255,145,.17), transparent 48%),
+        linear-gradient(145deg, rgba(17,52,30,.9), rgba(3,12,7,.94));
+      box-shadow: inset 0 0 55px rgba(41,255,145,.05);
+    }
+
+    .visual::before {
+      content: "";
+      position: absolute;
+      width: 310px;
+      height: 140px;
+      border: 1px solid rgba(41,255,145,.28);
+      border-radius: 50%;
+      transform: rotate(-25deg);
+    }
+
+    .visual::after {
+      content: "";
+      position: absolute;
+      width: 230px;
+      height: 310px;
+      border: 1px dashed rgba(41,255,145,.24);
+      border-radius: 50%;
+    }
+
+    .visual-icon {
+      width: 165px; height: 165px;
+      display: grid; place-items: center;
+      position: relative;
+      z-index: 2;
+      border: 1px solid rgba(41,255,145,.7);
+      border-radius: 38px;
+      color: var(--green);
+      background: rgba(41,255,145,.08);
+      box-shadow: 0 0 36px rgba(41,255,145,.25), inset 0 0 35px rgba(41,255,145,.12);
+      font-size: 82px;
+    }
+
+    .shop-card {
+      position: relative;
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: 25px;
+      background: linear-gradient(145deg, rgba(15,42,25,.94), rgba(5,15,8,.97));
+      box-shadow: 0 22px 65px rgba(0,0,0,.22);
+    }
+
+    .shop-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 8%;
+      left: 8%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      box-shadow: 0 0 15px var(--green);
+    }
+
+    .card-heading {
+      display: flex; align-items: center; justify-content: space-between; gap: 15px;
+      margin-bottom: 22px;
+    }
+    .card-heading h2 { font-size: 22px; }
+
+    .secure-badge {
+      padding: 7px 10px;
+      border: 1px solid rgba(41,255,145,.26);
+      border-radius: 8px;
+      color: var(--green);
+      background: rgba(41,255,145,.06);
+      font-size: 10px;
+    }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 17px; }
+    .form-group { display: flex; flex-direction: column; gap: 9px; }
+
+    label { color: var(--green-light); font-size: 12px; font-weight: 600; }
+
+    select, input {
+      width: 100%; height: 50px; outline: none;
+      padding: 0 14px;
+      border: 1px solid rgba(41,255,145,.22);
+      border-radius: 11px;
+      color: var(--text);
+      background: #07170d;
+      font-size: 13px;
+      transition: .25s;
+    }
+
+    select:focus, input:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(41,255,145,.08);
+    }
+
+    option { color: white; background: #07170d; }
+
+    .coupon-line { display: flex; gap: 10px; }
+    .coupon-line input { direction: ltr; text-align: left; }
+
+    .coupon-button {
+      min-width: 115px;
+      border: 1px solid var(--line-strong);
+      border-radius: 11px;
+      color: #00170a;
+      background: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .coupon-button:disabled { opacity: .55; cursor: not-allowed; }
+
+    .coupon-message { min-height: 22px; margin-top: 8px; font-size: 11px; line-height: 1.8; }
+    .coupon-message.success { color: var(--green); }
+    .coupon-message.error { color: var(--red); }
+
+    .summary {
+      margin-top: 23px;
+      padding: 18px;
+      border: 1px solid rgba(41,255,145,.14);
+      border-radius: 14px;
+      background: rgba(0,0,0,.18);
+    }
+
+    .summary-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 15px;
+      padding: 8px 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .summary-row strong { color: var(--text); direction: ltr; }
+    .summary-row.discount strong { color: var(--green); }
+
+    .summary-row.total {
+      margin-top: 9px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      color: var(--green-light);
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .summary-row.total strong { color: var(--green); font-size: 24px; }
+
+    .add-button {
+      width: 100%;
+      height: 56px;
+      margin-top: 19px;
+      border: 0;
+      border-radius: 13px;
+      color: #00170a;
+      background: linear-gradient(110deg, var(--green), var(--green-light));
+      box-shadow: 0 10px 28px rgba(41,255,145,.15);
+      font-size: 14px;
+      font-weight: 900;
+      transition: .28s;
+    }
+    .add-button:hover { transform: translateY(-4px); box-shadow: 0 15px 34px rgba(41,255,145,.28); }
+
+    .help-text { margin-top: 13px; color: var(--muted); text-align: center; font-size: 10px; line-height: 1.9; }
+
+    .benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 25px; }
+    .benefit {
+      padding: 21px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: rgba(8,26,15,.65);
+    }
+    .benefit-icon { margin-bottom: 12px; color: var(--green); font-size: 25px; }
+    .benefit h3 { margin-bottom: 7px; font-size: 14px; }
+    .benefit p { color: var(--muted); font-size: 11px; line-height: 1.9; }
+
+    footer { padding: 26px; border-top: 1px solid var(--line); color: var(--muted); text-align: center; font-size: 11px; }
+
+    /* MODAL */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(0,0,0,.84);
+      backdrop-filter: blur(12px);
+    }
+    .modal.show { display: flex; animation: fadeIn .3s ease; }
+
+    .modal-box {
+      width: min(460px, 100%);
+      padding: 30px 23px;
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      border-radius: 24px;
+      background: linear-gradient(145deg, #113720, #061009);
+      box-shadow: 0 20px 80px rgba(0,0,0,.5);
+      text-align: center;
+      animation: popup .35s ease;
+    }
+
+    .modal-box::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 9%;
+      left: 9%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      box-shadow: 0 0 18px var(--green);
+    }
+
+    .modal-box h2 {
+      margin-bottom: 11px;
+      color: var(--green);
+      font-size: 23px;
+      text-shadow: 0 0 18px rgba(41,255,145,.3);
+    }
+
+    .modal-box p {
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 2;
+    }
+
+    .success-icon {
+      width: 80px; height: 80px;
+      display: grid; place-items: center;
+      margin: 0 auto 18px;
+      border: 2px solid var(--green);
+      border-radius: 50%;
+      color: #00170a;
+      background: linear-gradient(135deg, var(--green), var(--green-light));
+      box-shadow: 0 0 35px rgba(41,255,145,.55);
+      font-size: 48px;
+      font-weight: 900;
+      animation: pulse 2s infinite;
+    }
+
+    .modal-summary {
+      margin-bottom: 17px;
+      padding: 15px;
+      border: 1px solid rgba(41,255,145,.15);
+      border-radius: 12px;
+      color: var(--green-light);
+      background: rgba(0,0,0,.16);
+      font-size: 12px;
+      line-height: 2.2;
+    }
+
+    .continue-payment {
+      width: 100%;
+      min-height: 53px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 11px;
+      color: #00170a;
+      background: linear-gradient(110deg, var(--green), var(--green-light));
+      font-size: 13px;
+      font-weight: 900;
+      transition: .25s;
+    }
+    .continue-payment:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(41,255,145,.35); }
+    .continue-payment span { margin-right: 8px; font-size: 19px; }
+
+    .close-button {
+      width: 100%;
+      height: 44px;
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--text);
+      background: rgba(255,255,255,.04);
+      font-size: 12px;
+      transition: .25s;
+    }
+    .close-button:hover { border-color: var(--green); color: var(--green); }
+
+    .payment-box { padding-top: 34px; }
+
+    .payment-close {
+      position: absolute;
+      top: 13px; left: 16px;
+      width: 34px; height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--muted);
+      background: rgba(255,255,255,.04);
+      font-size: 25px;
+      line-height: 28px;
+      transition: .25s;
+    }
+    .payment-close:hover { color:#00170a; background:var(--green); transform: rotate(90deg); }
+
+    .payment-icon {
+      width: 78px; height: 78px;
+      display: grid; place-items: center;
+      margin: 0 auto 17px;
+      border: 1px solid var(--line-strong);
+      border-radius: 24px;
+      background: rgba(41,255,145,.08);
+      box-shadow: 0 0 28px rgba(41,255,145,.2);
+      font-size: 40px;
+    }
+
+    .payment-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 13px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      text-align: right;
+      background: rgba(41,255,145,.045);
+      transition: .25s;
+    }
+    .payment-card:hover { border-color: var(--line-strong); background: rgba(41,255,145,.09); transform: translateY(-3px); }
+
+    .platform-icon {
+      width: 44px; height: 44px; flex: 0 0 44px;
+      display: grid; place-items: center;
+      border-radius: 13px;
+      color: #fff;
+      background: linear-gradient(135deg, #8b5cf6, #4f46e5);
+      font-size: 22px;
+      font-weight: 900;
+    }
+    .bale-card .platform-icon {
+      background: linear-gradient(135deg, #38bdf8, #2563eb);
+    }
+
+    .platform-info { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 5px; }
+    .platform-info span { color: var(--muted); font-size: 11px; }
+    .platform-info strong { direction: ltr; color: var(--green-light); font-size: 13px; word-break: break-all; }
+
+    .copy-button {
+      padding: 8px 11px;
+      border: 1px solid var(--line-strong);
+      border-radius: 9px;
+      color: var(--green);
+      background: rgba(41,255,145,.07);
+      font-size: 10px;
+      font-weight: 700;
+      transition: .25s;
+    }
+    .copy-button:hover { color:#00170a; background:var(--green); }
+
+    .payment-note {
+      margin-top: 17px;
+      padding: 12px;
+      border: 1px solid rgba(255,209,76,.25);
+      border-radius: 12px;
+      color: #ffe28a;
+      background: rgba(255,209,76,.07);
+      font-size: 11px;
+      line-height: 1.9;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes popup { from { opacity: 0; transform: translateY(25px) scale(.94); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes pulse { 0%,100% { box-shadow: 0 0 25px rgba(41,255,145,.5); } 50% { box-shadow: 0 0 45px rgba(41,255,145,.85); } }
+
+    @media (max-width: 850px) {
+      .hero { grid-template-columns: 1fr; }
+      .benefits { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      header { padding: 0 4%; }
+      .logo { font-size: 11px; }
+      .logo-icon { width: 37px; height: 37px; }
+      .back-button { padding: 8px 10px; font-size: 10px; }
+      .page { width: 92%; padding-top: 34px; }
+      .shop-card { padding: 21px 16px; }
+      .form-grid, .benefits { grid-template-columns: 1fr; }
+      .coupon-line { flex-direction: column; }
+      .coupon-button { height: 47px; }
+      .card-heading { align-items: flex-start; flex-direction: column; }
+      .visual { min-height: 280px; }
+      .visual-icon { width: 135px; height: 135px; font-size: 62px; }
+      .payment-card { gap: 8px; padding: 11px; }
+      .copy-button { padding: 7px 8px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="index.html" class="logo">
+      <div class="logo-icon">⌁</div>
+      CONFIG <span>STORE</span>
+    </a>
+
+    <a href="index.html" class="back-button">
+      ← بازگشت به صفحه اصلی
+    </a>
+  </header>
+
+  <main class="page">
+    <div class="breadcrumb">
+      صفحه اصلی
+      <span>/</span>
+      کانفیگ WireGuard
+    </div>
+
+    <section class="hero">
+      <div>
+        <div class="status">
+          <span class="status-dot"></span>
+          سرویس فعال و آماده خرید
+        </div>
+
+        <h1>
+          کانفیگ
+          <span>WireGuard</span>
+          حرفه‌ای
+        </h1>
+
+        <p class="hero-text">
+          اتصال سریع، پایدار و امن برای وب‌گردی،
+          بازی آنلاین، استریم، دانلود و استفاده روزمره.
+          کانفیگ‌ها با پشتیبانی و راهنمای نصب ارائه می‌شوند.
+        </p>
+
+        <div class="hero-price">
+          <small>شروع قیمت از</small>
+          <strong>30 هزارتومن</strong>
+        </div>
+      </div>
+
+      <div class="visual">
+        <div class="visual-icon">⛯</div>
+      </div>
+    </section>
+
+    <section class="shop-card">
+
+      <div class="card-heading">
+        <h2>انتخاب سرویس</h2>
+        <span class="secure-badge">⚡ فعال‌سازی سریع</span>
+      </div>
+
+      <div class="form-grid">
+        <!-- مدت زمان -->
+        <div class="form-group">
+          <label for="duration">مدت زمان</label>
+          <select id="duration">
+            <option value="7" data-price="30">7 روزه — 30 هزارتومن</option>
+            <option value="30" data-price="45">1 ماهه — 45 هزارتومن</option>
+          </select>
+        </div>
+
+        <!-- حجم مصرفی -->
+        <div class="form-group">
+          <label for="volume">حجم مصرفی</label>
+          <select id="volume">
+            <option value="20" data-price="30">20 گیگ — 30 هزارتومن</option>
+            <option value="50" data-price="60">50 گیگ — 60 هزارتومن</option>
+            <option value="80" data-price="80">80 گیگ — 80 هزارتومن</option>
+            <option value="100" data-price="110">100 گیگ — 110 هزارتومن</option>
+          </select>
+        </div>
+
+        <!-- تعداد -->
+        <div class="form-group">
+          <label for="quantity">تعداد کانفیگ</label>
+          <select id="quantity">
+            <option value="1">1 عدد</option>
+            <option value="2">2 عدد</option>
+          </select>
+        </div>
+
+        <!-- کد تخفیف -->
+        <div class="form-group">
+          <label for="coupon">کد تخفیف</label>
+          <div class="coupon-line">
+            <input
+              id="coupon"
+              type="text"
+              placeholder="کد را وارد کنید"
+              autocomplete="off"
+              spellcheck="false"
+            >
+            <button
+              id="couponButton"
+              class="coupon-button"
+              type="button"
+              onclick="applyCoupon()"
+            >
+              اعمال کد
+            </button>
+          </div>
+          <div id="couponMessage" class="coupon-message"></div>
+        </div>
+      </div>
+
+      <div class="summary">
+        <div class="summary-row">
+          <span>قیمت مدت زمان</span>
+          <strong id="durationPrice">30 هزارتومن</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>قیمت حجم</span>
+          <strong id="volumePrice">30 هزارتومن</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>تعداد کانفیگ</span>
+          <strong id="quantityText">1 عدد</strong>
+        </div>
+
+        <div class="summary-row discount">
+          <span>تخفیف</span>
+          <strong id="discountText">0 هزارتومن</strong>
+        </div>
+
+        <div class="summary-row total">
+          <span>مبلغ نهایی</span>
+          <strong id="totalPrice">60 هزارتومن</strong>
+        </div>
+      </div>
+
+      <button class="add-button" type="button" onclick="addToCart()">
+        ثبت سفارش
+      </button>
+
+      <p class="help-text">
+        پس از ثبت سفارش، برای دریافت کانفیگ و اطلاعات فعال‌سازی
+        با پشتیبانی در ارتباط باشید.
+      </p>
+
+    </section>
+
+    <section class="benefits">
+      <article class="benefit">
+        <div class="benefit-icon">⚡</div>
+        <h3>سرعت بالا</h3>
+        <p>مناسب استفاده روزمره، دانلود، استریم و بازی آنلاین.</p>
+      </article>
+
+      <article class="benefit">
+        <div class="benefit-icon">◉</div>
+        <h3>اتصال پایدار</h3>
+        <p>سرویس پایدار برای استفاده طولانی‌مدت و بدون قطعی.</p>
+      </article>
+
+      <article class="benefit">
+        <div class="benefit-icon">✓</div>
+        <h3>پشتیبانی سریع</h3>
+        <p>راهنمای نصب و پاسخ‌گویی سریع برای فعال‌سازی سرویس.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    تمامی حقوق برای Config Store محفوظ است.
+  </footer>
+
+  <!-- پنجره ثبت موفق سفارش -->
+  <div id="orderModal" class="modal">
+    <div class="modal-box">
+      <div class="success-icon">✓</div>
+      <h2>سفارش شما ثبت شد!</h2>
+
+      <p>
+        سفارش شما با موفقیت ثبت شد.<br>
+        برای تکمیل سفارش، روی دکمه ادامه بزنید.
+      </p>
+
+      <div id="modalSummary" class="modal-summary"></div>
+
+      <button
+        id="continuePaymentButton"
+        class="continue-payment"
+        type="button"
+      >
+        ادامه برای پرداخت
+        <span>←</span>
+      </button>
+
+      <button class="close-button" type="button" onclick="closeOrderModal()">
+        بستن
+      </button>
+    </div>
+  </div>
+
+  <!-- پنجره پرداخت -->
+  <div id="paymentModal" class="modal">
+    <div class="modal-box payment-box">
+      <button class="payment-close" type="button" onclick="closePaymentModal()">×</button>
+
+      <div class="payment-icon">💳</div>
+      <h2>تکمیل پرداخت سفارش</h2>
+
+      <p>
+        برای پرداخت، به یکی از آیدی‌های زیر پیام دهید
+        و اطلاعات سفارش خود را ارسال کنید.
+      </p>
+
+      <div class="payment-card rubika-card">
+        <div class="platform-icon">R</div>
+        <div class="platform-info">
+          <span>آیدی روبیکا</span>
+          <strong>community_Python@</strong>
+        </div>
+        <button class="copy-button" type="button" data-copy="community_Python@">کپی</button>
+      </div>
+
+      <div class="payment-card bale-card">
+        <div class="platform-icon">B</div>
+        <div class="platform-info">
+          <span>آیدی بله</span>
+          <strong>pythondeveloperss@</strong>
+        </div>
+        <button class="copy-button" type="button" data-copy="pythondeveloperss@">کپی</button>
+      </div>
+
+      <div class="payment-note">
+        ⚡ بعد از پرداخت، تصویر رسید را برای همان آیدی ارسال کنید.
+      </div>
+
+      <button class="close-button" type="button" onclick="closePaymentModal()">بستن</button>
+    </div>
+  </div>
+
+  <script>
+    const DISCOUNT_CODE = "QrEsU";
+    const DISCOUNT_AMOUNT = 40;
+
+    let couponApplied = false;
+
+    const durationSelect = document.getElementById("duration");
+    const volumeSelect = document.getElementById("volume");
+    const quantitySelect = document.getElementById("quantity");
+
+    const durationPriceElement = document.getElementById("durationPrice");
+    const volumePriceElement = document.getElementById("volumePrice");
+    const quantityTextElement = document.getElementById("quantityText");
+    const discountTextElement = document.getElementById("discountText");
+    const totalPriceElement = document.getElementById("totalPrice");
+
+    const couponInput = document.getElementById("coupon");
+    const couponButton = document.getElementById("couponButton");
+    const couponMessage = document.getElementById("couponMessage");
+
+    const orderModal = document.getElementById("orderModal");
+    const paymentModal = document.getElementById("paymentModal");
+    const modalSummary = document.getElementById("modalSummary");
+    const continuePaymentButton = document.getElementById("continuePaymentButton");
+
+    function formatPrice(number) {
+      return number + " هزارتومن";
+    }
+
+    function getSelectedPrice(selectElement) {
+      const option = selectElement.options[selectElement.selectedIndex];
+      return Number(option.dataset.price);
+    }
+
+    function getSelectedText(selectElement) {
+      return selectElement.options[selectElement.selectedIndex].textContent.trim();
+    }
+
+    function calculatePrice() {
+      const durationPrice = getSelectedPrice(durationSelect);
+      const volumePrice = getSelectedPrice(volumeSelect);
+
+      let quantity = Number(quantitySelect.value);
+
+      if (couponApplied) {
+        quantity = 2;
+        quantitySelect.value = "2";
+      }
+
+      const subtotal = (durationPrice + volumePrice) * quantity;
+      const discount = couponApplied ? DISCOUNT_AMOUNT : 0;
+      const total = Math.max(0, subtotal - discount);
+
+      durationPriceElement.textContent = formatPrice(durationPrice);
+      volumePriceElement.textContent = formatPrice(volumePrice);
+      quantityTextElement.textContent = quantity + " عدد";
+      discountTextElement.textContent = discount > 0 ? "-" + formatPrice(discount) : "0 هزارتومن";
+      totalPriceElement.textContent = formatPrice(total);
+
+      return { durationPrice, volumePrice, quantity, discount, total };
+    }
+
+    function applyCoupon() {
+      const enteredCode = couponInput.value.trim();
+
+      if (couponApplied) {
+        couponMessage.textContent = "این کد قبلاً اعمال شده است.";
+        couponMessage.className = "coupon-message success";
+        return;
+      }
+
+      if (enteredCode !== DISCOUNT_CODE) {
+        couponMessage.textContent = "کد تخفیف اشتباه است.";
+        couponMessage.className = "coupon-message error";
+        return;
+      }
+
+      couponApplied = true;
+      couponInput.disabled = true;
+      couponButton.disabled = true;
+      couponButton.textContent = "اعمال شد";
+
+      couponMessage.textContent = "کد صحیح است؛ تعداد کانفیگ‌ها 2 عدد شد و 40 هزارتومن تخفیف اعمال شد.";
+      couponMessage.className = "coupon-message success";
+
+      calculatePrice();
+    }
+
+    function addToCart() {
+      const order = calculatePrice();
+
+      const durationText = getSelectedText(durationSelect);
+      const volumeText = getSelectedText(volumeSelect);
+
+      const discountText = order.discount > 0 ? "40 هزارتومن" : "بدون تخفیف";
+
+      modalSummary.innerHTML = `
+        <div>مدت: ${durationText}</div>
+        <div>حجم: ${volumeText}</div>
+        <div>تعداد کانفیگ: ${order.quantity} عدد</div>
+        <div>تخفیف: ${discountText}</div>
+        <div>
+          مبلغ نهایی:
+          <strong style="color:#29ff91">${formatPrice(order.total)}</strong>
+        </div>
+      `;
+
+      orderModal.classList.add("show");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeOrderModal() {
+      orderModal.classList.remove("show");
+      document.body.style.overflow = "";
+    }
+
+    function closePaymentModal() {
+      paymentModal.classList.remove("show");
+      document.body.style.overflow = "";
+    }
+
+    continuePaymentButton.addEventListener("click", function() {
+      orderModal.classList.remove("show");
+      paymentModal.classList.add("show");
+    });
+
+    durationSelect.addEventListener("change", calculatePrice);
+    volumeSelect.addEventListener("change", calculatePrice);
+
+    quantitySelect.addEventListener("change", function() {
+      if (couponApplied) quantitySelect.value = "2";
+      calculatePrice();
+    });
+
+    couponInput.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") applyCoupon();
+    });
+
+    orderModal.addEventListener("click", function(event) {
+      if (event.target === orderModal) closeOrderModal();
+    });
+
+    paymentModal.addEventListener("click", function(event) {
+      if (event.target === paymentModal) closePaymentModal();
+    });
+
+    document.querySelectorAll(".copy-button").forEach(function(button) {
+      button.addEventListener("click", async function() {
+        const text = button.dataset.copy;
+        try {
+          await navigator.clipboard.writeText(text);
+          const oldText = button.textContent;
+          button.textContent = "کپی شد ✓";
+          setTimeout(function() { button.textContent = oldText; }, 1600);
+        } catch (e) {
+          alert("آیدی: " + text);
+        }
+      });
+    });
+
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape") {
+        closeOrderModal();
+        closePaymentModal();
+      }
+    });
+
+    calculatePrice();
+  </script>
+</body>
+</html>
