@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Config Store</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,6 +20,7 @@
     :root {
       --bg: #060813;
       --card: #121a34;
+      --card2: #0d142b;
       --text: #f7f9ff;
       --muted: #9ba7c4;
       --line: rgba(150, 170, 225, .18);
@@ -27,6 +29,10 @@
       --purple: #a855f7;
       --pink: #f43f8c;
       --red: #ff6378;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
@@ -43,14 +49,14 @@
     header {
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 20;
       height: 75px;
       padding: 0 6%;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--line);
-      background: rgba(6, 8, 19, .8);
+      background: rgba(6, 8, 19, .85);
       backdrop-filter: blur(15px);
     }
 
@@ -89,6 +95,7 @@
       color: var(--muted);
       text-decoration: none;
       font-size: 13px;
+      transition: .2s;
     }
 
     nav a:hover {
@@ -127,7 +134,7 @@
       grid-template-columns: 1.1fr .9fr;
       align-items: center;
       gap: 50px;
-      padding: 70px 0;
+      padding: 70px 0 55px;
     }
 
     .badge {
@@ -211,6 +218,7 @@
       0%, 100% {
         transform: rotate(3deg) translateY(0);
       }
+
       50% {
         transform: rotate(1deg) translateY(-13px);
       }
@@ -282,6 +290,11 @@
       background: linear-gradient(90deg, #5c7cff, var(--cyan));
     }
 
+    /* بخش ویژگی‌ها */
+    .features-section {
+      padding: 10px 0 75px;
+    }
+
     .section-title {
       margin-bottom: 22px;
     }
@@ -294,6 +307,99 @@
       margin-top: 5px;
       color: var(--muted);
       font-size: 13px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .feature {
+      min-height: 185px;
+      padding: 22px 18px;
+      border: 1px solid var(--line);
+      border-radius: 19px;
+      background: linear-gradient(145deg, rgba(25,38,71,.9), rgba(10,16,35,.9));
+      transition: .3s;
+    }
+
+    .feature:hover {
+      transform: translateY(-7px);
+      border-color: rgba(0,245,223,.5);
+      box-shadow: 0 15px 35px rgba(0,245,223,.08);
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 15px;
+      border-radius: 15px;
+      color: var(--cyan);
+      background: rgba(0,245,223,.1);
+      font-size: 25px;
+    }
+
+    .feature:nth-child(2) .feature-icon {
+      color: #a98bff;
+      background: rgba(168,85,247,.12);
+    }
+
+    .feature:nth-child(3) .feature-icon {
+      color: var(--green);
+      background: rgba(66,242,162,.1);
+    }
+
+    .feature:nth-child(4) .feature-icon {
+      color: #ff83b4;
+      background: rgba(244,63,140,.1);
+    }
+
+    .feature h3 {
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .feature p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.9;
+    }
+
+    /* نوار آمار */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 70px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(18,25,49,.75);
+    }
+
+    .stat {
+      padding: 8px;
+      border-left: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .stat:last-child {
+      border-left: 0;
+    }
+
+    .stat strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--cyan);
+      font-size: 24px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 12px;
     }
 
     .products {
@@ -379,7 +485,7 @@
       position: fixed;
       right: 25px;
       bottom: 25px;
-      z-index: 20;
+      z-index: 30;
       width: 78px;
       height: 78px;
       border: 2px solid rgba(255,255,255,.55);
@@ -521,6 +627,12 @@
       display: none !important;
     }
 
+    @media (max-width: 900px) {
+      .features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     @media (max-width: 800px) {
       .hero {
         grid-template-columns: 1fr;
@@ -538,6 +650,14 @@
       .products {
         grid-template-columns: 1fr 1fr;
       }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stat:nth-child(2) {
+        border-left: 0;
+      }
     }
 
     @media (max-width: 560px) {
@@ -553,8 +673,13 @@
         font-size: 14px;
       }
 
+      .features,
       .products {
         grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: 1fr 1fr;
       }
 
       .redeem-float {
@@ -577,6 +702,7 @@
 
     <nav>
       <a href="#home">خانه</a>
+      <a href="#features">ویژگی‌ها</a>
       <a href="#configs">کانفیگ‌ها</a>
     </nav>
 
@@ -639,6 +765,75 @@
             <span>پینگ تقریبی</span>
             <b>32ms</b>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- بخش سرعت سریع و امکانات -->
+    <section id="features" class="features-section container">
+      <div class="section-title">
+        <h2>چرا Config Store؟</h2>
+        <p>همه‌چیزی که برای یک اتصال خوب نیاز دارید</p>
+      </div>
+
+      <div class="features">
+
+        <div class="feature">
+          <div class="feature-icon">⚡</div>
+          <h3>سرعت بالا</h3>
+          <p>
+            اتصال سریع و مناسب برای دانلود، استریم و استفاده روزمره.
+          </p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">🔒</div>
+          <h3>امنیت بالا</h3>
+          <p>
+            حفظ امنیت اطلاعات و اتصال مطمئن در زمان استفاده از اینترنت.
+          </p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">◉</div>
+          <h3>پایداری عالی</h3>
+          <p>
+            سرورهای پایدار با قطعی کم و عملکرد مناسب در تمام ساعات.
+          </p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">♢</div>
+          <h3>چند دستگاه</h3>
+          <p>
+            قابل استفاده روی موبایل، کامپیوتر، تبلت و دستگاه‌های مختلف.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- آمار سرویس -->
+    <section class="container">
+      <div class="stats">
+        <div class="stat">
+          <strong>99%</strong>
+          <span>پایداری سرور</span>
+        </div>
+
+        <div class="stat">
+          <strong>32ms</strong>
+          <span>پینگ تقریبی</span>
+        </div>
+
+        <div class="stat">
+          <strong>24/7</strong>
+          <span>فعالیت سرویس</span>
+        </div>
+
+        <div class="stat">
+          <strong>4+</strong>
+          <span>دستگاه قابل پشتیبانی</span>
         </div>
       </div>
     </section>
@@ -746,106 +941,69 @@
   </div>
 
   <script>
-    /*
-      کد معتبر ردیم
-    */
     const VALID_CODE = "RfHBQo";
 
     /*
-      کلید ذخیره‌شده در مرورگر
-      با این کلید، کد فقط یک بار در همان مرورگر قابل استفاده است.
+      این مقدار مشخص می‌کند کد قبلاً در این مرورگر استفاده شده یا نه.
     */
     const USED_CODE_KEY = "config_store_RfHBQo_used";
 
     /*
-      اطلاعات کانفیگ دانلودی
+      اطلاعات فایل دانلودی کانفیگ
+      در صورت نیاز اطلاعات کانفیگ خودت را اینجا قرار بده.
     */
     const configData = {
-      "remarks": "config ( config store ZRX )",
-      "log": {
-        "loglevel": "warning"
+      remarks: "config ( config store ZRX )",
+      log: {
+        loglevel: "warning"
       },
-      "inbounds": [
+      inbounds: [
         {
-          "tag": "socks",
-          "port": 10808,
-          "protocol": "socks",
-          "settings": {
-            "auth": "noauth",
-            "udp": true,
-            "userLevel": 8
-          },
-          "sniffing": {
-            "enabled": true,
-            "destOverride": ["http", "tls"],
-            "routeOnly": false
+          tag: "socks",
+          port: 10808,
+          protocol: "socks",
+          settings: {
+            auth: "noauth",
+            udp: true,
+            userLevel: 8
           }
         }
       ],
-      "outbounds": [
+      outbounds: [
         {
-          "tag": "proxy",
-          "protocol": "vmess",
-          "settings": {
-            "vnext": [
+          tag: "proxy",
+          protocol: "vmess",
+          settings: {
+            vnext: [
               {
-                "address": "fr.connfull.org",
-                "port": 2053,
-                "users": [
+                address: "fr.connfull.org",
+                port: 2053,
+                users: [
                   {
-                    "id": "008c1098-78b0-40a4-8935-147d43c9e024",
-                    "security": "auto",
-                    "level": 8
+                    id: "008c1098-78b0-40a4-8935-147d43c9e024",
+                    security: "auto",
+                    level: 8
                   }
                 ]
               }
             ]
           },
-          "streamSettings": {
-            "network": "tcp",
-            "security": "tls",
-            "tcpSettings": {
-              "header": {
-                "type": "none"
-              }
-            },
-            "tlsSettings": {
-              "allowInsecure": true,
-              "alpn": ["h2", "http/1.1", "h3"],
-              "fingerprint": "chrome",
-              "show": false
-            }
-          },
-          "mux": {
-            "enabled": false,
-            "concurrency": -1,
-            "xudpConcurrency": 8,
-            "xudpProxyUDP443": ""
-          }
-        },
-        {
-          "tag": "direct",
-          "protocol": "freedom",
-          "settings": {
-            "domainStrategy": "UseIP"
-          }
-        },
-        {
-          "tag": "block",
-          "protocol": "blackhole",
-          "settings": {
-            "response": {
-              "type": "http"
+          streamSettings: {
+            network: "tcp",
+            security: "tls",
+            tlsSettings: {
+              allowInsecure: true,
+              fingerprint: "chrome"
             }
           }
         }
       ],
-      "dns": {
-        "servers": ["1.1.1.1"]
+      dns: {
+        servers: ["1.1.1.1"]
       },
-      "routing": {
-        "domainStrategy": "IPIfNonMatch",
-        "rules": []
+      routing: {
+        domainStrategy: "IPIfNonMatch",
+        rules: []
       }
     };
 
@@ -883,7 +1041,7 @@
     function redeemCode() {
       const enteredCode = codeInput.value.trim();
 
-      if (enteredCode === "") {
+      if (!enteredCode) {
         codeMessage.textContent = "لطفاً کد ردیم را وارد کنید.";
         return;
       }
@@ -893,21 +1051,17 @@
         return;
       }
 
-      /*
-        اگر کد قبلاً استفاده شده باشد،
-        دیگر اجازه فعال‌سازی داده نمی‌شود.
-      */
-      const isAlreadyUsed =
+      const alreadyUsed =
         localStorage.getItem(USED_CODE_KEY) === "true";
 
-      if (isAlreadyUsed) {
+      if (alreadyUsed) {
         codeMessage.textContent =
           "این کد تکراری می‌باشد و قبلاً استفاده شده است.";
         return;
       }
 
       /*
-        ثبت استفاده از کد قبل از نمایش دانلود
+        کد قبل از نمایش دانلود مصرف‌شده ثبت می‌شود.
       */
       localStorage.setItem(USED_CODE_KEY, "true");
 
