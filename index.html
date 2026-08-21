@@ -4,9 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Config Store | خرید کانفیگ</title>
+  <title>Config Store | کانفیگ پرسرعت</title>
 
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -14,62 +16,163 @@
     }
 
     :root {
-      --bg: #030a06;
-      --card: #0b1a11;
-      --card2: #112b1b;
-      --green: #27ff91;
-      --green-soft: #baffdc;
-      --text: #f1fff7;
-      --muted: #9ab5a5;
-      --border: rgba(39, 255, 145, .22);
-      --danger: #ff6d7d;
+      --bg: #020806;
+      --bg2: #06150d;
+      --card: rgba(10, 28, 17, .76);
+      --card-light: rgba(19, 53, 31, .75);
+      --green: #22ff91;
+      --green2: #8dffc3;
+      --green-dark: #0bc66a;
+      --white: #effff6;
+      --muted: #91ad9d;
+      --border: rgba(34, 255, 145, .2);
+      --border-light: rgba(34, 255, 145, .48);
+      --red: #ff6881;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
       min-height: 100vh;
-      color: var(--text);
-      font-family: Tahoma, Arial, sans-serif;
+      overflow-x: hidden;
+      color: var(--white);
       background:
-        radial-gradient(circle at 10% 0%, rgba(39,255,145,.16), transparent 330px),
-        radial-gradient(circle at 90% 15%, rgba(0,180,100,.1), transparent 300px),
-        linear-gradient(135deg, #030a06, #07170d, #020604);
+        radial-gradient(circle at 15% 0%, rgba(34,255,145,.17), transparent 370px),
+        radial-gradient(circle at 92% 12%, rgba(0,190,105,.14), transparent 360px),
+        linear-gradient(135deg, var(--bg), var(--bg2), #010403);
+      font-family: "Vazirmatn", Tahoma, sans-serif;
     }
 
     body::before {
       content: "";
       position: fixed;
       inset: 0;
-      z-index: -1;
-      opacity: .2;
+      z-index: -3;
+      opacity: .22;
       pointer-events: none;
       background-image:
-        linear-gradient(rgba(39,255,145,.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(39,255,145,.06) 1px, transparent 1px);
-      background-size: 45px 45px;
+        linear-gradient(rgba(34,255,145,.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34,255,145,.055) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, black, transparent 80%);
     }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      opacity: .24;
+      background-image:
+        radial-gradient(circle at 12% 23%, var(--green) 0 1px, transparent 2px),
+        radial-gradient(circle at 83% 19%, var(--green) 0 1px, transparent 2px),
+        radial-gradient(circle at 71% 63%, var(--green) 0 1px, transparent 2px),
+        radial-gradient(circle at 24% 78%, var(--green) 0 1px, transparent 2px),
+        radial-gradient(circle at 94% 84%, var(--green) 0 1px, transparent 2px);
+      background-size: 260px 260px;
+      animation: particles 13s linear infinite;
+    }
+
+    @keyframes particles {
+      from {
+        transform: translateY(0);
+      }
+
+      to {
+        transform: translateY(-260px);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(34,255,145,.16);
+      }
+
+      50% {
+        box-shadow: 0 0 0 14px rgba(34,255,145,0);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-12px);
+      }
+    }
+
+    @keyframes glow {
+      0%, 100% {
+        opacity: .45;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: .9;
+        transform: scale(1.12);
+      }
+    }
+
+    @keyframes shine {
+      0% {
+        transform: translateX(-120%);
+      }
+
+      100% {
+        transform: translateX(120%);
+      }
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    /* Header */
 
     header {
       position: sticky;
       top: 0;
-      z-index: 10;
-      height: 76px;
+      z-index: 20;
+      height: 78px;
       padding: 0 7%;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid var(--border);
-      background: rgba(3, 10, 6, .86);
-      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(34,255,145,.16);
+      background: rgba(2, 10, 6, .76);
+      backdrop-filter: blur(18px);
     }
 
     .logo {
       display: flex;
       align-items: center;
-      gap: 10px;
-      color: var(--text);
+      gap: 11px;
+      color: var(--white);
       font-size: 16px;
       font-weight: 900;
-      letter-spacing: .4px;
+      letter-spacing: .5px;
     }
 
     .logo span {
@@ -77,84 +180,264 @@
     }
 
     .logo-icon {
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       display: grid;
       place-items: center;
-      border: 1px solid rgba(39,255,145,.45);
-      border-radius: 13px;
+      border: 1px solid rgba(34,255,145,.5);
+      border-radius: 14px;
       color: var(--green);
-      background: rgba(39,255,145,.1);
-      font-size: 23px;
+      background:
+        linear-gradient(135deg, rgba(34,255,145,.18), rgba(34,255,145,.03));
+      box-shadow:
+        0 0 25px rgba(34,255,145,.18),
+        inset 0 0 15px rgba(34,255,145,.1);
+      font-size: 24px;
+      animation: pulse 3s infinite;
     }
 
-    .redeem-open-button {
-      padding: 11px 17px;
-      border: 1px solid var(--border);
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-link {
+      padding: 10px 14px;
+      color: var(--muted);
       border-radius: 9px;
-      color: var(--green-soft);
-      background: rgba(255,255,255,.04);
-      font-family: inherit;
       font-size: 12px;
-      font-weight: bold;
+      transition: .25s;
+    }
+
+    .nav-link:hover {
+      color: var(--green);
+      background: rgba(34,255,145,.08);
+    }
+
+    .redeem-button {
+      padding: 11px 16px;
+      border: 1px solid rgba(34,255,145,.38);
+      border-radius: 9px;
+      color: var(--green2);
+      background: rgba(34,255,145,.07);
+      font-size: 11px;
+      font-weight: 800;
       cursor: pointer;
       transition: .25s;
     }
 
-    .redeem-open-button:hover {
+    .redeem-button:hover {
       color: #00170b;
       background: var(--green);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(34,255,145,.2);
     }
 
+    /* Hero */
+
     .hero {
-      width: min(1100px, 90%);
+      position: relative;
+      width: min(1150px, 90%);
+      min-height: 555px;
       margin: auto;
-      padding: 90px 0 70px;
+      padding: 95px 0 90px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      animation: appear .9s ease both;
+    }
+
+    .hero-content {
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 22px;
+      padding: 9px 15px;
+      border: 1px solid rgba(34,255,145,.31);
+      border-radius: 50px;
+      color: var(--green);
+      background: rgba(34,255,145,.07);
+      box-shadow: 0 0 25px rgba(34,255,145,.07);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .hero-badge::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 13px var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    .hero h1 {
+      max-width: 850px;
+      margin: auto;
+      font-size: clamp(34px, 6vw, 69px);
+      font-weight: 900;
+      line-height: 1.42;
+      letter-spacing: -1px;
+    }
+
+    .hero h1 span {
+      color: var(--green);
+      text-shadow: 0 0 28px rgba(34,255,145,.35);
+    }
+
+    .hero-description {
+      max-width: 650px;
+      margin: 23px auto 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 2.2;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-top: 31px;
+    }
+
+    .primary-button,
+    .secondary-button {
+      min-width: 155px;
+      padding: 13px 18px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 900;
+      transition: .25s;
+    }
+
+    .primary-button {
+      color: #00170b;
+      background: linear-gradient(110deg, var(--green), var(--green2));
+      box-shadow: 0 10px 28px rgba(34,255,145,.14);
+    }
+
+    .secondary-button {
+      border: 1px solid var(--border-light);
+      color: var(--green2);
+      background: rgba(255,255,255,.035);
+    }
+
+    .primary-button:hover,
+    .secondary-button:hover {
+      transform: translateY(-4px);
+    }
+
+    .secondary-button:hover {
+      color: #00170b;
+      background: var(--green);
+    }
+
+    .hero-orb {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      top: 105px;
+      left: 50%;
+      z-index: 0;
+      border: 1px solid rgba(34,255,145,.13);
+      border-radius: 50%;
+      transform: translateX(-50%);
+      box-shadow:
+        0 0 90px rgba(34,255,145,.08),
+        inset 0 0 60px rgba(34,255,145,.05);
+      animation: glow 5s ease-in-out infinite;
+    }
+
+    .hero-orb::before,
+    .hero-orb::after {
+      content: "";
+      position: absolute;
+      inset: -45px;
+      border: 1px solid rgba(34,255,145,.08);
+      border-radius: 50%;
+    }
+
+    .hero-orb::after {
+      inset: -90px;
+      border-color: rgba(34,255,145,.045);
+    }
+
+    /* Stats */
+
+    .stats {
+      width: min(950px, 90%);
+      margin: -23px auto 78px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      position: relative;
+      z-index: 3;
+    }
+
+    .stat {
+      padding: 18px 15px;
+      border-left: 1px solid rgba(34,255,145,.16);
+      background: rgba(7, 24, 13, .55);
       text-align: center;
     }
 
-    .hero-label {
-      display: inline-block;
-      margin-bottom: 22px;
-      padding: 8px 14px;
-      border: 1px solid rgba(39,255,145,.28);
-      border-radius: 30px;
+    .stat:first-child {
+      border-radius: 14px 0 0 14px;
+    }
+
+    .stat:last-child {
+      border-left: 0;
+      border-radius: 0 14px 14px 0;
+    }
+
+    .stat strong {
+      display: block;
       color: var(--green);
-      background: rgba(39,255,145,.08);
-      font-size: 11px;
-      font-weight: bold;
+      font-size: 22px;
+      font-weight: 900;
     }
 
-    h1 {
-      max-width: 760px;
-      margin: auto;
-      font-size: clamp(30px, 6vw, 60px);
-      line-height: 1.45;
-    }
-
-    h1 span {
-      color: var(--green);
-    }
-
-    .hero-text {
-      max-width: 650px;
-      margin: 22px auto 0;
+    .stat span {
       color: var(--muted);
-      font-size: 14px;
-      line-height: 2.1;
+      font-size: 10px;
     }
 
-    .products-section {
-      width: min(1100px, 90%);
+    /* Products */
+
+    .section {
+      width: min(1150px, 90%);
       margin: auto;
-      padding-bottom: 85px;
+      padding-bottom: 88px;
     }
 
-    .section-title {
-      margin-bottom: 25px;
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .section-heading h2 {
+      color: var(--white);
+      font-size: 27px;
+      font-weight: 900;
+    }
+
+    .section-heading h2 span {
       color: var(--green);
-      font-size: 23px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 12px;
     }
 
     .products {
@@ -163,118 +446,213 @@
       gap: 18px;
     }
 
-    .product {
+    .product-card {
       position: relative;
       overflow: hidden;
-      padding: 25px 22px;
+      min-height: 355px;
+      padding: 25px 22px 21px;
+      display: flex;
+      flex-direction: column;
       border: 1px solid var(--border);
-      border-radius: 20px;
+      border-radius: 21px;
       background:
-        linear-gradient(145deg, rgba(17,43,27,.94), rgba(7,17,10,.96));
-      transition: .3s;
+        linear-gradient(145deg, rgba(17,49,29,.9), rgba(5,15,9,.96));
+      transition: .35s ease;
+      animation: float 6s ease-in-out infinite;
     }
 
-    .product:hover {
-      transform: translateY(-7px);
-      border-color: rgba(39,255,145,.58);
-      box-shadow: 0 18px 40px rgba(0,0,0,.28);
+    .product-card:nth-child(2) {
+      animation-delay: -2s;
+    }
+
+    .product-card:nth-child(3) {
+      animation-delay: -4s;
+    }
+
+    .product-card::before {
+      content: "";
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      top: -90px;
+      left: -60px;
+      border-radius: 50%;
+      background: rgba(34,255,145,.13);
+      filter: blur(28px);
+      transition: .35s;
+    }
+
+    .product-card::after {
+      content: "";
+      position: absolute;
+      width: 90px;
+      height: 180%;
+      top: -40%;
+      left: -100%;
+      opacity: 0;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.08),
+        transparent
+      );
+      transform: rotate(20deg);
+      transition: .4s;
+    }
+
+    .product-card:hover {
+      border-color: var(--border-light);
+      transform: translateY(-12px) scale(1.015);
+      box-shadow:
+        0 20px 45px rgba(0,0,0,.33),
+        0 0 30px rgba(34,255,145,.08);
+      animation-play-state: paused;
+    }
+
+    .product-card:hover::after {
+      left: 130%;
+      opacity: 1;
+    }
+
+    .product-top {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 23px;
     }
 
     .product-icon {
-      width: 58px;
-      height: 58px;
+      width: 61px;
+      height: 61px;
       display: grid;
       place-items: center;
-      margin-bottom: 19px;
-      border: 1px solid rgba(39,255,145,.35);
-      border-radius: 16px;
+      border: 1px solid rgba(34,255,145,.42);
+      border-radius: 17px;
       color: var(--green);
-      background: rgba(39,255,145,.1);
-      font-size: 28px;
+      background: rgba(34,255,145,.1);
+      box-shadow: 0 0 27px rgba(34,255,145,.08);
+      font-size: 29px;
     }
 
-    .product h3 {
+    .product-number {
+      color: rgba(186,255,220,.45);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .product-card h3 {
+      position: relative;
+      z-index: 1;
       margin-bottom: 12px;
-      font-size: 20px;
+      font-size: 21px;
+      font-weight: 900;
     }
 
-    .product p {
-      min-height: 82px;
+    .product-card > p {
+      position: relative;
+      z-index: 1;
+      min-height: 76px;
       color: var(--muted);
       font-size: 12px;
       line-height: 2;
     }
 
+    .tag-list {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 17px;
+    }
+
+    .tag {
+      padding: 6px 9px;
+      border: 1px solid rgba(34,255,145,.16);
+      border-radius: 7px;
+      color: var(--green2);
+      background: rgba(34,255,145,.055);
+      font-size: 10px;
+    }
+
     .product-bottom {
+      position: relative;
+      z-index: 1;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      margin-top: 20px;
-      padding-top: 17px;
-      border-top: 1px solid rgba(39,255,145,.15);
+      margin-top: auto;
+      padding-top: 19px;
+      border-top: 1px solid rgba(34,255,145,.14);
     }
 
-    .price {
+    .product-price {
       color: var(--green);
       font-size: 12px;
-      font-weight: bold;
+      font-weight: 900;
     }
 
-    .buy-button {
+    .product-button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 11px 13px;
+      padding: 10px 13px;
       border-radius: 9px;
       color: #00170b;
       background: var(--green);
       font-size: 11px;
       font-weight: 900;
-      text-decoration: none;
       transition: .25s;
     }
 
-    .buy-button:hover {
-      background: var(--green-soft);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(39,255,145,.2);
+    .product-button:hover {
+      background: var(--green2);
+      transform: translateY(-3px);
+      box-shadow: 0 7px 18px rgba(34,255,145,.22);
     }
 
-    .features {
-      width: min(1100px, 90%);
+    /* Advantages */
+
+    .advantages {
+      width: min(1150px, 90%);
+      margin: 0 auto 86px;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      margin: 0 auto 80px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
     }
 
-    .feature {
-      padding: 20px;
+    .advantage {
+      padding: 23px 18px;
       border: 1px solid var(--border);
       border-radius: 16px;
-      background: rgba(10, 29, 17, .75);
+      background: rgba(8, 26, 15, .69);
+      transition: .3s;
     }
 
-    .feature strong {
-      display: block;
-      margin-bottom: 8px;
+    .advantage:hover {
+      border-color: var(--border-light);
+      background: rgba(16, 50, 28, .8);
+      transform: translateY(-6px);
+    }
+
+    .advantage-icon {
+      margin-bottom: 14px;
       color: var(--green);
+      font-size: 25px;
+    }
+
+    .advantage h3 {
+      margin-bottom: 9px;
       font-size: 14px;
     }
 
-    .feature p {
+    .advantage p {
       color: var(--muted);
-      font-size: 12px;
-      line-height: 1.9;
-    }
-
-    footer {
-      padding: 25px;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      text-align: center;
       font-size: 11px;
+      line-height: 1.9;
     }
 
     /* Redeem Modal */
@@ -287,8 +665,8 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
-      background: rgba(0, 0, 0, .78);
-      backdrop-filter: blur(8px);
+      background: rgba(0,0,0,.8);
+      backdrop-filter: blur(9px);
     }
 
     .modal.show {
@@ -297,35 +675,36 @@
 
     .modal-box {
       width: min(430px, 100%);
-      padding: 28px 23px;
-      border: 1px solid rgba(39,255,145,.45);
-      border-radius: 20px;
+      padding: 29px 23px;
+      border: 1px solid rgba(34,255,145,.45);
+      border-radius: 21px;
       background: linear-gradient(145deg, #12321f, #061009);
-      box-shadow: 0 20px 70px rgba(0,0,0,.45);
+      box-shadow: 0 20px 75px rgba(0,0,0,.5);
       text-align: center;
+      animation: appear .3s ease both;
     }
 
     .modal-box h2 {
       margin-bottom: 10px;
       color: var(--green);
-      font-size: 22px;
+      font-size: 23px;
     }
 
     .modal-box p {
       margin-bottom: 20px;
       color: var(--muted);
       font-size: 12px;
-      line-height: 1.9;
+      line-height: 2;
     }
 
     .redeem-input {
       width: 100%;
-      height: 49px;
+      height: 50px;
       padding: 0 15px;
       outline: none;
-      border: 1px solid rgba(39,255,145,.25);
+      border: 1px solid rgba(34,255,145,.27);
       border-radius: 10px;
-      color: var(--green-soft);
+      color: var(--green2);
       background: rgba(0,0,0,.25);
       font-family: inherit;
       font-size: 14px;
@@ -335,10 +714,10 @@
 
     .redeem-input:focus {
       border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(39,255,145,.08);
+      box-shadow: 0 0 0 3px rgba(34,255,145,.08);
     }
 
-    .redeem-submit {
+    .submit-redeem {
       width: 100%;
       height: 48px;
       margin-top: 12px;
@@ -346,25 +725,13 @@
       border-radius: 10px;
       color: #00170b;
       background: var(--green);
-      font-family: inherit;
+      font-size: 12px;
       font-weight: 900;
       cursor: pointer;
     }
 
-    .redeem-submit:hover {
-      background: var(--green-soft);
-    }
-
-    .close-button {
-      width: 100%;
-      height: 44px;
-      margin-top: 10px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: var(--text);
-      background: rgba(255,255,255,.04);
-      font-family: inherit;
-      cursor: pointer;
+    .submit-redeem:hover {
+      background: var(--green2);
     }
 
     .redeem-result {
@@ -379,17 +746,44 @@
     }
 
     .error {
-      color: var(--danger);
+      color: var(--red);
     }
 
-    @media (max-width: 850px) {
-      .products,
-      .features {
-        grid-template-columns: 1fr 1fr;
+    .close-button {
+      width: 100%;
+      height: 44px;
+      margin-top: 10px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--white);
+      background: rgba(255,255,255,.04);
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    footer {
+      padding: 27px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      text-align: center;
+      font-size: 11px;
+    }
+
+    @media (max-width: 900px) {
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .advantages {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .product-card:last-child {
+        grid-column: span 2;
       }
     }
 
-    @media (max-width: 560px) {
+    @media (max-width: 600px) {
       header {
         padding: 0 4%;
       }
@@ -399,26 +793,83 @@
       }
 
       .logo-icon {
-        width: 36px;
-        height: 36px;
+        width: 37px;
+        height: 37px;
       }
 
-      .redeem-open-button {
+      .nav-link {
+        display: none;
+      }
+
+      .redeem-button {
         padding: 9px 10px;
         font-size: 10px;
       }
 
       .hero {
-        padding-top: 65px;
+        min-height: 520px;
+        padding-top: 72px;
+      }
+
+      .hero h1 {
+        font-size: 35px;
+      }
+
+      .hero-description {
+        font-size: 12px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+      }
+
+      .primary-button,
+      .secondary-button {
+        width: 210px;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stat,
+      .stat:first-child,
+      .stat:last-child {
+        border: 1px solid rgba(34,255,145,.14);
+        border-radius: 0;
+      }
+
+      .stat:first-child {
+        border-radius: 12px 0 0 0;
+      }
+
+      .stat:nth-child(2) {
+        border-radius: 0 12px 0 0;
+      }
+
+      .stat:nth-child(3) {
+        border-radius: 0 0 0 12px;
+      }
+
+      .stat:last-child {
+        border-radius: 0 0 12px 0;
+      }
+
+      .section-heading {
+        display: block;
+      }
+
+      .section-heading p {
+        margin-top: 8px;
       }
 
       .products,
-      .features {
+      .advantages {
         grid-template-columns: 1fr;
       }
 
-      .product p {
-        min-height: auto;
+      .product-card:last-child {
+        grid-column: auto;
       }
     }
   </style>
@@ -426,154 +877,263 @@
 
 <body>
 
+  <!-- Header -->
   <header>
-    <div class="logo">
+    <a href="index.html" class="logo">
       <div class="logo-icon">⌁</div>
       CONFIG <span>STORE</span>
-    </div>
+    </a>
 
-    <button
-      class="redeem-open-button"
-      onclick="openRedeem()"
-    >
-      Redeem Code
-    </button>
+    <nav class="nav">
+      <a href="#products" class="nav-link">محصولات</a>
+      <a href="#advantages" class="nav-link">مزایا</a>
+
+      <button
+        class="redeem-button"
+        onclick="openRedeem()"
+      >
+        Redeem Code
+      </button>
+    </nav>
   </header>
 
-  <main>
+  <!-- Hero -->
+  <section class="hero">
 
-    <section class="hero">
-      <div class="hero-label">سرویس‌های اختصاصی و پرسرعت</div>
+    <div class="hero-orb"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        سرویس‌های پرسرعت و پایدار
+      </div>
 
       <h1>
-        کانفیگ مورد نیازت را
-        <span>انتخاب و خریداری کن</span>
+        اینترنت آزاد،
+        <span>بدون محدودیت</span>
       </h1>
 
-      <p class="hero-text">
-        کانفیگ‌های پایدار و پرسرعت برای استفاده روزمره،
-        بازی آنلاین، استریم، دانلود و وب‌گردی.
+      <p class="hero-description">
+        بهترین کانفیگ‌های V2Ray، WireGuard و SSH
+        با سرعت بالا، اتصال پایدار و فعال‌سازی سریع.
+        سرویس مناسب خودت را انتخاب کن و با خیال راحت استفاده کن.
       </p>
-    </section>
 
-    <section class="products-section">
+      <div class="hero-buttons">
+        <a href="#products" class="primary-button">
+          مشاهده کانفیگ‌ها
+        </a>
 
-      <h2 class="section-title">محصولات ما</h2>
+        <button
+          class="secondary-button"
+          onclick="openRedeem()"
+        >
+          استفاده از Redeem Code
+        </button>
+      </div>
+    </div>
 
-      <div class="products">
+  </section>
 
-        <!-- کارت V2Ray -->
-        <article class="product">
+  <!-- Statistics -->
+  <section class="stats">
+
+    <div class="stat">
+      <strong>99%</strong>
+      <span>پایداری سرویس</span>
+    </div>
+
+    <div class="stat">
+      <strong>24/7</strong>
+      <span>پشتیبانی آنلاین</span>
+    </div>
+
+    <div class="stat">
+      <strong>+1000</strong>
+      <span>کاربر فعال</span>
+    </div>
+
+    <div class="stat">
+      <strong>⚡ سریع</strong>
+      <span>فعال‌سازی سفارش</span>
+    </div>
+
+  </section>
+
+  <!-- Products -->
+  <section id="products" class="section">
+
+    <div class="section-heading">
+      <div>
+        <h2>انتخاب <span>سرویس</span></h2>
+        <p>کانفیگ مناسب خودت را انتخاب کن</p>
+      </div>
+    </div>
+
+    <div class="products">
+
+      <!-- V2Ray -->
+      <article class="product-card">
+
+        <div class="product-top">
           <div class="product-icon">✦</div>
+          <span class="product-number">01</span>
+        </div>
 
-          <h3>کانفیگ V2Ray</h3>
+        <h3>کانفیگ V2Ray</h3>
 
-          <p>
-            کانفیگ پرسرعت و پایدار V2Ray مناسب موبایل،
-            کامپیوتر، گیم، استریم و استفاده روزمره.
-          </p>
+        <p>
+          کانفیگ قدرتمند و پایدار برای استفاده روزمره،
+          گیم، استریم، دانلود و وب‌گردی بدون دردسر.
+        </p>
 
-          <div class="product-bottom">
-            <span class="price">خرید آنلاین</span>
+        <div class="tag-list">
+          <span class="tag">سرعت بالا</span>
+          <span class="tag">پینگ مناسب</span>
+          <span class="tag">پشتیبانی چند دستگاه</span>
+        </div>
 
-            <!-- این لینک صفحه جداگانه V2Ray را باز می‌کند -->
-            <a
-              href="v2ray.html"
-              class="buy-button"
-            >
-              خرید کانفیگ V2Ray
-            </a>
-          </div>
-        </article>
+        <div class="product-bottom">
+          <span class="product-price">موجود است</span>
 
-        <!-- کارت نمونه اول -->
-        <article class="product">
+          <!-- با کلیک وارد صفحه V2Ray می‌شود -->
+          <a
+            href="v2ray.html"
+            class="product-button"
+          >
+            خرید کانفیگ
+          </a>
+        </div>
+
+      </article>
+
+      <!-- WireGuard -->
+      <article class="product-card">
+
+        <div class="product-top">
           <div class="product-icon">◈</div>
+          <span class="product-number">02</span>
+        </div>
 
-          <h3>کانفیگ اختصاصی</h3>
+        <h3>کانفیگ WireGuard</h3>
 
-          <p>
-            کانفیگ اختصاصی با اتصال پایدار و مناسب
-            برای استفاده شخصی و طولانی‌مدت.
-          </p>
-
-          <div class="product-bottom">
-            <span class="price">به‌زودی</span>
-
-            <a href="#" class="buy-button">
-              مشاهده
-            </a>
-          </div>
-        </article>
-
-        <!-- کارت نمونه دوم -->
-        <article class="product">
-          <div class="product-icon">◉</div>
-
-          <h3>سرویس ویژه</h3>
-
-          <p>
-            سرویس ویژه با امکانات بیشتر و پشتیبانی
-            اختصاصی برای کاربران حرفه‌ای.
-          </p>
-
-          <div class="product-bottom">
-            <span class="price">به‌زودی</span>
-
-            <a href="#" class="buy-button">
-              مشاهده
-            </a>
-          </div>
-        </article>
-
-      </div>
-    </section>
-
-    <section class="features">
-
-      <div class="feature">
-        <strong>✓ سرعت بالا</strong>
         <p>
-          استفاده از سرورهای مناسب برای داشتن اتصال
-          سریع و روان.
+          اتصال سریع و سبک با امنیت بالا، مناسب موبایل،
+          کامپیوتر، بازی آنلاین و استفاده طولانی‌مدت.
         </p>
-      </div>
 
-      <div class="feature">
-        <strong>✓ فعال‌سازی سریع</strong>
+        <div class="tag-list">
+          <span class="tag">امنیت بالا</span>
+          <span class="tag">اتصال سریع</span>
+          <span class="tag">مصرف کم</span>
+        </div>
+
+        <div class="product-bottom">
+          <span class="product-price">موجود است</span>
+
+          <!-- بعداً می‌توانی wireguard.html بسازی -->
+          <a
+            href="wireguard.html"
+            class="product-button"
+          >
+            خرید کانفیگ
+          </a>
+        </div>
+
+      </article>
+
+      <!-- SSH -->
+      <article class="product-card">
+
+        <div class="product-top">
+          <div class="product-icon">⌘</div>
+          <span class="product-number">03</span>
+        </div>
+
+        <h3>کانفیگ SSH</h3>
+
         <p>
-          پس از خرید، کانفیگ در سریع‌ترین زمان برای شما
-          ارسال می‌شود.
+          سرویس SSH پرسرعت و پایدار برای وب‌گردی،
+          استفاده روزمره و اتصال مطمئن در دستگاه‌های مختلف.
         </p>
-      </div>
 
-      <div class="feature">
-        <strong>✓ پشتیبانی</strong>
-        <p>
-          در صورت وجود مشکل، تیم پشتیبانی پاسخ‌گوی شماست.
-        </p>
-      </div>
+        <div class="tag-list">
+          <span class="tag">پایدار</span>
+          <span class="tag">سریع</span>
+          <span class="tag">فعال‌سازی فوری</span>
+        </div>
 
-    </section>
+        <div class="product-bottom">
+          <span class="product-price">موجود است</span>
 
-  </main>
+          <!-- بعداً می‌توانی ssh.html بسازی -->
+          <a
+            href="ssh.html"
+            class="product-button"
+          >
+            خرید کانفیگ
+          </a>
+        </div>
+
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Advantages -->
+  <section id="advantages" class="advantages">
+
+    <div class="advantage">
+      <div class="advantage-icon">⚡</div>
+      <h3>سرعت بالا</h3>
+      <p>
+        سرورهای قدرتمند برای دانلود، استریم و وب‌گردی
+        روان و سریع.
+      </p>
+    </div>
+
+    <div class="advantage">
+      <div class="advantage-icon">◉</div>
+      <h3>اتصال پایدار</h3>
+      <p>
+        سرویس پایدار با قطعی کم و عملکرد مناسب در تمام
+        ساعات شبانه‌روز.
+      </p>
+    </div>
+
+    <div class="advantage">
+      <div class="advantage-icon">♢</div>
+      <h3>فعال‌سازی سریع</h3>
+      <p>
+        بعد از ثبت سفارش، کانفیگ در کوتاه‌ترین زمان
+        برای شما ارسال می‌شود.
+      </p>
+    </div>
+
+    <div class="advantage">
+      <div class="advantage-icon">♧</div>
+      <h3>پشتیبانی حرفه‌ای</h3>
+      <p>
+        در صورت نیاز به راهنمایی، تیم پشتیبانی پاسخ‌گوی
+        شما خواهد بود.
+      </p>
+    </div>
+
+  </section>
 
   <footer>
     تمامی حقوق برای Config Store محفوظ است.
   </footer>
 
-  <!-- پنجره Redeem Code؛ کاملاً جدا از خرید V2Ray -->
-  <div
-    id="redeemModal"
-    class="modal"
-  >
+  <!-- Redeem Code Modal -->
+  <div id="redeemModal" class="modal">
+
     <div class="modal-box">
 
       <h2>Redeem Code</h2>
 
       <p>
-        کد فعال‌سازی خود را وارد کنید.
-        این بخش جدا از خرید معمولی کانفیگ است.
+        اگر کد فعال‌سازی داری، آن را وارد کن.
+        Redeem Code از خرید معمولی کانفیگ جداست.
       </p>
 
       <input
@@ -585,10 +1145,10 @@
       >
 
       <button
-        class="redeem-submit"
+        class="submit-redeem"
         onclick="checkRedeemCode()"
       >
-        بررسی کد
+        بررسی و فعال‌سازی کد
       </button>
 
       <div
@@ -604,18 +1164,25 @@
       </button>
 
     </div>
+
   </div>
 
   <script>
     /*
-      کد معتبر Redeem را اینجا تعیین کن.
-      در حال حاضر کد معتبر: Qr678
+      کد معتبر Redeem را اینجا تغییر بده.
+      کد فعلی: Qr678
     */
+
     const VALID_REDEEM_CODE = "Qr678";
 
-    const redeemModal = document.getElementById("redeemModal");
-    const redeemInput = document.getElementById("redeemInput");
-    const redeemResult = document.getElementById("redeemResult");
+    const redeemModal =
+      document.getElementById("redeemModal");
+
+    const redeemInput =
+      document.getElementById("redeemInput");
+
+    const redeemResult =
+      document.getElementById("redeemResult");
 
     function openRedeem() {
       redeemModal.classList.add("show");
@@ -633,7 +1200,8 @@
     }
 
     function checkRedeemCode() {
-      const enteredCode = redeemInput.value.trim();
+      const enteredCode =
+        redeemInput.value.trim();
 
       if (enteredCode === VALID_REDEEM_CODE) {
         redeemResult.textContent =
@@ -650,23 +1218,32 @@
       }
     }
 
-    redeemInput.addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
-        checkRedeemCode();
+    redeemInput.addEventListener(
+      "keydown",
+      function(event) {
+        if (event.key === "Enter") {
+          checkRedeemCode();
+        }
       }
-    });
+    );
 
-    redeemModal.addEventListener("click", function(event) {
-      if (event.target === redeemModal) {
-        closeRedeem();
+    redeemModal.addEventListener(
+      "click",
+      function(event) {
+        if (event.target === redeemModal) {
+          closeRedeem();
+        }
       }
-    });
+    );
 
-    document.addEventListener("keydown", function(event) {
-      if (event.key === "Escape") {
-        closeRedeem();
+    document.addEventListener(
+      "keydown",
+      function(event) {
+        if (event.key === "Escape") {
+          closeRedeem();
+        }
       }
-    });
+    );
   </script>
 
 </body>
