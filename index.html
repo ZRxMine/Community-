@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Config Store | کانفیگ پرسرعت</title>
 
   <style>
@@ -51,29 +50,27 @@
       content: "";
       position: fixed;
       inset: 0;
-      z-index: -3;
+      z-index: -2;
       opacity: .22;
       pointer-events: none;
       background-image:
         linear-gradient(rgba(34,255,145,.055) 1px, transparent 1px),
         linear-gradient(90deg, rgba(34,255,145,.055) 1px, transparent 1px);
       background-size: 48px 48px;
-      mask-image: linear-gradient(to bottom, black, transparent 80%);
     }
 
     body::after {
       content: "";
       position: fixed;
       inset: 0;
-      z-index: -2;
+      z-index: -1;
       pointer-events: none;
-      opacity: .24;
+      opacity: .25;
       background-image:
         radial-gradient(circle at 12% 23%, var(--green) 0 1px, transparent 2px),
         radial-gradient(circle at 83% 19%, var(--green) 0 1px, transparent 2px),
         radial-gradient(circle at 71% 63%, var(--green) 0 1px, transparent 2px),
-        radial-gradient(circle at 24% 78%, var(--green) 0 1px, transparent 2px),
-        radial-gradient(circle at 94% 84%, var(--green) 0 1px, transparent 2px);
+        radial-gradient(circle at 24% 78%, var(--green) 0 1px, transparent 2px);
       background-size: 260px 260px;
       animation: particles 13s linear infinite;
     }
@@ -88,50 +85,6 @@
       }
     }
 
-    @keyframes pulse {
-      0%, 100% {
-        box-shadow: 0 0 0 0 rgba(34,255,145,.16);
-      }
-
-      50% {
-        box-shadow: 0 0 0 14px rgba(34,255,145,0);
-      }
-    }
-
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-12px);
-      }
-    }
-
-    @keyframes glow {
-      0%, 100% {
-        opacity: .45;
-        transform: translateX(-50%) scale(1);
-      }
-
-      50% {
-        opacity: .9;
-        transform: translateX(-50%) scale(1.12);
-      }
-    }
-
-    @keyframes appear {
-      from {
-        opacity: 0;
-        transform: translateY(25px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
     a {
       color: inherit;
       text-decoration: none;
@@ -142,7 +95,7 @@
     }
 
     /* =========================
-       Creeper Loading Screen
+       Loading Screen
     ========================= */
 
     .site-loader {
@@ -154,19 +107,21 @@
       justify-content: center;
       overflow: hidden;
       background:
-        radial-gradient(circle at center, rgba(34,255,145,.16), transparent 300px),
+        radial-gradient(circle at center, rgba(34,255,145,.16), transparent 310px),
         linear-gradient(135deg, #010403, #03150b, #010403);
+      opacity: 1;
+      visibility: visible;
       transition:
         opacity .8s ease,
-        visibility .8s ease,
-        transform .8s ease;
+        visibility .8s ease;
     }
 
     .site-loader::before {
       content: "";
       position: absolute;
       inset: 0;
-      opacity: .24;
+      opacity: .22;
+      pointer-events: none;
       background-image:
         linear-gradient(rgba(34,255,145,.07) 1px, transparent 1px),
         linear-gradient(90deg, rgba(34,255,145,.07) 1px, transparent 1px);
@@ -177,27 +132,26 @@
     .site-loader::after {
       content: "";
       position: absolute;
-      width: 430px;
-      height: 430px;
+      width: 360px;
+      height: 360px;
       border: 1px solid rgba(34,255,145,.2);
       border-radius: 50%;
       box-shadow:
         0 0 50px rgba(34,255,145,.12),
         inset 0 0 60px rgba(34,255,145,.08);
-      animation: loaderRing 4s linear infinite;
+      animation: loaderRing 5s linear infinite;
     }
 
     .site-loader.loader-finished {
       opacity: 0;
       visibility: hidden;
-      transform: scale(1.15);
       pointer-events: none;
     }
 
     .loader-content {
       position: relative;
-      z-index: 5;
-      width: min(450px, 90%);
+      z-index: 2;
+      width: min(430px, 90%);
       text-align: center;
       animation: loaderAppear .8s ease both;
     }
@@ -207,7 +161,7 @@
       font-size: clamp(25px, 6vw, 42px);
       font-weight: 900;
       letter-spacing: 2px;
-      text-shadow: 0 0 25px rgba(34,255,145,.3);
+      text-shadow: 0 0 25px rgba(34,255,145,.35);
     }
 
     .loading-title span {
@@ -221,14 +175,13 @@
     }
 
     .creeper-area {
+      position: relative;
       width: 230px;
       height: 260px;
       margin: 25px auto 15px;
-      position: relative;
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      filter: drop-shadow(0 0 22px rgba(34,255,145,.4));
     }
 
     .creeper {
@@ -237,9 +190,10 @@
       height: 210px;
       margin-top: 15px;
       transform-origin: center bottom;
+      filter: drop-shadow(0 0 20px rgba(34,255,145,.5));
       animation:
         creeperFloat 1.7s ease-in-out infinite,
-        creeperShake 3.5s ease-in-out infinite;
+        creeperGlow 1.5s ease-in-out infinite alternate;
     }
 
     .creeper-head {
@@ -252,7 +206,7 @@
       background: linear-gradient(135deg, #72ffac, #1edb76 58%, #0b8748);
       box-shadow:
         inset 0 0 18px rgba(255,255,255,.2),
-        0 0 20px rgba(34,255,145,.35);
+        0 0 25px rgba(34,255,145,.4);
     }
 
     .creeper-eye {
@@ -261,7 +215,6 @@
       width: 17px;
       height: 19px;
       background: #001c0e;
-      box-shadow: 0 0 8px rgba(0,0,0,.5);
     }
 
     .eye-right {
@@ -341,11 +294,10 @@
       border: 1px solid rgba(34,255,145,.4);
       border-radius: 20px;
       background: rgba(255,255,255,.06);
-      box-shadow: 0 0 15px rgba(34,255,145,.1);
     }
 
     .loading-progress-bar {
-      width: 0%;
+      width: 0;
       height: 100%;
       border-radius: inherit;
       background: linear-gradient(
@@ -369,53 +321,6 @@
       color: var(--green);
       animation: blinkDot 1s infinite;
     }
-
-    .blast-particle {
-      position: absolute;
-      top: 105px;
-      left: 50%;
-      width: 9px;
-      height: 9px;
-      opacity: 0;
-      border-radius: 2px;
-      background: var(--green);
-      box-shadow: 0 0 13px var(--green);
-      transform: translate(-50%, -50%);
-    }
-
-    .site-loader.explode .creeper {
-      animation: creeperExplosion .75s ease forwards;
-    }
-
-    .site-loader.explode .creeper-area::before {
-      content: "";
-      position: absolute;
-      top: 105px;
-      left: 50%;
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      border: 5px solid var(--green);
-      transform: translate(-50%, -50%);
-      animation: explosionFlash .7s ease forwards;
-    }
-
-    .site-loader.explode .blast-particle {
-      animation: particleBlast .9s ease forwards;
-    }
-
-    .p1 { --x: -130px; --y: -115px; }
-    .p2 { --x: 120px; --y: -120px; }
-    .p3 { --x: -155px; --y: -25px; }
-    .p4 { --x: 150px; --y: -35px; }
-    .p5 { --x: -125px; --y: 80px; }
-    .p6 { --x: 130px; --y: 90px; }
-    .p7 { --x: -65px; --y: -145px; }
-    .p8 { --x: 65px; --y: -150px; }
-    .p9 { --x: -80px; --y: 130px; }
-    .p10 { --x: 85px; --y: 135px; }
-    .p11 { --x: 0px; --y: -165px; }
-    .p12 { --x: 0px; --y: 160px; }
 
     @keyframes loaderAppear {
       from {
@@ -441,46 +346,37 @@
 
     @keyframes loaderRing {
       from {
-        transform: rotate(0deg) scale(.8);
+        transform: rotate(0deg) scale(.85);
       }
 
       to {
-        transform: rotate(360deg) scale(1.15);
+        transform: rotate(360deg) scale(1.1);
       }
     }
 
     @keyframes creeperFloat {
       0%, 100% {
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
       }
 
       50% {
-        transform: translateY(-13px);
+        transform: translateY(-14px) scale(1.03);
       }
     }
 
-    @keyframes creeperShake {
-      0%, 70%, 100% {
-        filter: brightness(1);
+    @keyframes creeperGlow {
+      from {
+        filter: drop-shadow(0 0 12px rgba(34,255,145,.35));
       }
 
-      75% {
-        filter: brightness(1.5);
-      }
-
-      80% {
-        filter: brightness(1);
-        transform: scale(1.04);
-      }
-
-      85% {
-        filter: brightness(1.7);
+      to {
+        filter: drop-shadow(0 0 32px rgba(34,255,145,.9));
       }
     }
 
     @keyframes loadingProgress {
       from {
-        width: 0%;
+        width: 0;
       }
 
       to {
@@ -495,55 +391,6 @@
 
       50% {
         opacity: 1;
-      }
-    }
-
-    @keyframes creeperExplosion {
-      0% {
-        opacity: 1;
-        transform: scale(1);
-      }
-
-      45% {
-        opacity: 1;
-        transform: scale(1.35);
-        filter: brightness(2);
-      }
-
-      100% {
-        opacity: 0;
-        transform: scale(2.7) rotate(18deg);
-        filter: brightness(4);
-      }
-    }
-
-    @keyframes explosionFlash {
-      0% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(.2);
-      }
-
-      100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(7);
-      }
-    }
-
-    @keyframes particleBlast {
-      0% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-      }
-
-      100% {
-        opacity: 0;
-        transform:
-          translate(
-            calc(-50% + var(--x)),
-            calc(-50% + var(--y))
-          )
-          rotate(360deg)
-          scale(.2);
       }
     }
 
@@ -570,7 +417,6 @@
       color: var(--white);
       font-size: 16px;
       font-weight: 900;
-      letter-spacing: .5px;
     }
 
     .logo span {
@@ -585,16 +431,9 @@
       border: 1px solid rgba(34,255,145,.5);
       border-radius: 14px;
       color: var(--green);
-      background: linear-gradient(
-        135deg,
-        rgba(34,255,145,.18),
-        rgba(34,255,145,.03)
-      );
-      box-shadow:
-        0 0 25px rgba(34,255,145,.18),
-        inset 0 0 15px rgba(34,255,145,.1);
+      background: rgba(34,255,145,.08);
+      box-shadow: 0 0 25px rgba(34,255,145,.18);
       font-size: 24px;
-      animation: pulse 3s infinite;
     }
 
     .nav {
@@ -632,7 +471,6 @@
       color: #00170b;
       background: var(--green);
       transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(34,255,145,.2);
     }
 
     /* Hero */
@@ -646,7 +484,6 @@
       display: flex;
       align-items: center;
       text-align: center;
-      animation: appear .9s ease both;
     }
 
     .hero-content {
@@ -665,7 +502,6 @@
       border-radius: 50px;
       color: var(--green);
       background: rgba(34,255,145,.07);
-      box-shadow: 0 0 25px rgba(34,255,145,.07);
       font-size: 11px;
       font-weight: 700;
     }
@@ -677,7 +513,6 @@
       border-radius: 50%;
       background: var(--green);
       box-shadow: 0 0 13px var(--green);
-      animation: pulse 2s infinite;
     }
 
     .hero h1 {
@@ -686,7 +521,6 @@
       font-size: clamp(34px, 6vw, 69px);
       font-weight: 900;
       line-height: 1.42;
-      letter-spacing: -1px;
     }
 
     .hero h1 span {
@@ -705,7 +539,6 @@
     .hero-buttons {
       display: flex;
       justify-content: center;
-      align-items: center;
       gap: 12px;
       margin-top: 31px;
     }
@@ -723,7 +556,6 @@
     .primary-button {
       color: #00170b;
       background: linear-gradient(110deg, var(--green), var(--green2));
-      box-shadow: 0 10px 28px rgba(34,255,145,.14);
     }
 
     .secondary-button {
@@ -743,45 +575,13 @@
       background: var(--green);
     }
 
-    .hero-orb {
-      position: absolute;
-      width: 300px;
-      height: 300px;
-      top: 105px;
-      left: 50%;
-      z-index: 0;
-      border: 1px solid rgba(34,255,145,.13);
-      border-radius: 50%;
-      transform: translateX(-50%);
-      box-shadow:
-        0 0 90px rgba(34,255,145,.08),
-        inset 0 0 60px rgba(34,255,145,.05);
-      animation: glow 5s ease-in-out infinite;
-    }
-
-    .hero-orb::before,
-    .hero-orb::after {
-      content: "";
-      position: absolute;
-      inset: -45px;
-      border: 1px solid rgba(34,255,145,.08);
-      border-radius: 50%;
-    }
-
-    .hero-orb::after {
-      inset: -90px;
-      border-color: rgba(34,255,145,.045);
-    }
-
-    /* Statistics */
+    /* Stats */
 
     .stats {
       width: min(950px, 90%);
       margin: -23px auto 78px;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      position: relative;
-      z-index: 3;
     }
 
     .stat {
@@ -828,7 +628,6 @@
     }
 
     .section-heading h2 {
-      color: var(--white);
       font-size: 27px;
       font-weight: 900;
     }
@@ -849,79 +648,23 @@
     }
 
     .product-card {
-      position: relative;
-      overflow: hidden;
       min-height: 355px;
       padding: 25px 22px 21px;
       display: flex;
       flex-direction: column;
       border: 1px solid var(--border);
       border-radius: 21px;
-      background: linear-gradient(
-        145deg,
-        rgba(17,49,29,.9),
-        rgba(5,15,9,.96)
-      );
+      background: linear-gradient(145deg, rgba(17,49,29,.9), rgba(5,15,9,.96));
       transition: .35s ease;
-      animation: float 6s ease-in-out infinite;
-    }
-
-    .product-card:nth-child(2) {
-      animation-delay: -2s;
-    }
-
-    .product-card:nth-child(3) {
-      animation-delay: -4s;
-    }
-
-    .product-card::before {
-      content: "";
-      position: absolute;
-      width: 170px;
-      height: 170px;
-      top: -90px;
-      left: -60px;
-      border-radius: 50%;
-      background: rgba(34,255,145,.13);
-      filter: blur(28px);
-      transition: .35s;
-    }
-
-    .product-card::after {
-      content: "";
-      position: absolute;
-      width: 90px;
-      height: 180%;
-      top: -40%;
-      left: -100%;
-      opacity: 0;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,.08),
-        transparent
-      );
-      transform: rotate(20deg);
-      transition: .4s;
     }
 
     .product-card:hover {
       border-color: var(--border-light);
-      transform: translateY(-12px) scale(1.015);
-      box-shadow:
-        0 20px 45px rgba(0,0,0,.33),
-        0 0 30px rgba(34,255,145,.08);
-      animation-play-state: paused;
-    }
-
-    .product-card:hover::after {
-      left: 130%;
-      opacity: 1;
+      transform: translateY(-10px);
+      box-shadow: 0 20px 45px rgba(0,0,0,.33);
     }
 
     .product-top {
-      position: relative;
-      z-index: 1;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -937,7 +680,6 @@
       border-radius: 17px;
       color: var(--green);
       background: rgba(34,255,145,.1);
-      box-shadow: 0 0 27px rgba(34,255,145,.08);
       font-size: 29px;
     }
 
@@ -948,16 +690,12 @@
     }
 
     .product-card h3 {
-      position: relative;
-      z-index: 1;
       margin-bottom: 12px;
       font-size: 21px;
       font-weight: 900;
     }
 
     .product-card > p {
-      position: relative;
-      z-index: 1;
       min-height: 76px;
       color: var(--muted);
       font-size: 12px;
@@ -965,8 +703,6 @@
     }
 
     .tag-list {
-      position: relative;
-      z-index: 1;
       display: flex;
       flex-wrap: wrap;
       gap: 7px;
@@ -983,8 +719,6 @@
     }
 
     .product-bottom {
-      position: relative;
-      z-index: 1;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -1001,9 +735,6 @@
     }
 
     .product-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
       padding: 10px 13px;
       border-radius: 9px;
       color: #00170b;
@@ -1016,7 +747,6 @@
     .product-button:hover {
       background: var(--green2);
       transform: translateY(-3px);
-      box-shadow: 0 7px 18px rgba(34,255,145,.22);
     }
 
     /* Advantages */
@@ -1039,7 +769,6 @@
 
     .advantage:hover {
       border-color: var(--border-light);
-      background: rgba(16, 50, 28, .8);
       transform: translateY(-6px);
     }
 
@@ -1060,7 +789,7 @@
       line-height: 1.9;
     }
 
-    /* Redeem Modal */
+    /* Modal */
 
     .modal {
       position: fixed;
@@ -1084,9 +813,7 @@
       border: 1px solid rgba(34,255,145,.45);
       border-radius: 21px;
       background: linear-gradient(145deg, #12321f, #061009);
-      box-shadow: 0 20px 75px rgba(0,0,0,.5);
       text-align: center;
-      animation: appear .3s ease both;
     }
 
     .modal-box h2 {
@@ -1117,33 +844,33 @@
       direction: ltr;
     }
 
-    .redeem-input:focus {
-      border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(34,255,145,.08);
-    }
-
-    .submit-redeem {
+    .submit-redeem,
+    .close-button {
       width: 100%;
-      height: 48px;
+      height: 47px;
       margin-top: 12px;
-      border: 0;
       border-radius: 10px;
-      color: #00170b;
-      background: var(--green);
       font-size: 12px;
       font-weight: 900;
       cursor: pointer;
     }
 
-    .submit-redeem:hover {
-      background: var(--green2);
+    .submit-redeem {
+      border: 0;
+      color: #00170b;
+      background: var(--green);
+    }
+
+    .close-button {
+      border: 1px solid var(--border);
+      color: var(--white);
+      background: rgba(255,255,255,.04);
     }
 
     .redeem-result {
       min-height: 24px;
       margin-top: 14px;
       font-size: 12px;
-      line-height: 1.8;
     }
 
     .success {
@@ -1152,18 +879,6 @@
 
     .error {
       color: var(--red);
-    }
-
-    .close-button {
-      width: 100%;
-      height: 44px;
-      margin-top: 10px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: var(--white);
-      background: rgba(255,255,255,.04);
-      font-size: 12px;
-      cursor: pointer;
     }
 
     footer {
@@ -1189,11 +904,6 @@
     }
 
     @media (max-width: 600px) {
-      .site-loader::after {
-        width: 290px;
-        height: 290px;
-      }
-
       header {
         padding: 0 4%;
       }
@@ -1211,11 +921,6 @@
         display: none;
       }
 
-      .redeem-button {
-        padding: 9px 10px;
-        font-size: 10px;
-      }
-
       .hero {
         min-height: 520px;
         padding-top: 72px;
@@ -1231,6 +936,7 @@
 
       .hero-buttons {
         flex-direction: column;
+        align-items: center;
       }
 
       .primary-button,
@@ -1287,9 +993,7 @@
 
 <body class="loader-active">
 
-  <!-- =========================
-       Creeper Loading Screen
-  ========================== -->
+  <!-- Loading -->
 
   <div id="siteLoader" class="site-loader">
 
@@ -1305,23 +1009,12 @@
 
       <div class="creeper-area">
 
-        <span class="blast-particle p1"></span>
-        <span class="blast-particle p2"></span>
-        <span class="blast-particle p3"></span>
-        <span class="blast-particle p4"></span>
-        <span class="blast-particle p5"></span>
-        <span class="blast-particle p6"></span>
-        <span class="blast-particle p7"></span>
-        <span class="blast-particle p8"></span>
-        <span class="blast-particle p9"></span>
-        <span class="blast-particle p10"></span>
-        <span class="blast-particle p11"></span>
-        <span class="blast-particle p12"></span>
-
         <div class="creeper">
+
           <div class="creeper-head">
             <div class="creeper-eye eye-right"></div>
             <div class="creeper-eye eye-left"></div>
+
             <div class="creeper-mouth mouth-one"></div>
             <div class="creeper-mouth mouth-two"></div>
             <div class="creeper-mouth mouth-three"></div>
@@ -1332,6 +1025,7 @@
 
           <div class="creeper-leg leg-right"></div>
           <div class="creeper-leg leg-left"></div>
+
         </div>
 
       </div>
@@ -1360,10 +1054,7 @@
       <a href="#products" class="nav-link">محصولات</a>
       <a href="#advantages" class="nav-link">مزایا</a>
 
-      <button
-        class="redeem-button"
-        onclick="openRedeem()"
-      >
+      <button class="redeem-button" onclick="openRedeem()">
         Redeem Code
       </button>
     </nav>
@@ -1372,8 +1063,6 @@
   <!-- Hero -->
 
   <section class="hero">
-
-    <div class="hero-orb"></div>
 
     <div class="hero-content">
 
@@ -1387,4 +1076,327 @@
       </h1>
 
       <p class="hero-description">
-        بهترین کانفی
+        بهترین کانفیگ‌های V2Ray، WireGuard و SSH
+        با سرعت بالا، اتصال پایدار و فعال‌سازی سریع.
+        سرویس مناسب خودت را انتخاب کن و با خیال راحت استفاده کن.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#products" class="primary-button">
+          مشاهده کانفیگ‌ها
+        </a>
+
+        <button class="secondary-button" onclick="openRedeem()">
+          استفاده از Redeem Code
+        </button>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Stats -->
+
+  <section class="stats">
+
+    <div class="stat">
+      <strong>99%</strong>
+      <span>پایداری سرویس</span>
+    </div>
+
+    <div class="stat">
+      <strong>24/7</strong>
+      <span>پشتیبانی آنلاین</span>
+    </div>
+
+    <div class="stat">
+      <strong>+1000</strong>
+      <span>کاربر فعال</span>
+    </div>
+
+    <div class="stat">
+      <strong>⚡ سریع</strong>
+      <span>فعال‌سازی سفارش</span>
+    </div>
+
+  </section>
+
+  <!-- Products -->
+
+  <section id="products" class="section">
+
+    <div class="section-heading">
+      <div>
+        <h2>انتخاب <span>سرویس</span></h2>
+        <p>کانفیگ مناسب خودت را انتخاب کن</p>
+      </div>
+    </div>
+
+    <div class="products">
+
+      <article class="product-card">
+
+        <div class="product-top">
+          <div class="product-icon">✦</div>
+          <span class="product-number">01</span>
+        </div>
+
+        <h3>کانفیگ V2Ray</h3>
+
+        <p>
+          کانفیگ قدرتمند و پایدار برای استفاده روزمره،
+          گیم، استریم، دانلود و وب‌گردی بدون دردسر.
+        </p>
+
+        <div class="tag-list">
+          <span class="tag">سرعت بالا</span>
+          <span class="tag">پینگ مناسب</span>
+          <span class="tag">چند دستگاه</span>
+        </div>
+
+        <div class="product-bottom">
+          <span class="product-price">موجود است</span>
+
+          <a href="v2ray.html" class="product-button">
+            خرید کانفیگ
+          </a>
+        </div>
+
+      </article>
+
+      <article class="product-card">
+
+        <div class="product-top">
+          <div class="product-icon">◈</div>
+          <span class="product-number">02</span>
+        </div>
+
+        <h3>کانفیگ WireGuard</h3>
+
+        <p>
+          اتصال سریع و سبک با امنیت بالا، مناسب موبایل،
+          کامپیوتر، بازی آنلاین و استفاده طولانی‌مدت.
+        </p>
+
+        <div class="tag-list">
+          <span class="tag">امنیت بالا</span>
+          <span class="tag">اتصال سریع</span>
+          <span class="tag">مصرف کم</span>
+        </div>
+
+        <div class="product-bottom">
+          <span class="product-price">موجود است</span>
+
+          <a href="WireGuard.html" class="product-button">
+            خرید کانفیگ
+          </a>
+        </div>
+
+      </article>
+
+      <article class="product-card">
+
+        <div class="product-top">
+          <div class="product-icon">⌘</div>
+          <span class="product-number">03</span>
+        </div>
+
+        <h3>کانفیگ SSH</h3>
+
+        <p>
+          سرویس SSH پرسرعت و پایدار برای وب‌گردی،
+          استفاده روزمره و اتصال مطمئن در دستگاه‌های مختلف.
+        </p>
+
+        <div class="tag-list">
+          <span class="tag">پایدار</span>
+          <span class="tag">سریع</span>
+          <span class="tag">فعال‌سازی فوری</span>
+        </div>
+
+        <div class="product-bottom">
+          <span class="product-price">موجود است</span>
+
+          <a href="SSH.html" class="product-button">
+            خرید کانفیگ
+          </a>
+        </div>
+
+      </article>
+
+    </div>
+
+  </section>
+
+  <!-- Advantages -->
+
+  <section id="advantages" class="advantages">
+
+    <div class="advantage">
+      <div class="advantage-icon">⚡</div>
+      <h3>سرعت بالا</h3>
+      <p>
+        سرورهای قدرتمند برای دانلود، استریم و وب‌گردی
+        روان و سریع.
+      </p>
+    </div>
+
+    <div class="advantage">
+      <div class="advantage-icon">◉</div>
+      <h3>اتصال پایدار</h3>
+      <p>
+        سرویس پایدار با قطعی کم و عملکرد مناسب در تمام
+        ساعات شبانه‌روز.
+      </p>
+    </div>
+
+    <div class="advantage">
+      <div class="advantage-icon">♢</div>
+      <h3>فعال‌سازی سریع</h3>
+      <p>
+        بعد از ثبت سفارش، کانفیگ در کوتاه‌ترین زمان
+        برای شما ارسال می‌شود.
+      </p>
+    </div>
+
+    <div class="advantage">
+      <div class="advantage-icon">♧</div>
+      <h3>پشتیبانی حرفه‌ای</h3>
+      <p>
+        در صورت نیاز به راهنمایی، تیم پشتیبانی پاسخ‌گوی
+        شما خواهد بود.
+      </p>
+    </div>
+
+  </section>
+
+  <footer>
+    تمامی حقوق برای Config Store محفوظ است.
+  </footer>
+
+  <!-- Redeem Modal -->
+
+  <div id="redeemModal" class="modal">
+
+    <div class="modal-box">
+
+      <h2>Redeem Code</h2>
+
+      <p>
+        اگر کد فعال‌سازی داری، آن را وارد کن.
+      </p>
+
+      <input
+        id="redeemInput"
+        class="redeem-input"
+        type="text"
+        placeholder="کد خود را وارد کنید"
+        autocomplete="off"
+      >
+
+      <button class="submit-redeem" onclick="checkRedeemCode()">
+        بررسی و فعال‌سازی کد
+      </button>
+
+      <div id="redeemResult" class="redeem-result"></div>
+
+      <button class="close-button" onclick="closeRedeem()">
+        بستن
+      </button>
+
+    </div>
+
+  </div>
+
+  <script>
+    /* =========================
+       حذف لودینگ بعد از ۵ ثانیه
+    ========================= */
+
+    setTimeout(function () {
+      const loader = document.getElementById("siteLoader");
+
+      if (loader) {
+        loader.classList.add("loader-finished");
+      }
+
+      document.body.classList.remove("loader-active");
+
+      setTimeout(function () {
+        if (loader) {
+          loader.remove();
+        }
+      }, 900);
+
+    }, 5000);
+
+
+    /* =========================
+       Redeem Code
+    ========================= */
+
+    const validRedeemCode = "Qr678";
+
+    const redeemModal =
+      document.getElementById("redeemModal");
+
+    const redeemInput =
+      document.getElementById("redeemInput");
+
+    const redeemResult =
+      document.getElementById("redeemResult");
+
+    function openRedeem() {
+      redeemModal.classList.add("show");
+      redeemInput.value = "";
+      redeemResult.textContent = "";
+      redeemResult.className = "redeem-result";
+
+      setTimeout(function () {
+        redeemInput.focus();
+      }, 100);
+    }
+
+    function closeRedeem() {
+      redeemModal.classList.remove("show");
+    }
+
+    function checkRedeemCode() {
+      const code = redeemInput.value.trim();
+
+      if (code === validRedeemCode) {
+        redeemResult.textContent =
+          "کد صحیح است و با موفقیت فعال شد.";
+
+        redeemResult.className =
+          "redeem-result success";
+      } else {
+        redeemResult.textContent =
+          "کد واردشده اشتباه است.";
+
+        redeemResult.className =
+          "redeem-result error";
+      }
+    }
+
+    redeemInput.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        checkRedeemCode();
+      }
+    });
+
+    redeemModal.addEventListener("click", function (event) {
+      if (event.target === redeemModal) {
+        closeRedeem();
+      }
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        closeRedeem();
+      }
+    });
+  </script>
+
+</body>
+</html>
