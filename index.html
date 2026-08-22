@@ -19,7 +19,6 @@
       --bg2: #06150d;
       --green: #22ff91;
       --green2: #8dffc3;
-      --green-dark: #0bc66a;
       --white: #effff6;
       --muted: #91ad9d;
       --border: rgba(34, 255, 145, .2);
@@ -64,8 +63,8 @@
       position: fixed;
       inset: 0;
       z-index: -1;
-      pointer-events: none;
       opacity: .25;
+      pointer-events: none;
       background-image:
         radial-gradient(circle at 12% 23%, var(--green) 0 1px, transparent 2px),
         radial-gradient(circle at 83% 19%, var(--green) 0 1px, transparent 2px),
@@ -94,9 +93,7 @@
       font-family: inherit;
     }
 
-    /* =========================
-       Loading Screen
-    ========================= */
+    /* Loading */
 
     .site-loader {
       position: fixed;
@@ -105,15 +102,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
       background:
         radial-gradient(circle at center, rgba(34,255,145,.16), transparent 310px),
         linear-gradient(135deg, #010403, #03150b, #010403);
-      opacity: 1;
-      visibility: visible;
-      transition:
-        opacity .8s ease,
-        visibility .8s ease;
+      transition: opacity .8s ease, visibility .8s ease;
     }
 
     .site-loader::before {
@@ -129,19 +121,6 @@
       animation: loaderGrid 8s linear infinite;
     }
 
-    .site-loader::after {
-      content: "";
-      position: absolute;
-      width: 360px;
-      height: 360px;
-      border: 1px solid rgba(34,255,145,.2);
-      border-radius: 50%;
-      box-shadow:
-        0 0 50px rgba(34,255,145,.12),
-        inset 0 0 60px rgba(34,255,145,.08);
-      animation: loaderRing 5s linear infinite;
-    }
-
     .site-loader.loader-finished {
       opacity: 0;
       visibility: hidden;
@@ -153,7 +132,6 @@
       z-index: 2;
       width: min(430px, 90%);
       text-align: center;
-      animation: loaderAppear .8s ease both;
     }
 
     .loading-title {
@@ -161,7 +139,6 @@
       font-size: clamp(25px, 6vw, 42px);
       font-weight: 900;
       letter-spacing: 2px;
-      text-shadow: 0 0 25px rgba(34,255,145,.35);
     }
 
     .loading-title span {
@@ -181,7 +158,6 @@
       margin: 25px auto 15px;
       display: flex;
       justify-content: center;
-      align-items: flex-start;
     }
 
     .creeper {
@@ -189,11 +165,8 @@
       width: 100px;
       height: 210px;
       margin-top: 15px;
-      transform-origin: center bottom;
       filter: drop-shadow(0 0 20px rgba(34,255,145,.5));
-      animation:
-        creeperFloat 1.7s ease-in-out infinite,
-        creeperGlow 1.5s ease-in-out infinite alternate;
+      animation: creeperFloat 1.7s ease-in-out infinite;
     }
 
     .creeper-head {
@@ -204,9 +177,7 @@
       height: 94px;
       border: 3px solid #0b9f55;
       background: linear-gradient(135deg, #72ffac, #1edb76 58%, #0b8748);
-      box-shadow:
-        inset 0 0 18px rgba(255,255,255,.2),
-        0 0 25px rgba(34,255,145,.4);
+      box-shadow: 0 0 25px rgba(34,255,145,.4);
     }
 
     .creeper-eye {
@@ -266,7 +237,6 @@
       height: 75px;
       border: 2px solid #0b9f55;
       background: linear-gradient(135deg, #59f99b, #15c969);
-      box-shadow: inset 0 0 14px rgba(255,255,255,.15);
     }
 
     .creeper-leg {
@@ -289,7 +259,7 @@
     .loading-progress {
       width: min(300px, 80%);
       height: 6px;
-      margin: 0 auto;
+      margin: auto;
       overflow: hidden;
       border: 1px solid rgba(34,255,145,.4);
       border-radius: 20px;
@@ -300,12 +270,7 @@
       width: 0;
       height: 100%;
       border-radius: inherit;
-      background: linear-gradient(
-        90deg,
-        var(--green-dark),
-        var(--green2),
-        var(--green)
-      );
+      background: linear-gradient(90deg, #0bc66a, var(--green2), var(--green));
       box-shadow: 0 0 15px var(--green);
       animation: loadingProgress 5s linear forwards;
     }
@@ -322,55 +287,13 @@
       animation: blinkDot 1s infinite;
     }
 
-    @keyframes loaderAppear {
-      from {
-        opacity: 0;
-        transform: scale(.7) translateY(25px);
-      }
-
-      to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
-    }
-
-    @keyframes loaderGrid {
-      from {
+    @keyframes creeperFloat {
+      0%, 100% {
         transform: translateY(0);
       }
 
-      to {
-        transform: translateY(45px);
-      }
-    }
-
-    @keyframes loaderRing {
-      from {
-        transform: rotate(0deg) scale(.85);
-      }
-
-      to {
-        transform: rotate(360deg) scale(1.1);
-      }
-    }
-
-    @keyframes creeperFloat {
-      0%, 100% {
-        transform: translateY(0) scale(1);
-      }
-
       50% {
-        transform: translateY(-14px) scale(1.03);
-      }
-    }
-
-    @keyframes creeperGlow {
-      from {
-        filter: drop-shadow(0 0 12px rgba(34,255,145,.35));
-      }
-
-      to {
-        filter: drop-shadow(0 0 32px rgba(34,255,145,.9));
+        transform: translateY(-14px);
       }
     }
 
@@ -381,6 +304,16 @@
 
       to {
         width: 100%;
+      }
+    }
+
+    @keyframes loaderGrid {
+      from {
+        transform: translateY(0);
+      }
+
+      to {
+        transform: translateY(45px);
       }
     }
 
@@ -406,7 +339,7 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid rgba(34,255,145,.16);
-      background: rgba(2, 10, 6, .76);
+      background: rgba(2,10,6,.76);
       backdrop-filter: blur(18px);
     }
 
@@ -432,7 +365,6 @@
       border-radius: 14px;
       color: var(--green);
       background: rgba(34,255,145,.08);
-      box-shadow: 0 0 25px rgba(34,255,145,.18);
       font-size: 24px;
     }
 
@@ -447,7 +379,6 @@
       color: var(--muted);
       border-radius: 9px;
       font-size: 12px;
-      transition: .25s;
     }
 
     .nav-link:hover {
@@ -464,19 +395,16 @@
       font-size: 11px;
       font-weight: 800;
       cursor: pointer;
-      transition: .25s;
     }
 
     .redeem-button:hover {
       color: #00170b;
       background: var(--green);
-      transform: translateY(-3px);
     }
 
     /* Hero */
 
     .hero {
-      position: relative;
       width: min(1150px, 90%);
       min-height: 555px;
       margin: auto;
@@ -488,8 +416,6 @@
 
     .hero-content {
       width: 100%;
-      position: relative;
-      z-index: 2;
     }
 
     .hero-badge {
@@ -550,7 +476,6 @@
       border-radius: 10px;
       font-size: 12px;
       font-weight: 900;
-      transition: .25s;
     }
 
     .primary-button {
@@ -587,7 +512,7 @@
     .stat {
       padding: 18px 15px;
       border-left: 1px solid rgba(34,255,145,.16);
-      background: rgba(7, 24, 13, .55);
+      background: rgba(7,24,13,.55);
       text-align: center;
     }
 
@@ -621,9 +546,6 @@
     }
 
     .section-heading {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
       margin-bottom: 24px;
     }
 
@@ -637,6 +559,7 @@
     }
 
     .section-heading p {
+      margin-top: 7px;
       color: var(--muted);
       font-size: 12px;
     }
@@ -741,12 +664,6 @@
       background: var(--green);
       font-size: 11px;
       font-weight: 900;
-      transition: .25s;
-    }
-
-    .product-button:hover {
-      background: var(--green2);
-      transform: translateY(-3px);
     }
 
     /* Advantages */
@@ -763,13 +680,7 @@
       padding: 23px 18px;
       border: 1px solid var(--border);
       border-radius: 16px;
-      background: rgba(8, 26, 15, .69);
-      transition: .3s;
-    }
-
-    .advantage:hover {
-      border-color: var(--border-light);
-      transform: translateY(-6px);
+      background: rgba(8,26,15,.69);
     }
 
     .advantage-icon {
@@ -808,7 +719,9 @@
     }
 
     .modal-box {
-      width: min(430px, 100%);
+      width: min(470px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
       padding: 29px 23px;
       border: 1px solid rgba(34,255,145,.45);
       border-radius: 21px;
@@ -842,6 +755,10 @@
       font-size: 14px;
       text-align: center;
       direction: ltr;
+    }
+
+    .redeem-input:disabled {
+      opacity: .55;
     }
 
     .submit-redeem,
@@ -879,6 +796,40 @@
 
     .error {
       color: var(--red);
+    }
+
+    .config-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .config-action-button {
+      flex: 1;
+      min-height: 47px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: .25s;
+    }
+
+    .config-action-button:hover {
+      transform: translateY(-3px);
+      filter: brightness(1.1);
+    }
+
+    .copy-config-button {
+      border: 1px solid rgba(34,255,145,.45);
+      color: var(--green2);
+      background: rgba(34,255,145,.08);
+    }
+
+    .download-config-button {
+      border: 0;
+      color: #00170b;
+      background: var(--green);
     }
 
     footer {
@@ -971,14 +922,6 @@
         border-radius: 0 0 12px 0;
       }
 
-      .section-heading {
-        display: block;
-      }
-
-      .section-heading p {
-        margin-top: 8px;
-      }
-
       .products,
       .advantages {
         grid-template-columns: 1fr;
@@ -987,16 +930,19 @@
       .product-card:last-child {
         grid-column: auto;
       }
+
+      .config-actions {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 
 <body class="loader-active">
 
-  <!-- Loading -->
+  <!-- Loading Screen -->
 
   <div id="siteLoader" class="site-loader">
-
     <div class="loader-content">
 
       <div class="loading-title">
@@ -1008,7 +954,6 @@
       </div>
 
       <div class="creeper-area">
-
         <div class="creeper">
 
           <div class="creeper-head">
@@ -1022,12 +967,10 @@
           </div>
 
           <div class="creeper-body"></div>
-
           <div class="creeper-leg leg-right"></div>
           <div class="creeper-leg leg-left"></div>
 
         </div>
-
       </div>
 
       <div class="loading-progress">
@@ -1039,13 +982,12 @@
       </div>
 
     </div>
-
   </div>
 
   <!-- Header -->
 
   <header>
-    <a href="index.html" class="logo">
+    <a href="#" class="logo">
       <div class="logo-icon">⌁</div>
       CONFIG <span>STORE</span>
     </a>
@@ -1063,7 +1005,6 @@
   <!-- Hero -->
 
   <section class="hero">
-
     <div class="hero-content">
 
       <div class="hero-badge">
@@ -1092,7 +1033,6 @@
       </div>
 
     </div>
-
   </section>
 
   <!-- Stats -->
@@ -1126,10 +1066,8 @@
   <section id="products" class="section">
 
     <div class="section-heading">
-      <div>
-        <h2>انتخاب <span>سرویس</span></h2>
-        <p>کانفیگ مناسب خودت را انتخاب کن</p>
-      </div>
+      <h2>انتخاب <span>سرویس</span></h2>
+      <p>کانفیگ مناسب خودت را انتخاب کن</p>
     </div>
 
     <div class="products">
@@ -1156,7 +1094,6 @@
 
         <div class="product-bottom">
           <span class="product-price">موجود است</span>
-
           <a href="v2ray.html" class="product-button">
             خرید کانفیگ
           </a>
@@ -1186,7 +1123,6 @@
 
         <div class="product-bottom">
           <span class="product-price">موجود است</span>
-
           <a href="WireGuard.html" class="product-button">
             خرید کانفیگ
           </a>
@@ -1216,8 +1152,7 @@
 
         <div class="product-bottom">
           <span class="product-price">موجود است</span>
-
-          <a href="ssh.html" class="product-button">
+          <a href="SSH.html" class="product-button">
             خرید کانفیگ
           </a>
         </div>
@@ -1225,7 +1160,6 @@
       </article>
 
     </div>
-
   </section>
 
   <!-- Advantages -->
@@ -1235,37 +1169,25 @@
     <div class="advantage">
       <div class="advantage-icon">⚡</div>
       <h3>سرعت بالا</h3>
-      <p>
-        سرورهای قدرتمند برای دانلود، استریم و وب‌گردی
-        روان و سریع.
-      </p>
+      <p>سرورهای قدرتمند برای دانلود، استریم و وب‌گردی روان و سریع.</p>
     </div>
 
     <div class="advantage">
       <div class="advantage-icon">◉</div>
       <h3>اتصال پایدار</h3>
-      <p>
-        سرویس پایدار با قطعی کم و عملکرد مناسب در تمام
-        ساعات شبانه‌روز.
-      </p>
+      <p>سرویس پایدار با قطعی کم و عملکرد مناسب در تمام ساعات شبانه‌روز.</p>
     </div>
 
     <div class="advantage">
       <div class="advantage-icon">♢</div>
       <h3>فعال‌سازی سریع</h3>
-      <p>
-        بعد از ثبت سفارش، کانفیگ در کوتاه‌ترین زمان
-        برای شما ارسال می‌شود.
-      </p>
+      <p>بعد از ثبت سفارش، کانفیگ در کوتاه‌ترین زمان برای شما ارسال می‌شود.</p>
     </div>
 
     <div class="advantage">
       <div class="advantage-icon">♧</div>
       <h3>پشتیبانی حرفه‌ای</h3>
-      <p>
-        در صورت نیاز به راهنمایی، تیم پشتیبانی پاسخ‌گوی
-        شما خواهد بود.
-      </p>
+      <p>در صورت نیاز به راهنمایی، تیم پشتیبانی پاسخ‌گوی شما خواهد بود.</p>
     </div>
 
   </section>
@@ -1283,7 +1205,8 @@
       <h2>Redeem Code</h2>
 
       <p>
-        اگر کد فعال‌سازی داری، آن را وارد کن.
+        کد فعال‌سازی خود را وارد کنید.
+        هر کد فقط یک بار قابل استفاده است.
       </p>
 
       <input
@@ -1300,12 +1223,27 @@
 
       <div id="redeemResult" class="redeem-result"></div>
 
+      <div id="configActions" class="config-actions" style="display: none;">
+
+        <button
+          class="config-action-button copy-config-button"
+          onclick="copyConfig()">
+          کپی کانفیگ
+        </button>
+
+        <button
+          class="config-action-button download-config-button"
+          onclick="downloadConfig()">
+          دانلود کانفیگ
+        </button>
+
+      </div>
+
       <button class="close-button" onclick="closeRedeem()">
         بستن
       </button>
 
     </div>
-
   </div>
 
   <script>
@@ -1332,10 +1270,204 @@
 
 
     /* =========================
+       کانفیگ اصلی
+    ========================= */
+
+    const configData = {
+      "remarks": "Config ( Config store )",
+      "log": {
+        "loglevel": "warning"
+      },
+      "inbounds": [
+        {
+          "tag": "socks",
+          "port": 10808,
+          "protocol": "socks",
+          "settings": {
+            "auth": "noauth",
+            "udp": true,
+            "userLevel": 8
+          },
+          "sniffing": {
+            "enabled": true,
+            "destOverride": [
+              "http",
+              "tls"
+            ],
+            "routeOnly": false
+          }
+        }
+      ],
+      "outbounds": [
+        {
+          "tag": "proxy",
+          "protocol": "vmess",
+          "settings": {
+            "vnext": [
+              {
+                "address": "de.connfull.org",
+                "port": 2053,
+                "users": [
+                  {
+                    "id": "e92a9615-e7b3-41e6-8895-4da83f4844a2",
+                    "security": "auto",
+                    "level": 8
+                  }
+                ]
+              }
+            ]
+          },
+          "streamSettings": {
+            "network": "tcp",
+            "security": "tls",
+            "tcpSettings": {
+              "header": {
+                "type": "none"
+              }
+            },
+            "tlsSettings": {
+              "allowInsecure": true,
+              "alpn": [
+                "h2",
+                "http/1.1",
+                "h3"
+              ],
+              "fingerprint": "chrome",
+              "show": false
+            }
+          },
+          "mux": {
+            "enabled": false,
+            "concurrency": -1,
+            "xudpConcurrency": 8,
+            "xudpProxyUDP443": ""
+          }
+        },
+        {
+          "tag": "direct",
+          "protocol": "freedom",
+          "settings": {
+            "domainStrategy": "UseIP"
+          },
+          "mux": {
+            "enabled": false,
+            "concurrency": 8,
+            "xudpConcurrency": 8,
+            "xudpProxyUDP443": ""
+          }
+        },
+        {
+          "tag": "block",
+          "protocol": "blackhole",
+          "settings": {
+            "response": {
+              "type": "http"
+            }
+          },
+          "mux": {
+            "enabled": false,
+            "concurrency": 8,
+            "xudpConcurrency": 8,
+            "xudpProxyUDP443": ""
+          }
+        }
+      ],
+      "dns": {
+        "servers": [
+          "1.1.1.1"
+        ],
+        "hosts": {
+          "domain:googleapis.cn": "googleapis.com",
+          "dns.alidns.com": [
+            "223.5.5.5",
+            "223.6.6.6",
+            "2400:3200::1",
+            "2400:3200:baba::1"
+          ],
+          "one.one.one.one": [
+            "1.1.1.1",
+            "1.0.0.1",
+            "2606:4700:4700::1111",
+            "2606:4700:4700::1001"
+          ],
+          "dot.pub": [
+            "1.12.12.12",
+            "120.53.53.53"
+          ],
+          "dns.google": [
+            "8.8.8.8",
+            "8.8.4.4",
+            "2001:4860:4860::8888",
+            "2001:4860:4860::8844"
+          ],
+          "dns.quad9.net": [
+            "9.9.9.9",
+            "149.112.112.112",
+            "2620:fe::fe",
+            "2620:fe::9"
+          ],
+          "common.dot.dns.yandex.net": [
+            "77.88.8.8",
+            "77.88.8.1",
+            "2a02:6b8::feed:0ff",
+            "2a02:6b8:0:1::feed:0ff"
+          ]
+        }
+      },
+      "routing": {
+        "domainStrategy": "IPIfNonMatch",
+        "rules": [
+          {
+            "type": "field",
+            "ip": [
+              "1.1.1.1"
+            ],
+            "outboundTag": "proxy",
+            "port": "53"
+          },
+          {
+            "type": "field",
+            "ip": [
+              "223.5.5.5"
+            ],
+            "outboundTag": "direct",
+            "port": "53"
+          },
+          {
+            "type": "field",
+            "ip": [
+              "1.1.1.1"
+            ],
+            "outboundTag": "proxy",
+            "port": "53"
+          },
+          {
+            "type": "field",
+            "ip": [
+              "223.5.5.5"
+            ],
+            "outboundTag": "direct",
+            "port": "53"
+          }
+        ]
+      }
+    };
+
+    const configText = JSON.stringify(configData, null, 2);
+
+
+    /* =========================
        Redeem Code
     ========================= */
 
     const validRedeemCode = "Qr678";
+
+    /*
+      این کلید در localStorage ذخیره می‌شود.
+      بنابراین کد در همین مرورگر فقط یک بار قابل استفاده است.
+    */
+
+    const redeemStorageKey = "config_store_qr678_used";
 
     const redeemModal =
       document.getElementById("redeemModal");
@@ -1346,38 +1478,159 @@
     const redeemResult =
       document.getElementById("redeemResult");
 
+    const configActions =
+      document.getElementById("configActions");
+
+
     function openRedeem() {
       redeemModal.classList.add("show");
+
       redeemInput.value = "";
+      redeemInput.disabled = false;
+
       redeemResult.textContent = "";
       redeemResult.className = "redeem-result";
+
+      configActions.style.display = "none";
+
+      if (localStorage.getItem(redeemStorageKey) === "true") {
+        redeemResult.textContent =
+          "این کد قبلاً استفاده شده است.";
+
+        redeemResult.className =
+          "redeem-result error";
+
+        redeemInput.disabled = true;
+      }
 
       setTimeout(function () {
         redeemInput.focus();
       }, 100);
     }
 
+
     function closeRedeem() {
       redeemModal.classList.remove("show");
     }
 
+
     function checkRedeemCode() {
       const code = redeemInput.value.trim();
 
-      if (code === validRedeemCode) {
+      if (localStorage.getItem(redeemStorageKey) === "true") {
         redeemResult.textContent =
-          "کد صحیح است و با موفقیت فعال شد.";
+          "این کد قبلاً استفاده شده و دیگر قابل استفاده نیست.";
+
+        redeemResult.className =
+          "redeem-result error";
+
+        configActions.style.display = "none";
+        redeemInput.disabled = true;
+
+        return;
+      }
+
+      if (code === validRedeemCode) {
+
+        /*
+          مصرف کد بلافاصله بعد از ورود صحیح ثبت می‌شود.
+        */
+
+        localStorage.setItem(redeemStorageKey, "true");
+
+        redeemResult.textContent =
+          "کد با موفقیت فعال شد. حالا کانفیگ را کپی یا دانلود کن.";
 
         redeemResult.className =
           "redeem-result success";
+
+        configActions.style.display = "flex";
+        redeemInput.disabled = true;
+
       } else {
+
         redeemResult.textContent =
           "کد واردشده اشتباه است.";
 
         redeemResult.className =
           "redeem-result error";
+
+        configActions.style.display = "none";
       }
     }
+
+
+    /* =========================
+       کپی کانفیگ
+    ========================= */
+
+    function copyConfig() {
+      navigator.clipboard.writeText(configText)
+        .then(function () {
+          redeemResult.textContent =
+            "کانفیگ با موفقیت کپی شد.";
+
+          redeemResult.className =
+            "redeem-result success";
+        })
+        .catch(function () {
+          const textArea = document.createElement("textarea");
+
+          textArea.value = configText;
+          textArea.style.position = "fixed";
+          textArea.style.opacity = "0";
+
+          document.body.appendChild(textArea);
+          textArea.focus();
+          textArea.select();
+
+          document.execCommand("copy");
+          textArea.remove();
+
+          redeemResult.textContent =
+            "کانفیگ با موفقیت کپی شد.";
+
+          redeemResult.className =
+            "redeem-result success";
+        });
+    }
+
+
+    /* =========================
+       دانلود کانفیگ
+    ========================= */
+
+    function downloadConfig() {
+      const file = new Blob(
+        [configText],
+        {
+          type: "application/json;charset=utf-8"
+        }
+      );
+
+      const url = URL.createObjectURL(file);
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = "config.json";
+
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      URL.revokeObjectURL(url);
+
+      redeemResult.textContent =
+        "فایل config.json دانلود شد.";
+
+      redeemResult.className =
+        "redeem-result success";
+    }
+
+
+    /* =========================
+       کنترل‌ها
+    ========================= */
 
     redeemInput.addEventListener("keydown", function (event) {
       if (event.key === "Enter") {
