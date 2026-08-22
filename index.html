@@ -18,8 +18,6 @@
     :root {
       --bg: #020806;
       --bg2: #06150d;
-      --card: rgba(10, 28, 17, .76);
-      --card-light: rgba(19, 53, 31, .75);
       --green: #22ff91;
       --green2: #8dffc3;
       --green-dark: #0bc66a;
@@ -43,6 +41,10 @@
         radial-gradient(circle at 92% 12%, rgba(0,190,105,.14), transparent 360px),
         linear-gradient(135deg, var(--bg), var(--bg2), #010403);
       font-family: "Vazirmatn", Tahoma, sans-serif;
+    }
+
+    body.loader-active {
+      overflow: hidden;
     }
 
     body::before {
@@ -109,22 +111,12 @@
     @keyframes glow {
       0%, 100% {
         opacity: .45;
-        transform: scale(1);
+        transform: translateX(-50%) scale(1);
       }
 
       50% {
         opacity: .9;
-        transform: scale(1.12);
-      }
-    }
-
-    @keyframes shine {
-      0% {
-        transform: translateX(-120%);
-      }
-
-      100% {
-        transform: translateX(120%);
+        transform: translateX(-50%) scale(1.12);
       }
     }
 
@@ -147,6 +139,412 @@
 
     button {
       font-family: inherit;
+    }
+
+    /* =========================
+       Creeper Loading Screen
+    ========================= */
+
+    .site-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at center, rgba(34,255,145,.16), transparent 300px),
+        linear-gradient(135deg, #010403, #03150b, #010403);
+      transition:
+        opacity .8s ease,
+        visibility .8s ease,
+        transform .8s ease;
+    }
+
+    .site-loader::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .24;
+      background-image:
+        linear-gradient(rgba(34,255,145,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34,255,145,.07) 1px, transparent 1px);
+      background-size: 45px 45px;
+      animation: loaderGrid 8s linear infinite;
+    }
+
+    .site-loader::after {
+      content: "";
+      position: absolute;
+      width: 430px;
+      height: 430px;
+      border: 1px solid rgba(34,255,145,.2);
+      border-radius: 50%;
+      box-shadow:
+        0 0 50px rgba(34,255,145,.12),
+        inset 0 0 60px rgba(34,255,145,.08);
+      animation: loaderRing 4s linear infinite;
+    }
+
+    .site-loader.loader-finished {
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(1.15);
+      pointer-events: none;
+    }
+
+    .loader-content {
+      position: relative;
+      z-index: 5;
+      width: min(450px, 90%);
+      text-align: center;
+      animation: loaderAppear .8s ease both;
+    }
+
+    .loading-title {
+      color: var(--white);
+      font-size: clamp(25px, 6vw, 42px);
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-shadow: 0 0 25px rgba(34,255,145,.3);
+    }
+
+    .loading-title span {
+      color: var(--green);
+    }
+
+    .loading-subtitle {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .creeper-area {
+      width: 230px;
+      height: 260px;
+      margin: 25px auto 15px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      filter: drop-shadow(0 0 22px rgba(34,255,145,.4));
+    }
+
+    .creeper {
+      position: relative;
+      width: 100px;
+      height: 210px;
+      margin-top: 15px;
+      transform-origin: center bottom;
+      animation:
+        creeperFloat 1.7s ease-in-out infinite,
+        creeperShake 3.5s ease-in-out infinite;
+    }
+
+    .creeper-head {
+      position: absolute;
+      top: 0;
+      left: 3px;
+      width: 94px;
+      height: 94px;
+      border: 3px solid #0b9f55;
+      background: linear-gradient(135deg, #72ffac, #1edb76 58%, #0b8748);
+      box-shadow:
+        inset 0 0 18px rgba(255,255,255,.2),
+        0 0 20px rgba(34,255,145,.35);
+    }
+
+    .creeper-eye {
+      position: absolute;
+      top: 24px;
+      width: 17px;
+      height: 19px;
+      background: #001c0e;
+      box-shadow: 0 0 8px rgba(0,0,0,.5);
+    }
+
+    .eye-right {
+      right: 20px;
+    }
+
+    .eye-left {
+      left: 20px;
+    }
+
+    .creeper-mouth {
+      position: absolute;
+      background: #001c0e;
+    }
+
+    .mouth-one {
+      width: 20px;
+      height: 19px;
+      left: 37px;
+      top: 43px;
+    }
+
+    .mouth-two {
+      width: 19px;
+      height: 20px;
+      left: 21px;
+      top: 59px;
+    }
+
+    .mouth-three {
+      width: 19px;
+      height: 20px;
+      right: 21px;
+      top: 59px;
+    }
+
+    .mouth-four {
+      width: 20px;
+      height: 17px;
+      left: 37px;
+      top: 78px;
+    }
+
+    .creeper-body {
+      position: absolute;
+      top: 98px;
+      left: 22px;
+      width: 56px;
+      height: 75px;
+      border: 2px solid #0b9f55;
+      background: linear-gradient(135deg, #59f99b, #15c969);
+      box-shadow: inset 0 0 14px rgba(255,255,255,.15);
+    }
+
+    .creeper-leg {
+      position: absolute;
+      top: 168px;
+      width: 25px;
+      height: 43px;
+      border: 2px solid #087d42;
+      background: linear-gradient(135deg, #49ed8c, #0eaf5b);
+    }
+
+    .leg-right {
+      right: 21px;
+    }
+
+    .leg-left {
+      left: 21px;
+    }
+
+    .loading-progress {
+      width: min(300px, 80%);
+      height: 6px;
+      margin: 0 auto;
+      overflow: hidden;
+      border: 1px solid rgba(34,255,145,.4);
+      border-radius: 20px;
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 0 15px rgba(34,255,145,.1);
+    }
+
+    .loading-progress-bar {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(
+        90deg,
+        var(--green-dark),
+        var(--green2),
+        var(--green)
+      );
+      box-shadow: 0 0 15px var(--green);
+      animation: loadingProgress 5s linear forwards;
+    }
+
+    .loading-percent {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 2px;
+    }
+
+    .loading-percent span {
+      color: var(--green);
+      animation: blinkDot 1s infinite;
+    }
+
+    .blast-particle {
+      position: absolute;
+      top: 105px;
+      left: 50%;
+      width: 9px;
+      height: 9px;
+      opacity: 0;
+      border-radius: 2px;
+      background: var(--green);
+      box-shadow: 0 0 13px var(--green);
+      transform: translate(-50%, -50%);
+    }
+
+    .site-loader.explode .creeper {
+      animation: creeperExplosion .75s ease forwards;
+    }
+
+    .site-loader.explode .creeper-area::before {
+      content: "";
+      position: absolute;
+      top: 105px;
+      left: 50%;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      border: 5px solid var(--green);
+      transform: translate(-50%, -50%);
+      animation: explosionFlash .7s ease forwards;
+    }
+
+    .site-loader.explode .blast-particle {
+      animation: particleBlast .9s ease forwards;
+    }
+
+    .p1 { --x: -130px; --y: -115px; }
+    .p2 { --x: 120px; --y: -120px; }
+    .p3 { --x: -155px; --y: -25px; }
+    .p4 { --x: 150px; --y: -35px; }
+    .p5 { --x: -125px; --y: 80px; }
+    .p6 { --x: 130px; --y: 90px; }
+    .p7 { --x: -65px; --y: -145px; }
+    .p8 { --x: 65px; --y: -150px; }
+    .p9 { --x: -80px; --y: 130px; }
+    .p10 { --x: 85px; --y: 135px; }
+    .p11 { --x: 0px; --y: -165px; }
+    .p12 { --x: 0px; --y: 160px; }
+
+    @keyframes loaderAppear {
+      from {
+        opacity: 0;
+        transform: scale(.7) translateY(25px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @keyframes loaderGrid {
+      from {
+        transform: translateY(0);
+      }
+
+      to {
+        transform: translateY(45px);
+      }
+    }
+
+    @keyframes loaderRing {
+      from {
+        transform: rotate(0deg) scale(.8);
+      }
+
+      to {
+        transform: rotate(360deg) scale(1.15);
+      }
+    }
+
+    @keyframes creeperFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-13px);
+      }
+    }
+
+    @keyframes creeperShake {
+      0%, 70%, 100% {
+        filter: brightness(1);
+      }
+
+      75% {
+        filter: brightness(1.5);
+      }
+
+      80% {
+        filter: brightness(1);
+        transform: scale(1.04);
+      }
+
+      85% {
+        filter: brightness(1.7);
+      }
+    }
+
+    @keyframes loadingProgress {
+      from {
+        width: 0%;
+      }
+
+      to {
+        width: 100%;
+      }
+    }
+
+    @keyframes blinkDot {
+      0%, 100% {
+        opacity: .2;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes creeperExplosion {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      45% {
+        opacity: 1;
+        transform: scale(1.35);
+        filter: brightness(2);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(2.7) rotate(18deg);
+        filter: brightness(4);
+      }
+    }
+
+    @keyframes explosionFlash {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(.2);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(7);
+      }
+    }
+
+    @keyframes particleBlast {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      100% {
+        opacity: 0;
+        transform:
+          translate(
+            calc(-50% + var(--x)),
+            calc(-50% + var(--y))
+          )
+          rotate(360deg)
+          scale(.2);
+      }
     }
 
     /* Header */
@@ -187,8 +585,11 @@
       border: 1px solid rgba(34,255,145,.5);
       border-radius: 14px;
       color: var(--green);
-      background:
-        linear-gradient(135deg, rgba(34,255,145,.18), rgba(34,255,145,.03));
+      background: linear-gradient(
+        135deg,
+        rgba(34,255,145,.18),
+        rgba(34,255,145,.03)
+      );
       box-shadow:
         0 0 25px rgba(34,255,145,.18),
         inset 0 0 15px rgba(34,255,145,.1);
@@ -329,6 +730,7 @@
       border: 1px solid var(--border-light);
       color: var(--green2);
       background: rgba(255,255,255,.035);
+      cursor: pointer;
     }
 
     .primary-button:hover,
@@ -371,7 +773,7 @@
       border-color: rgba(34,255,145,.045);
     }
 
-    /* Stats */
+    /* Statistics */
 
     .stats {
       width: min(950px, 90%);
@@ -455,8 +857,11 @@
       flex-direction: column;
       border: 1px solid var(--border);
       border-radius: 21px;
-      background:
-        linear-gradient(145deg, rgba(17,49,29,.9), rgba(5,15,9,.96));
+      background: linear-gradient(
+        145deg,
+        rgba(17,49,29,.9),
+        rgba(5,15,9,.96)
+      );
       transition: .35s ease;
       animation: float 6s ease-in-out infinite;
     }
@@ -784,6 +1189,11 @@
     }
 
     @media (max-width: 600px) {
+      .site-loader::after {
+        width: 290px;
+        height: 290px;
+      }
+
       header {
         padding: 0 4%;
       }
@@ -875,9 +1285,71 @@
   </style>
 </head>
 
-<body>
+<body class="loader-active">
+
+  <!-- =========================
+       Creeper Loading Screen
+  ========================== -->
+
+  <div id="siteLoader" class="site-loader">
+
+    <div class="loader-content">
+
+      <div class="loading-title">
+        CONFIG <span>STORE</span>
+      </div>
+
+      <div class="loading-subtitle">
+        در حال آماده‌سازی سرویس‌ها...
+      </div>
+
+      <div class="creeper-area">
+
+        <span class="blast-particle p1"></span>
+        <span class="blast-particle p2"></span>
+        <span class="blast-particle p3"></span>
+        <span class="blast-particle p4"></span>
+        <span class="blast-particle p5"></span>
+        <span class="blast-particle p6"></span>
+        <span class="blast-particle p7"></span>
+        <span class="blast-particle p8"></span>
+        <span class="blast-particle p9"></span>
+        <span class="blast-particle p10"></span>
+        <span class="blast-particle p11"></span>
+        <span class="blast-particle p12"></span>
+
+        <div class="creeper">
+          <div class="creeper-head">
+            <div class="creeper-eye eye-right"></div>
+            <div class="creeper-eye eye-left"></div>
+            <div class="creeper-mouth mouth-one"></div>
+            <div class="creeper-mouth mouth-two"></div>
+            <div class="creeper-mouth mouth-three"></div>
+            <div class="creeper-mouth mouth-four"></div>
+          </div>
+
+          <div class="creeper-body"></div>
+
+          <div class="creeper-leg leg-right"></div>
+          <div class="creeper-leg leg-left"></div>
+        </div>
+
+      </div>
+
+      <div class="loading-progress">
+        <div class="loading-progress-bar"></div>
+      </div>
+
+      <div class="loading-percent">
+        LOADING <span>•</span> 100%
+      </div>
+
+    </div>
+
+  </div>
 
   <!-- Header -->
+
   <header>
     <a href="index.html" class="logo">
       <div class="logo-icon">⌁</div>
@@ -898,11 +1370,13 @@
   </header>
 
   <!-- Hero -->
+
   <section class="hero">
 
     <div class="hero-orb"></div>
 
     <div class="hero-content">
+
       <div class="hero-badge">
         سرویس‌های پرسرعت و پایدار
       </div>
@@ -913,338 +1387,4 @@
       </h1>
 
       <p class="hero-description">
-        بهترین کانفیگ‌های V2Ray، WireGuard و SSH
-        با سرعت بالا، اتصال پایدار و فعال‌سازی سریع.
-        سرویس مناسب خودت را انتخاب کن و با خیال راحت استفاده کن.
-      </p>
-
-      <div class="hero-buttons">
-        <a href="#products" class="primary-button">
-          مشاهده کانفیگ‌ها
-        </a>
-
-        <button
-          class="secondary-button"
-          onclick="openRedeem()"
-        >
-          استفاده از Redeem Code
-        </button>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- Statistics -->
-  <section class="stats">
-
-    <div class="stat">
-      <strong>99%</strong>
-      <span>پایداری سرویس</span>
-    </div>
-
-    <div class="stat">
-      <strong>24/7</strong>
-      <span>پشتیبانی آنلاین</span>
-    </div>
-
-    <div class="stat">
-      <strong>+1000</strong>
-      <span>کاربر فعال</span>
-    </div>
-
-    <div class="stat">
-      <strong>⚡ سریع</strong>
-      <span>فعال‌سازی سفارش</span>
-    </div>
-
-  </section>
-
-  <!-- Products -->
-  <section id="products" class="section">
-
-    <div class="section-heading">
-      <div>
-        <h2>انتخاب <span>سرویس</span></h2>
-        <p>کانفیگ مناسب خودت را انتخاب کن</p>
-      </div>
-    </div>
-
-    <div class="products">
-
-      <!-- V2Ray -->
-      <article class="product-card">
-
-        <div class="product-top">
-          <div class="product-icon">✦</div>
-          <span class="product-number">01</span>
-        </div>
-
-        <h3>کانفیگ V2Ray</h3>
-
-        <p>
-          کانفیگ قدرتمند و پایدار برای استفاده روزمره،
-          گیم، استریم، دانلود و وب‌گردی بدون دردسر.
-        </p>
-
-        <div class="tag-list">
-          <span class="tag">سرعت بالا</span>
-          <span class="tag">پینگ مناسب</span>
-          <span class="tag">پشتیبانی چند دستگاه</span>
-        </div>
-
-        <div class="product-bottom">
-          <span class="product-price">موجود است</span>
-
-          <!-- با کلیک وارد صفحه V2Ray می‌شود -->
-          <a
-            href="v2ray.html"
-            class="product-button"
-          >
-            خرید کانفیگ
-          </a>
-        </div>
-
-      </article>
-
-      <!-- WireGuard -->
-      <article class="product-card">
-
-        <div class="product-top">
-          <div class="product-icon">◈</div>
-          <span class="product-number">02</span>
-        </div>
-
-        <h3>کانفیگ WireGuard</h3>
-
-        <p>
-          اتصال سریع و سبک با امنیت بالا، مناسب موبایل،
-          کامپیوتر، بازی آنلاین و استفاده طولانی‌مدت.
-        </p>
-
-        <div class="tag-list">
-          <span class="tag">امنیت بالا</span>
-          <span class="tag">اتصال سریع</span>
-          <span class="tag">مصرف کم</span>
-        </div>
-
-        <div class="product-bottom">
-          <span class="product-price">موجود است</span>
-
-          <!-- بعداً می‌توانی wireguard.html بسازی -->
-          <a
-            href="WireGuard.html"
-            class="product-button"
-          >
-            خرید کانفیگ
-          </a>
-        </div>
-
-      </article>
-
-      <!-- SSH -->
-      <article class="product-card">
-
-        <div class="product-top">
-          <div class="product-icon">⌘</div>
-          <span class="product-number">03</span>
-        </div>
-
-        <h3>کانفیگ SSH</h3>
-
-        <p>
-          سرویس SSH پرسرعت و پایدار برای وب‌گردی،
-          استفاده روزمره و اتصال مطمئن در دستگاه‌های مختلف.
-        </p>
-
-        <div class="tag-list">
-          <span class="tag">پایدار</span>
-          <span class="tag">سریع</span>
-          <span class="tag">فعال‌سازی فوری</span>
-        </div>
-
-        <div class="product-bottom">
-          <span class="product-price">موجود است</span>
-
-          <!-- بعداً می‌توانی ssh.html بسازی -->
-          <a
-            href="ssh.html"
-            class="product-button"
-          >
-            خرید کانفیگ
-          </a>
-        </div>
-
-      </article>
-
-    </div>
-  </section>
-
-  <!-- Advantages -->
-  <section id="advantages" class="advantages">
-
-    <div class="advantage">
-      <div class="advantage-icon">⚡</div>
-      <h3>سرعت بالا</h3>
-      <p>
-        سرورهای قدرتمند برای دانلود، استریم و وب‌گردی
-        روان و سریع.
-      </p>
-    </div>
-
-    <div class="advantage">
-      <div class="advantage-icon">◉</div>
-      <h3>اتصال پایدار</h3>
-      <p>
-        سرویس پایدار با قطعی کم و عملکرد مناسب در تمام
-        ساعات شبانه‌روز.
-      </p>
-    </div>
-
-    <div class="advantage">
-      <div class="advantage-icon">♢</div>
-      <h3>فعال‌سازی سریع</h3>
-      <p>
-        بعد از ثبت سفارش، کانفیگ در کوتاه‌ترین زمان
-        برای شما ارسال می‌شود.
-      </p>
-    </div>
-
-    <div class="advantage">
-      <div class="advantage-icon">♧</div>
-      <h3>پشتیبانی حرفه‌ای</h3>
-      <p>
-        در صورت نیاز به راهنمایی، تیم پشتیبانی پاسخ‌گوی
-        شما خواهد بود.
-      </p>
-    </div>
-
-  </section>
-
-  <footer>
-    تمامی حقوق برای Config Store محفوظ است.
-  </footer>
-
-  <!-- Redeem Code Modal -->
-  <div id="redeemModal" class="modal">
-
-    <div class="modal-box">
-
-      <h2>Redeem Code</h2>
-
-      <p>
-        اگر کد فعال‌سازی داری، آن را وارد کن.
-        Redeem Code از خرید معمولی کانفیگ جداست.
-      </p>
-
-      <input
-        id="redeemInput"
-        class="redeem-input"
-        type="text"
-        placeholder="کد خود را وارد کنید"
-        autocomplete="off"
-      >
-
-      <button
-        class="submit-redeem"
-        onclick="checkRedeemCode()"
-      >
-        بررسی و فعال‌سازی کد
-      </button>
-
-      <div
-        id="redeemResult"
-        class="redeem-result"
-      ></div>
-
-      <button
-        class="close-button"
-        onclick="closeRedeem()"
-      >
-        بستن
-      </button>
-
-    </div>
-
-  </div>
-
-  <script>
-    /*
-      کد معتبر Redeem را اینجا تغییر بده.
-      کد فعلی: Qr678
-    */
-
-    const VALID_REDEEM_CODE = "Qr678";
-
-    const redeemModal =
-      document.getElementById("redeemModal");
-
-    const redeemInput =
-      document.getElementById("redeemInput");
-
-    const redeemResult =
-      document.getElementById("redeemResult");
-
-    function openRedeem() {
-      redeemModal.classList.add("show");
-      redeemInput.value = "";
-      redeemResult.textContent = "";
-      redeemResult.className = "redeem-result";
-
-      setTimeout(function() {
-        redeemInput.focus();
-      }, 100);
-    }
-
-    function closeRedeem() {
-      redeemModal.classList.remove("show");
-    }
-
-    function checkRedeemCode() {
-      const enteredCode =
-        redeemInput.value.trim();
-
-      if (enteredCode === VALID_REDEEM_CODE) {
-        redeemResult.textContent =
-          "کد صحیح است و با موفقیت فعال شد.";
-
-        redeemResult.className =
-          "redeem-result success";
-      } else {
-        redeemResult.textContent =
-          "کد واردشده اشتباه است.";
-
-        redeemResult.className =
-          "redeem-result error";
-      }
-    }
-
-    redeemInput.addEventListener(
-      "keydown",
-      function(event) {
-        if (event.key === "Enter") {
-          checkRedeemCode();
-        }
-      }
-    );
-
-    redeemModal.addEventListener(
-      "click",
-      function(event) {
-        if (event.target === redeemModal) {
-          closeRedeem();
-        }
-      }
-    );
-
-    document.addEventListener(
-      "keydown",
-      function(event) {
-        if (event.key === "Escape") {
-          closeRedeem();
-        }
-      }
-    );
-  </script>
-
-</body>
-</html>
+        بهترین کانفی
