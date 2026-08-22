@@ -483,8 +483,6 @@
       font-size: 11px;
     }
 
-    /* مودال‌ها */
-
     .modal {
       position: fixed;
       inset: 0;
@@ -1051,8 +1049,6 @@
     تمامی حقوق برای Config Store محفوظ است.
   </footer>
 
-
-  <!-- پنجره ثبت سفارش -->
   <div id="orderModal" class="modal">
 
     <div class="modal-box">
@@ -1089,8 +1085,6 @@
 
   </div>
 
-
-  <!-- پنجره پرداخت -->
   <div id="paymentModal" class="modal">
 
     <div class="modal-box payment-box">
@@ -1166,9 +1160,8 @@
 
   </div>
 
-
   <script>
-    const DISCOUNT_CODE = "QrEsU";
+    const DISCOUNT_CODE = "Qrv2ray89";
     const DISCOUNT_AMOUNT = 40;
 
     let couponApplied = false;
@@ -1246,13 +1239,8 @@
       const volumePrice =
         getSelectedPrice(volumeSelect);
 
-      let quantity =
+      const quantity =
         Number(quantitySelect.value);
-
-      if (couponApplied) {
-        quantity = 2;
-        quantitySelect.value = "2";
-      }
 
       const subtotal =
         (durationPrice + volumePrice) * quantity;
@@ -1304,6 +1292,16 @@
         return;
       }
 
+      if (enteredCode === "") {
+        couponMessage.textContent =
+          "لطفاً کد تخفیف را وارد کنید.";
+
+        couponMessage.className =
+          "coupon-message error";
+
+        return;
+      }
+
       if (enteredCode !== DISCOUNT_CODE) {
         couponMessage.textContent =
           "کد تخفیف اشتباه است.";
@@ -1321,7 +1319,7 @@
       couponButton.textContent = "اعمال شد";
 
       couponMessage.textContent =
-        "کد صحیح است؛ تعداد کانفیگ‌ها 2 عدد شد و 40 هزارتومن تخفیف اعمال شد.";
+        "کد صحیح است؛ ۴۰ هزارتومن تخفیف اعمال شد.";
 
       couponMessage.className =
         "coupon-message success";
@@ -1342,7 +1340,7 @@
 
       const discountText =
         order.discount > 0
-          ? "40 هزارتومن"
+          ? formatPrice(order.discount)
           : "بدون تخفیف";
 
       modalSummary.innerHTML = `
@@ -1394,16 +1392,9 @@
       calculatePrice
     );
 
-
     quantitySelect.addEventListener(
       "change",
-      function() {
-        if (couponApplied) {
-          quantitySelect.value = "2";
-        }
-
-        calculatePrice();
-      }
+      calculatePrice
     );
 
 
@@ -1442,7 +1433,8 @@
         button.addEventListener(
           "click",
           async function() {
-            const text = button.dataset.copy;
+            const text =
+              button.dataset.copy;
 
             try {
               await navigator.clipboard.writeText(text);
@@ -1453,10 +1445,12 @@
               button.textContent =
                 "کپی شد ✓";
 
-              setTimeout(function() {
-                button.textContent =
-                  oldText;
-              }, 1600);
+              setTimeout(
+                function() {
+                  button.textContent = oldText;
+                },
+                1600
+              );
 
             } catch (error) {
               alert("آیدی: " + text);
